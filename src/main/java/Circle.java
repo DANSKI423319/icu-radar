@@ -7,7 +7,7 @@ import javax.swing.WindowConstants;
 public class Circle extends JPanel {
 
     private int slices;
-    private int radius;
+    private int radius, rad1, rad2, rad3, rad4, rad5;
     private int size = 500;
     private int xOrigin, yOrigin = size / 2;
 
@@ -35,8 +35,9 @@ public class Circle extends JPanel {
 
         // Returns shortest number between both, uses as definite origin
         int superOrigin = Math.min(xOrigin, yOrigin);
-        int radius2 = 0;
+        int radiusSum = 0;
 
+        /*
         // DRAWS CIRCLES
         // If I wanted to specify lines to certain circles, I will need
         // to take this out of a loop, and specify each radius(2)...
@@ -45,27 +46,61 @@ public class Circle extends JPanel {
             radius2 = Math.abs(superOrigin - radius) / 6;
             G2D.drawOval(xOrigin - radius, yOrigin - radius, 2 * radius, 2 * radius);
         }
-
-        // Draw main circle //       
-        // radius = 4 * superOrigin / 5;
-        // radius2 = Math.abs(superOrigin - radius) / 3;
-        // g2d.drawOval(xOrigin - radius, yOrigin - radius, 2 * radius, 2 * radius); 
+         */
         
+        // Draw main circle //
+        radiusSum = Math.abs(superOrigin - rad5) / 10;
+        
+        rad1 = 1 * superOrigin / 6;
+        G2D.drawOval(xOrigin - rad1, yOrigin - rad1, 2 * rad1, 2 * rad1);
+
+        rad2 = 2 * superOrigin / 6;
+        G2D.drawOval(xOrigin - rad2, yOrigin - rad2, 2 * rad2, 2 * rad2);
+
+        rad3 = 3 * superOrigin / 6;
+        G2D.drawOval(xOrigin - rad3, yOrigin - rad3, 2 * rad3, 2 * rad3);
+
+        rad4 = 4 * superOrigin / 6;
+        G2D.drawOval(xOrigin - rad4, yOrigin - rad4, 2 * rad4, 2 * rad4);
+        
+        rad5 = 5 * superOrigin / 6;
+        G2D.drawOval(xOrigin - rad5, yOrigin - rad5, 2 * rad5, 2 * rad5);
+
+        // Plot points
+        int points[] = {1, 2, 1, 4, 1};
+
         // Cut slices into radar
         for (int i = 0; i < slices; i++) {
+            G2D.setColor(Color.green);
+            double angle = 2 * Math.PI * i / slices;
+
+            int xCoord = (int) Math.round(xOrigin + rad5 * Math.cos(angle)); // Get angles
+            int yCoord = (int) Math.round(yOrigin + rad5 * Math.sin(angle)); // and coordinates
+
+            G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord); // Draw line to new coordinates
+        }
+        
+        // Plot Scores
+        for (int i = 0; i < points.length; i++) {
             G2D.setColor(Color.blue);
             double angle = 2 * Math.PI * i / slices;
-            int xCoord = (int) Math.round(xOrigin + radius * Math.cos(angle)); // Get angles
-            int yCoord = (int) Math.round(yOrigin + radius * Math.sin(angle)); // and coordinates
+            int xCoord;
+            int yCoord;
             
-            G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord); // Draw line to new coordinates
-            
-            G2D.fillOval(xCoord - radius2, yCoord - radius2, 2 * radius2, 2 * radius2); // Create point
-            G2D.setColor(Color.red);
+            if (points[i] == 1) {
+                xCoord = (int) Math.round(xOrigin + rad1 * Math.cos(angle));
+                yCoord = (int) Math.round(yOrigin + rad1 * Math.sin(angle));
 
-            String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
-            G2D.drawString(txt, xCoord, yCoord - 36);
+                G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord);
+                G2D.fillOval(xCoord - radiusSum, yCoord - radiusSum, 2 * radiusSum, 2 * radiusSum);
+                
+                G2D.setColor(Color.red);
+
+                String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
+                G2D.drawString(txt, xCoord, yCoord - 12);
+            }
         }
+        
     }
 
     private static void createFrame() {
@@ -73,7 +108,7 @@ public class Circle extends JPanel {
         mainFrame.setTitle("Custom Radar");
 
         // Create chart with 'x' slices
-        mainFrame.add(new Circle(3));
+        mainFrame.add(new Circle(5));
 
         mainFrame.pack();
         mainFrame.setVisible(true);
