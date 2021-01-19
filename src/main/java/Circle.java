@@ -2,6 +2,7 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.*;
 import javax.swing.WindowConstants;
 
 public class Circle extends JPanel {
@@ -67,25 +68,29 @@ public class Circle extends JPanel {
         G2D.drawOval(xOrigin - rad5, yOrigin - rad5, 2 * rad5, 2 * rad5);
 
         // Plot points (needs to equal amount of slices)
-        int points[] = {5, 4, 3, 2, 1};
+        int points[] = {1, 2, 5, 4, 3};
+        int xPoints[] = {0, 0, 0, 0, 0};
+        int yPoints[] = {0, 0, 0, 0, 0};
 
+        int xCoord;
+        int yCoord;
+        
+        
         // Cut slices into radar
         for (int i = 0; i < slices; i++) {
-            G2D.setColor(Color.green);
+            G2D.setColor(Color.black);
             double angle = 2 * Math.PI * i / slices;
 
-            int xCoord = (int) Math.round(xOrigin + rad5 * Math.cos(angle)); // Get angles
-            int yCoord = (int) Math.round(yOrigin + rad5 * Math.sin(angle)); // and coordinates
+            xCoord = (int) Math.round(xOrigin + rad5 * Math.cos(angle)); // Get angles
+            yCoord = (int) Math.round(yOrigin + rad5 * Math.sin(angle)); // and coordinates
 
             G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord); // Draw line to new coordinates
         }
         
         // Plot Scores
         for (int i = 0; i < points.length; i++) {
-            G2D.setColor(Color.blue);
+            G2D.setColor(Color.red);
             double angle = 2 * Math.PI * i / slices;
-            int xCoord;
-            int yCoord;
             
             if (points[i] == 1) {
                 
@@ -95,10 +100,13 @@ public class Circle extends JPanel {
                 G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord);
                 G2D.fillOval(xCoord - radiusSum, yCoord - radiusSum, 2 * radiusSum, 2 * radiusSum);
                 
-                G2D.setColor(Color.red);
+                G2D.setColor(Color.black);
 
                 String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
                 G2D.drawString(txt, xCoord, yCoord - 12);
+                
+                xPoints[i] = xCoord;
+                yPoints[i] = yCoord;
                 
             } else if (points[i] == 2) {
                 
@@ -108,10 +116,13 @@ public class Circle extends JPanel {
                 G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord);
                 G2D.fillOval(xCoord - radiusSum, yCoord - radiusSum, 2 * radiusSum, 2 * radiusSum);
                 
-                G2D.setColor(Color.red);
+                G2D.setColor(Color.black);
 
                 String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
-                G2D.drawString(txt, xCoord, yCoord - 12);
+                G2D.drawString(txt, xCoord, yCoord - 12); 
+                
+                xPoints[i] = xCoord;
+                yPoints[i] = yCoord;
                 
             } else if (points[i] == 3) {
                 
@@ -121,10 +132,13 @@ public class Circle extends JPanel {
                 G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord);
                 G2D.fillOval(xCoord - radiusSum, yCoord - radiusSum, 2 * radiusSum, 2 * radiusSum);
                 
-                G2D.setColor(Color.red);
+                G2D.setColor(Color.black);
 
                 String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
                 G2D.drawString(txt, xCoord, yCoord - 12);
+                
+                xPoints[i] = xCoord;
+                yPoints[i] = yCoord;
                 
             } else if (points[i] == 4) {
                 
@@ -134,10 +148,13 @@ public class Circle extends JPanel {
                 G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord);
                 G2D.fillOval(xCoord - radiusSum, yCoord - radiusSum, 2 * radiusSum, 2 * radiusSum);
                 
-                G2D.setColor(Color.red);
+                G2D.setColor(Color.black);
 
                 String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
                 G2D.drawString(txt, xCoord, yCoord - 12);
+                
+                xPoints[i] = xCoord;
+                yPoints[i] = yCoord;
                 
             } else if (points[i] == 5) {
                 
@@ -147,16 +164,24 @@ public class Circle extends JPanel {
                 G2D.drawLine(xOrigin, yOrigin, xCoord, yCoord);
                 G2D.fillOval(xCoord - radiusSum, yCoord - radiusSum, 2 * radiusSum, 2 * radiusSum);
                 
-                G2D.setColor(Color.red);
+                G2D.setColor(Color.black);
 
                 String txt = i + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
                 G2D.drawString(txt, xCoord, yCoord - 12);
                 
+                xPoints[i] = xCoord;
+                yPoints[i] = yCoord;
+                
             } else {
                 System.out.println("Error");
             }
-            
-        }
+        }   
+        
+        int alpha = 127;
+        Color myColor = new Color(255, 0, 0, alpha);
+        G2D.drawPolygon(xPoints, yPoints, 5);
+        G2D.setColor(myColor);
+        G2D.fillPolygon(xPoints, yPoints, 5);
         
     }
 
