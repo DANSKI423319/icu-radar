@@ -8,14 +8,16 @@ public class Circle extends JPanel {
 
     private final int[] scores;
     private final int slices;
+    private final int range;
     private int radius;
     private final int size = 500;
 
-    public Circle(int n, int input[]) {
+    public Circle(int n, int input[], int nn) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.slices = n;
         this.scores = input;
+        this.range = nn + 1;
     }
 
     @Override
@@ -23,6 +25,9 @@ public class Circle extends JPanel {
 
         super.paintComponent(g);
         Graphics2D G2D = (Graphics2D) g;
+
+        int alpha = 80;
+        Color myColor = new Color(255, 0, 0, alpha);
 
         // Smooth lines
         G2D.setRenderingHint(
@@ -38,10 +43,9 @@ public class Circle extends JPanel {
         G2D.translate(superOrigin, superOrigin);
 
         // Draw circle loop
-        for (int i = 0; i < 6; i++) { // Change both 5s to change amount of lines
-            radius = i * superOrigin / 6;
+        for (int i = 0; i < (range); i++) { // Range is the maximum score given, tells how many circles to make
+            radius = i * superOrigin / (range);
             G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
-            G2D.drawString(Integer.toString(i), 42 * i, 0);
         }
 
         // Plot points
@@ -54,8 +58,8 @@ public class Circle extends JPanel {
             G2D.setColor(Color.black);
             double angle = 2 * Math.PI * i / slices;
 
-            xCoord = (int) Math.round(0 + (5 * superOrigin / 6) * Math.cos(angle)); // Get angles
-            yCoord = (int) Math.round(0 + (5 * superOrigin / 6) * Math.sin(angle)); // and coordinates
+            xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.cos(angle)); // Get angles
+            yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.sin(angle)); // and coordinates
 
             G2D.drawLine(0, 0, yCoord, -xCoord); // Draw line
         }
@@ -63,46 +67,53 @@ public class Circle extends JPanel {
         // Get scores, load array(s)
         for (int i = 0; i < scores.length; i++) {
             double angle = 2 * Math.PI * i / slices;
-            xCoord = (int) Math.round(0 + (scores[i] * superOrigin / 6) * Math.cos(angle));
-            yCoord = (int) Math.round(0 + (scores[i] * superOrigin / 6) * Math.sin(angle));
+            xCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
 
             xPoints[i] = -xCoord;
             yPoints[i] = yCoord;
         }
 
-        // Draw radar, with loaded array(s)
+        // Plot radar, with loaded array(s)
         G2D.setColor(Color.red);
         G2D.drawPolygon(yPoints, xPoints, slices);
-
-        int alpha = 80;
-        Color myColor = new Color(255, 0, 0, alpha);
         G2D.setColor(myColor);
         G2D.fillPolygon(yPoints, xPoints, slices);
 
         int radiusSum = Math.abs(superOrigin - radius) / 3;
 
+        // Plot scores
         for (int i = 0; i < scores.length; i++) {
             G2D.setColor(Color.red);
             G2D.fillOval(yPoints[i] - radiusSum, xPoints[i] - radiusSum, 2 * radiusSum, 2 * radiusSum);
 
-            G2D.setColor(Color.white);
-            // String txt = (i + 1) + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
+            /*
+            String txt = (i + 1) + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
             int pointVal = scores[i];
             String stringVal = Integer.toString(pointVal);
             G2D.drawString(stringVal, yPoints[i] - 3, xPoints[i] + 4);
+            */
         }
     }
 
     private static void createFrame() {
         JFrame mainFrame = new JFrame();
         mainFrame.setTitle("Custom Radar");
+        
+        // Chart Scores
+        int scores[] = {5, 4, 3, 2, 3, 3, 2};
+        int slices = scores.length;
+        int range = 0;
 
-        // Create chart with 'x' slices
-        int input[] = {3, 4, 4, 2, 3, 4, 5};
-        mainFrame.add(new Circle(7, input));
+        for (int i = 0; i < scores.length; i++)
+        {
+            if (scores[i] > range)
+            {
+                range = scores[i];
+            }
+        }
 
-        // int input2[] = {1, 2, 3};
-        // mainFrame.add(new Circle(3, input2));
+        mainFrame.add(new Circle(slices, scores, range));
 
         mainFrame.pack();
         mainFrame.setVisible(true);
