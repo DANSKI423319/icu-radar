@@ -43,11 +43,10 @@ public class Circle extends JPanel {
         for (int i = 0; i < 6; i++) { // Change both 5s to change amount of lines
             radius = i * superOrigin / 6;
             G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
+            G2D.drawString(Integer.toString(i), 42 * i, 0);
         }
 
         // Plot points
-        // int points[] = {3, 4, 5, 2, 1, 4, 5};
-
         int xPoints[] = new int[slices];
         int yPoints[] = new int[slices];
         int xCoord, yCoord;
@@ -60,10 +59,8 @@ public class Circle extends JPanel {
             xCoord = (int) Math.round(0 + (5 * superOrigin / 6) * Math.cos(angle)); // Get angles
             yCoord = (int) Math.round(0 + (5 * superOrigin / 6) * Math.sin(angle)); // and coordinates
 
-            G2D.drawLine(0, 0, xCoord, yCoord); // Draw line
+            G2D.drawLine(0, 0, yCoord, -xCoord); // Draw line
         }
-
-        int radiusSum = Math.abs(superOrigin - radius) / 3;
 
         // Get scores, load array(s)
         for (int i = 0; i < scores.length; i++) {
@@ -71,28 +68,30 @@ public class Circle extends JPanel {
             xCoord = (int) Math.round(0 + (scores[i] * superOrigin / 6) * Math.cos(angle));
             yCoord = (int) Math.round(0 + (scores[i] * superOrigin / 6) * Math.sin(angle));
 
-            xPoints[i] = xCoord;
+            xPoints[i] = -xCoord;
             yPoints[i] = yCoord;
         }
 
         // Draw radar, with loaded array(s)
         G2D.setColor(Color.red);
-        G2D.drawPolygon(xPoints, yPoints, slices);
+        G2D.drawPolygon(yPoints, xPoints, slices);
 
         int alpha = 80;
         Color myColor = new Color(255, 0, 0, alpha);
         G2D.setColor(myColor);
-        G2D.fillPolygon(xPoints, yPoints, slices);
-        
+        G2D.fillPolygon(yPoints, xPoints, slices);
+
+        int radiusSum = Math.abs(superOrigin - radius) / 3;
+
         for (int i = 0; i < scores.length; i++) {
             G2D.setColor(Color.red);
-            G2D.fillOval(xPoints[i] - radiusSum, yPoints[i] - radiusSum, 2 * radiusSum, 2 * radiusSum);
+            G2D.fillOval(yPoints[i] - radiusSum, xPoints[i] - radiusSum, 2 * radiusSum, 2 * radiusSum);
 
             G2D.setColor(Color.white);
-            //String txt = (i + 1) + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
+            // String txt = (i + 1) + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
             int pointVal = scores[i];
             String stringVal = Integer.toString(pointVal);
-            G2D.drawString(stringVal, xPoints[i] - 3, yPoints[i] + 4);
+            G2D.drawString(stringVal, yPoints[i] - 3, xPoints[i] + 4);
         }
     }
 
@@ -100,9 +99,13 @@ public class Circle extends JPanel {
         JFrame mainFrame = new JFrame();
         mainFrame.setTitle("Custom Radar");
 
-        int input[] = {3, 4, 4, 2, 3, 4, 5};
         // Create chart with 'x' slices
+        int input[] = {3, 4, 4, 2, 3, 4, 5};
         mainFrame.add(new Circle(7, input));
+
+        // int input2[] = {1, 2, 3};
+        // mainFrame.add(new Circle(3, input2));
+
 
         mainFrame.pack();
         mainFrame.setVisible(true);
