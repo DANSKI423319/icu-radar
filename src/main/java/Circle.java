@@ -2,16 +2,14 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.*;
 import javax.swing.WindowConstants;
 
 public class Circle extends JPanel {
 
-    private int[] scores;
-    private int slices;
+    private final int[] scores;
+    private final int slices;
     private int radius;
-    private int size = 500;
-    private int xOrigin, yOrigin = size / 2;
+    private final int size = 500;
 
     public Circle(int n, int input[]) {
         super(true);
@@ -32,8 +30,8 @@ public class Circle extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         // Cuts window size in half to get origin
-        xOrigin = getWidth() / 2;
-        yOrigin = getHeight() / 2;
+        int xOrigin = getWidth() / 2;
+        int yOrigin = getHeight() / 2;
 
         // Change to Cartesian coordinates...
         int superOrigin = Math.min(xOrigin, yOrigin);
@@ -105,7 +103,6 @@ public class Circle extends JPanel {
 
         // int input2[] = {1, 2, 3};
         // mainFrame.add(new Circle(3, input2));
-
 
         mainFrame.pack();
         mainFrame.setVisible(true);
