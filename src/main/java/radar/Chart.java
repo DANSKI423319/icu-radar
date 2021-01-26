@@ -1,20 +1,20 @@
+package radar;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import javax.swing.WindowConstants;
 
-public class Circle extends JPanel {
+public class Chart extends JPanel {
 
     private final int[] scores;
     private final int slices;
     private final int range;
     private int radius;
-    private final int size = 500;
 
-    public Circle(int n, int input[], int nn) {
+    public Chart(int n, int input[], int nn, int size) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
+        this.setBackground(Color.lightGray);
         this.slices = n;
         this.scores = input;
         this.range = nn + 1;
@@ -94,40 +94,5 @@ public class Circle extends JPanel {
             G2D.drawString(stringVal, yPoints[i] - 3, xPoints[i] + 4);
             */
         }
-    }
-
-    private static void createFrame() {
-        JFrame mainFrame = new JFrame();
-        mainFrame.setTitle("Custom Radar");
-        
-        // Chart Scores
-        int scores[] = {5, 4, 3, 2, 3, 3, 2};
-        int slices = scores.length;
-        int range = 0;
-
-        for (int i = 0; i < scores.length; i++)
-        {
-            if (scores[i] > range)
-            {
-                range = scores[i];
-            }
-        }
-
-        mainFrame.add(new Circle(slices, scores, range));
-
-        mainFrame.pack();
-        mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                createFrame();
-            }
-        });
     }
 }
