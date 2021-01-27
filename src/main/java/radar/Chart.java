@@ -2,22 +2,19 @@ package radar;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.WindowConstants;
 
 public class Chart extends JPanel {
 
     private final int[] scores;
     private final int slices;
-    private final int range;
     private int radius;
 
-    public Chart(int n, int input[], int nn, int size) {
+    public Chart(int n, int input[], int size) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.setBackground(Color.lightGray);
         this.slices = n;
         this.scores = input;
-        this.range = nn + 1;
     }
 
     @Override
@@ -34,6 +31,23 @@ public class Chart extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        int range = 0;
+        
+        for (int i = 0; i < scores.length; i++)
+        {
+            if (scores[i] > range) {
+                
+                range = scores[i];
+                range = range + 1;
+                
+            } else if (range < 5) {
+                
+                range = 5;
+                range = range + 1;
+                
+            }
+        }
+        
         // Cuts window size in half to get origin
         int xOrigin = getWidth() / 2;
         int yOrigin = getHeight() / 2;
@@ -80,7 +94,7 @@ public class Chart extends JPanel {
         G2D.setColor(myColor);
         G2D.fillPolygon(yPoints, xPoints, slices);
 
-        int radiusSum = Math.abs(superOrigin - radius) / 3;
+        int radiusSum = Math.abs(superOrigin - radius) / 6;
 
         // Plot scores
         for (int i = 0; i < scores.length; i++) {

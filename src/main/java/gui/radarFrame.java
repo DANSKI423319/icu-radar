@@ -22,7 +22,7 @@ public class radarFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    public static void createChart(int slices, int scores[], int range, int size) {
+    public static void createChart(int slices, int scores[], int size) {
        JFrame mainFrame = new JFrame("Radar Chart");
         
         JPanel mainPanel = new JPanel();
@@ -31,21 +31,8 @@ public class radarFrame extends javax.swing.JFrame {
         JLabel lblTitle = new JLabel("Example");
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-        for (int i = 0; i < scores.length; i++)
-        {
-            if (scores[i] > range)
-            {
-                range = scores[i];
-            }
-
-            if (range < 5)
-            {
-                range = 5;
-            }
-        }
-
         mainFrame.add(lblTitle, BorderLayout.NORTH);
-        mainPanel.add(new Chart(slices, scores, range, size));
+        mainPanel.add(new Chart(slices, scores, size));
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         
         mainFrame.pack();
@@ -134,7 +121,7 @@ public class radarFrame extends javax.swing.JFrame {
         String input;
         int number;
         int min = 0;
-        int max = 5;
+        int max = 20;
         int range = 0;
         
         input = txtInput.getText();
@@ -147,20 +134,7 @@ public class radarFrame extends javax.swing.JFrame {
             array[i] = random_int;
         }
         
-        for (int i = 0; i < array.length; i++)
-        {
-            if (array[i] > range)
-            {
-                range = array[i];
-            }
-
-            if (range < 5)
-            {
-                range = 5;
-            }
-        }
-        
-        createChart(number, array, range, 500);
+        createChart(number, array, 500);
         
     }//GEN-LAST:event_btnGoActionPerformed
 

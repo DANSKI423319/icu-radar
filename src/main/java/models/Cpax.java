@@ -1,23 +1,9 @@
 package models;
 
-public class Cpax extends Patient {
+public class Cpax {
 
     private int respiratory, cough, bedRolling, supineEdge, dynamicSitting,
-            balance, sitToStand, bedToChair, stepping, grip;
-
-    public Cpax(int respiratory, int cough, int bedRolling, int supineEdge, int dynamicSitting, int balance, int sitToStand, int bedToChair, int stepping, int grip, String firstName, String lastName, String patientID) {
-        super(firstName, lastName, patientID);
-        this.respiratory = respiratory;
-        this.cough = cough;
-        this.bedRolling = bedRolling;
-        this.supineEdge = supineEdge;
-        this.dynamicSitting = dynamicSitting;
-        this.balance = balance;
-        this.sitToStand = sitToStand;
-        this.bedToChair = bedToChair;
-        this.stepping = stepping;
-        this.grip = grip;
-    }
+            balance, sitToStand, bedToChair, stepping, grip, total;
 
     public int getRespiratory() {
         return respiratory;
@@ -98,7 +84,29 @@ public class Cpax extends Patient {
     public void setGrip(int grip) {
         this.grip = grip;
     }
-    
-    
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Cpax(int respiratory, int cough, int bedRolling, int supineEdge, int dynamicSitting, int balance, int sitToStand, int bedToChair, int stepping, int grip, int total) {
+        this.respiratory = respiratory;
+        this.cough = cough;
+        this.bedRolling = bedRolling;
+        this.supineEdge = supineEdge;
+        this.dynamicSitting = dynamicSitting;
+        this.balance = balance;
+        this.sitToStand = sitToStand;
+        this.bedToChair = bedToChair;
+        this.stepping = stepping;
+        this.grip = grip;
+        this.total = total;
+    }
+
+    public Cpax() {};
     
 }

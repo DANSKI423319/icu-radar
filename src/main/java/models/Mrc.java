@@ -1,6 +1,6 @@
 package models;
 
-public class Mrc extends Patient {
+public class Mrc {
         
     private int shoulderAbductionRight_11036, shoulderAbductionRight_11074;
     private int shoulderAbductionLeft_11073, shoulderAbductionLeft_11035;
@@ -20,33 +20,7 @@ public class Mrc extends Patient {
     private int ankleDorsiflexionLeft_11027, ankleDorsiflexionLeft_11065;
     private int ankleDorsiflexionRight_11066, ankleDorsiflexionRight_11028;
 
-    public Mrc (int shoulderAbductionRight_11036, int shoulderAbductionRight_11074, int shoulderAbductionLeft_11073, int shoulderAbductionLeft_11035, int elbowFlexionRight_11030, int elbowFlexionRight_11068, int elbowFlexionLeft_11029, int elbowFlexionLeft_11067, int wristExtensionRight_11038, int wristExtensionRight_11077, int wristExtensionLeft_11037, int wristExtensionLeft_11076, int hipFlexionRight_11070, int hipFlexionRight_11032, int hipFlexionLeft_11069, int hipFlexionLeft_11031, int kneeExtensionRight_11072, int kneeExtensionRight_11034, int kneeExtensionLeft_11071, int kneeExtensionLeft_11033, int ankleDorsiflexionLeft_11027, int ankleDorsiflexionLeft_11065, int ankleDorsiflexionRight_11066, int ankleDorsiflexionRight_11028, String firstName, String lastName, String patientID) {
-        super(firstName, lastName, patientID);
-        this.shoulderAbductionRight_11036 = shoulderAbductionRight_11036;
-        this.shoulderAbductionRight_11074 = shoulderAbductionRight_11074;
-        this.shoulderAbductionLeft_11073 = shoulderAbductionLeft_11073;
-        this.shoulderAbductionLeft_11035 = shoulderAbductionLeft_11035;
-        this.elbowFlexionRight_11030 = elbowFlexionRight_11030;
-        this.elbowFlexionRight_11068 = elbowFlexionRight_11068;
-        this.elbowFlexionLeft_11029 = elbowFlexionLeft_11029;
-        this.elbowFlexionLeft_11067 = elbowFlexionLeft_11067;
-        this.wristExtensionRight_11038 = wristExtensionRight_11038;
-        this.wristExtensionRight_11077 = wristExtensionRight_11077;
-        this.wristExtensionLeft_11037 = wristExtensionLeft_11037;
-        this.wristExtensionLeft_11076 = wristExtensionLeft_11076;
-        this.hipFlexionRight_11070 = hipFlexionRight_11070;
-        this.hipFlexionRight_11032 = hipFlexionRight_11032;
-        this.hipFlexionLeft_11069 = hipFlexionLeft_11069;
-        this.hipFlexionLeft_11031 = hipFlexionLeft_11031;
-        this.kneeExtensionRight_11072 = kneeExtensionRight_11072;
-        this.kneeExtensionRight_11034 = kneeExtensionRight_11034;
-        this.kneeExtensionLeft_11071 = kneeExtensionLeft_11071;
-        this.kneeExtensionLeft_11033 = kneeExtensionLeft_11033;
-        this.ankleDorsiflexionLeft_11027 = ankleDorsiflexionLeft_11027;
-        this.ankleDorsiflexionLeft_11065 = ankleDorsiflexionLeft_11065;
-        this.ankleDorsiflexionRight_11066 = ankleDorsiflexionRight_11066;
-        this.ankleDorsiflexionRight_11028 = ankleDorsiflexionRight_11028;
-    }
+    private int total;
 
     public int getShoulderAbductionRight_11036() {
         return shoulderAbductionRight_11036;
@@ -238,6 +212,44 @@ public class Mrc extends Patient {
 
     public void setAnkleDorsiflexionRight_11028(int ankleDorsiflexionRight_11028) {
         this.ankleDorsiflexionRight_11028 = ankleDorsiflexionRight_11028;
-    }  
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Mrc(int shoulderAbductionRight_11036, int shoulderAbductionRight_11074, int shoulderAbductionLeft_11073, int shoulderAbductionLeft_11035, int elbowFlexionRight_11030, int elbowFlexionRight_11068, int elbowFlexionLeft_11029, int elbowFlexionLeft_11067, int wristExtensionRight_11038, int wristExtensionRight_11077, int wristExtensionLeft_11037, int wristExtensionLeft_11076, int hipFlexionRight_11070, int hipFlexionRight_11032, int hipFlexionLeft_11069, int hipFlexionLeft_11031, int kneeExtensionRight_11072, int kneeExtensionRight_11034, int kneeExtensionLeft_11071, int kneeExtensionLeft_11033, int ankleDorsiflexionLeft_11027, int ankleDorsiflexionLeft_11065, int ankleDorsiflexionRight_11066, int ankleDorsiflexionRight_11028, int total) {
+        this.shoulderAbductionRight_11036 = shoulderAbductionRight_11036;
+        this.shoulderAbductionRight_11074 = shoulderAbductionRight_11074;
+        this.shoulderAbductionLeft_11073 = shoulderAbductionLeft_11073;
+        this.shoulderAbductionLeft_11035 = shoulderAbductionLeft_11035;
+        this.elbowFlexionRight_11030 = elbowFlexionRight_11030;
+        this.elbowFlexionRight_11068 = elbowFlexionRight_11068;
+        this.elbowFlexionLeft_11029 = elbowFlexionLeft_11029;
+        this.elbowFlexionLeft_11067 = elbowFlexionLeft_11067;
+        this.wristExtensionRight_11038 = wristExtensionRight_11038;
+        this.wristExtensionRight_11077 = wristExtensionRight_11077;
+        this.wristExtensionLeft_11037 = wristExtensionLeft_11037;
+        this.wristExtensionLeft_11076 = wristExtensionLeft_11076;
+        this.hipFlexionRight_11070 = hipFlexionRight_11070;
+        this.hipFlexionRight_11032 = hipFlexionRight_11032;
+        this.hipFlexionLeft_11069 = hipFlexionLeft_11069;
+        this.hipFlexionLeft_11031 = hipFlexionLeft_11031;
+        this.kneeExtensionRight_11072 = kneeExtensionRight_11072;
+        this.kneeExtensionRight_11034 = kneeExtensionRight_11034;
+        this.kneeExtensionLeft_11071 = kneeExtensionLeft_11071;
+        this.kneeExtensionLeft_11033 = kneeExtensionLeft_11033;
+        this.ankleDorsiflexionLeft_11027 = ankleDorsiflexionLeft_11027;
+        this.ankleDorsiflexionLeft_11065 = ankleDorsiflexionLeft_11065;
+        this.ankleDorsiflexionRight_11066 = ankleDorsiflexionRight_11066;
+        this.ankleDorsiflexionRight_11028 = ankleDorsiflexionRight_11028;
+        this.total = total;
+    }
+
+    public Mrc() {};
     
 }
