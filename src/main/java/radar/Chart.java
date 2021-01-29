@@ -104,7 +104,7 @@ public class Chart extends JPanel {
                     xCoord = (int) Math.round(0 + (scores[ii] * superOrigin / range) * Math.cos(angle));
 
                     if (ii == (scores.length - 1)) {
-                        endPoints.add(scores.length - ii);
+                        endPoints.add(scores.length - 1);
                     } else {
                         if (xCoord > 0) {
                             endPoints.add(ii);
