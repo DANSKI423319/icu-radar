@@ -91,9 +91,9 @@ public class Chart extends JPanel {
             xCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.cos(angle));
             yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
 
-            if (xCoord == 0 && yCoord == 0) {
+            if (xCoord == 0) {
                 minusOffset.add(i - 1);
-                plusOffset.add(i + 1);
+                // If current I =... contue loop for next point
             } else {
                 xPoints[i] = -xCoord;
                 yPoints[i] = yCoord;
