@@ -107,6 +107,24 @@ public class Cpax {
         this.total = total;
     }
 
-    public Cpax() {};
-    
+    public Cpax() {
+    }
+
+    public int[] getScores() {
+        int[] array = {
+            this.respiratory,
+            this.cough,
+            this.bedRolling,
+            this.supineEdge,
+            this.dynamicSitting,
+            this.balance,
+            this.sitToStand,
+            this.bedToChair,
+            this.stepping,
+            this.grip
+        };
+
+        return array;
+    }
+
 }

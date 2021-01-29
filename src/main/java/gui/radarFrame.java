@@ -121,7 +121,7 @@ public class radarFrame extends javax.swing.JFrame {
         String input;
         int number;
         int min = 0;
-        int max = 20;
+        int max = 5;
         int range = 0;
         
         input = txtInput.getText();

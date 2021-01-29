@@ -2,6 +2,8 @@ package radar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import models.Model;
 
 public class Chart extends JPanel {
 
@@ -24,7 +26,7 @@ public class Chart extends JPanel {
         Graphics2D G2D = (Graphics2D) g;
 
         int alpha = 80;
-        Color myColor = new Color(255, 0, 0, alpha);
+        Color myColor = new Color(0, 255, 0, alpha);
 
         // Smooth lines
         G2D.setRenderingHint(
@@ -32,22 +34,21 @@ public class Chart extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         int range = 0;
-        
-        for (int i = 0; i < scores.length; i++)
-        {
+
+        for (int i = 0; i < scores.length; i++) {
             if (scores[i] > range) {
-                
+
                 range = scores[i];
                 range = range + 1;
-                
+
             } else if (range < 5) {
-                
+
                 range = 5;
                 range = range + 1;
-                
+
             }
         }
-        
+
         // Cuts window size in half to get origin
         int xOrigin = getWidth() / 2;
         int yOrigin = getHeight() / 2;
@@ -78,35 +79,63 @@ public class Chart extends JPanel {
             G2D.drawLine(0, 0, yCoord, -xCoord); // Draw line
         }
 
+        ArrayList<Integer> minusOffset = new ArrayList<>();
+        ArrayList<Integer> plusOffset = new ArrayList<>();
+
         // Get scores, load array(s)
         for (int i = 0; i < scores.length; i++) {
+            
+            Boolean valid;
+
             double angle = 2 * Math.PI * i / slices;
             xCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.cos(angle));
             yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
 
-            xPoints[i] = -xCoord;
-            yPoints[i] = yCoord;
+            if (xCoord == 0 && yCoord == 0) {
+                minusOffset.add(i - 1);
+                plusOffset.add(i + 1);
+            } else {
+                xPoints[i] = -xCoord;
+                yPoints[i] = yCoord;
+            }
+
+        }
+
+        Integer[] minus = minusOffset.toArray(new Integer[0]);
+        Integer[] plus = plusOffset.toArray(new Integer[0]);
+
+        G2D.setColor(Color.blue);
+        for (int i = 0; i < minus.length; i++) {
+            G2D.drawLine(yPoints[minus[i]], xPoints[minus[i]], yPoints[plus[i]], xPoints[plus[i]]);
         }
 
         // Plot radar, with loaded array(s)
-        G2D.setColor(Color.red);
+        G2D.setColor(Color.green);
         G2D.drawPolygon(yPoints, xPoints, slices);
         G2D.setColor(myColor);
         G2D.fillPolygon(yPoints, xPoints, slices);
 
-        int radiusSum = Math.abs(superOrigin - radius) / 6;
+        int radiusSum = Math.abs(superOrigin - radius) / 3;
 
         // Plot scores
         for (int i = 0; i < scores.length; i++) {
-            G2D.setColor(Color.red);
-            G2D.fillOval(yPoints[i] - radiusSum, xPoints[i] - radiusSum, 2 * radiusSum, 2 * radiusSum);
+            G2D.setColor(Color.green);
 
-            /*
-            String txt = (i + 1) + " X: " + Integer.toString(xCoord) + ", Y:" + Integer.toString(yCoord) + ".";
+            if (scores[i] > 0) {
+                G2D.fillOval(yPoints[i] - radiusSum, xPoints[i] - radiusSum, 2 * radiusSum, 2 * radiusSum);
+                G2D.setColor(Color.blue);
+
+                String txt = "" + (scores[i]);
+                G2D.setFont(new Font("Arial", Font.PLAIN, 18));
+                G2D.drawString(txt, yPoints[i] - 5, xPoints[i] + 4);
+            }
+
+        }
+
+        // String txt = (i + 1) + " X: " + Integer.toString(xPoints[i]) + ", Y:" + Integer.toString(yPoints[i]) + ".";
+        /*
             int pointVal = scores[i];
             String stringVal = Integer.toString(pointVal);
-            G2D.drawString(stringVal, yPoints[i] - 3, xPoints[i] + 4);
-            */
-        }
+         */
     }
 }

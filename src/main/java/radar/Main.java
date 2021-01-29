@@ -30,7 +30,7 @@ public class Main {
         mainFrame.add(lblTitle, BorderLayout.NORTH);
         
         // Chart Scores
-        int scores[] = {5, 4, 3, 2, 3, 3, 2};
+        int scores[] = {5, 4, 3, 2, 0, 3, 2};
         int slices = scores.length;
         int range = 0;
         int size = 500; 

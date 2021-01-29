@@ -1,7 +1,5 @@
 package models;
 
-import static models.Main.sofas;
-
 public class Sofa {
 
     private int creatine, bilirubin, platelets, pulmonaryFunction, gcs,
@@ -72,12 +70,21 @@ public class Sofa {
         this.noradrenaline = noradrenaline;
         this.total = total;
     }
-    
-    public Sofa () {};
+
+    public Sofa() {
+    }
 
     public int[] getScores() {
-        int[] array = {this.creatine, this.bilirubin, this.platelets, this.pulmonaryFunction, this.gcs, this.noradrenaline};
+        int[] array = {
+            this.creatine,
+            this.bilirubin,
+            this.platelets,
+            this.pulmonaryFunction,
+            this.gcs,
+            this.noradrenaline
+        };
+
         return array;
-    } 
-    
+    }
+
 }

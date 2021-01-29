@@ -1,22 +1,22 @@
 package models;
 
 public class Mrc {
-        
+
     private int shoulderAbductionRight_11036, shoulderAbductionRight_11074;
     private int shoulderAbductionLeft_11073, shoulderAbductionLeft_11035;
-    
+
     private int elbowFlexionRight_11030, elbowFlexionRight_11068;
     private int elbowFlexionLeft_11029, elbowFlexionLeft_11067;
-    
+
     private int wristExtensionRight_11038, wristExtensionRight_11077;
     private int wristExtensionLeft_11037, wristExtensionLeft_11076;
-    
+
     private int hipFlexionRight_11070, hipFlexionRight_11032;
     private int hipFlexionLeft_11069, hipFlexionLeft_11031;
-    
+
     private int kneeExtensionRight_11072, kneeExtensionRight_11034;
     private int kneeExtensionLeft_11071, kneeExtensionLeft_11033;
-    
+
     private int ankleDorsiflexionLeft_11027, ankleDorsiflexionLeft_11065;
     private int ankleDorsiflexionRight_11066, ankleDorsiflexionRight_11028;
 
@@ -250,6 +250,38 @@ public class Mrc {
         this.total = total;
     }
 
-    public Mrc() {};
-    
+    public Mrc() {
+    }
+
+    public int[] getScores() {
+        int[] array = {
+            this.shoulderAbductionRight_11036,
+            this.shoulderAbductionRight_11074,
+            this.shoulderAbductionLeft_11073,
+            this.shoulderAbductionLeft_11035,
+            this.elbowFlexionRight_11030,
+            this.elbowFlexionRight_11068,
+            this.elbowFlexionLeft_11029,
+            this.elbowFlexionLeft_11067,
+            this.wristExtensionRight_11038,
+            this.wristExtensionRight_11077,
+            this.wristExtensionLeft_11037,
+            this.wristExtensionLeft_11076,
+            this.hipFlexionRight_11070,
+            this.hipFlexionRight_11032,
+            this.hipFlexionLeft_11069,
+            this.hipFlexionLeft_11031,
+            this.kneeExtensionRight_11072,
+            this.kneeExtensionRight_11034,
+            this.kneeExtensionLeft_11071,
+            this.kneeExtensionLeft_11033,
+            this.ankleDorsiflexionLeft_11027,
+            this.ankleDorsiflexionLeft_11065,
+            this.ankleDorsiflexionRight_11066,
+            this.ankleDorsiflexionRight_11028
+        };
+
+        return array;
+    }
+
 }
