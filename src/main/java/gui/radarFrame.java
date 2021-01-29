@@ -132,8 +132,8 @@ public class radarFrame extends javax.swing.JFrame {
         for (int i = 0; i < number; i++) {
             int random_int = (int)(Math.random() * (max - min + 1) + min);
             array[i] = random_int;
+            System.out.println(i + ": " + random_int);
         }
-        
         createChart(number, array, 500);
         
     }//GEN-LAST:event_btnGoActionPerformed

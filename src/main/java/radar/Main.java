@@ -2,7 +2,6 @@ package radar;
 
 import java.awt.*;
 import javax.swing.*;
-import models.Model;
 
 public class Main {
 
@@ -30,7 +29,7 @@ public class Main {
         mainFrame.add(lblTitle, BorderLayout.NORTH);
         
         // Chart Scores
-        int scores[] = {5, 4, 3, 2, 0, 3, 2};
+        int scores[] = {0, 3, 2, 2, 0, 2, 2, 2, 5, 0};
         int slices = scores.length;
         int range = 0;
         int size = 500; 

@@ -2,6 +2,7 @@ package radar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import models.Model;
 
@@ -35,18 +36,17 @@ public class Chart extends JPanel {
 
         int range = 0;
 
+        // Set range for chart
         for (int i = 0; i < scores.length; i++) {
-            if (scores[i] > range) {
 
+            if (scores[i] > range) {
                 range = scores[i];
                 range = range + 1;
-
-            } else if (range < 5) {
-
+            } else if (scores[i] < 5) {
                 range = 5;
                 range = range + 1;
-
             }
+
         }
 
         // Cuts window size in half to get origin
@@ -79,22 +79,44 @@ public class Chart extends JPanel {
             G2D.drawLine(0, 0, yCoord, -xCoord); // Draw line
         }
 
-        ArrayList<Integer> minusOffset = new ArrayList<>();
-        ArrayList<Integer> plusOffset = new ArrayList<>();
+        ArrayList<Integer> startPoints = new ArrayList<>();
+        ArrayList<Integer> endPoints = new ArrayList<>();
 
         // Get scores, load array(s)
         for (int i = 0; i < scores.length; i++) {
-            
-            Boolean valid;
 
             double angle = 2 * Math.PI * i / slices;
             xCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.cos(angle));
             yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
 
+            // Long drawn expression to draw lines between values where this is a zero
+            // Can this be shortened?
             if (xCoord == 0) {
-                minusOffset.add(i - 1);
-                plusOffset.add(i + 1);
-                // If current I =... contue loop for next point
+
+                if (i == 0) {
+                    startPoints.add(scores.length - 1);
+                } else {
+                    startPoints.add(i - 1);
+                }
+
+                for (int ii = i; ii < scores.length; ii++) {
+                    angle = 2 * Math.PI * ii / slices;
+                    xCoord = (int) Math.round(0 + (scores[ii] * superOrigin / range) * Math.cos(angle));
+
+                    if (ii == (scores.length - 1)) {
+                        endPoints.add(scores.length - ii);
+                    } else {
+                        if (xCoord > 0) {
+                            endPoints.add(ii);
+                            break;
+                        }
+                        if (xCoord < 0) {
+                            endPoints.add(ii);
+                            break;
+                        }
+                    }
+                }
+
             } else {
                 xPoints[i] = -xCoord;
                 yPoints[i] = yCoord;
@@ -102,12 +124,17 @@ public class Chart extends JPanel {
 
         }
 
-        Integer[] minus = minusOffset.toArray(new Integer[0]);
-        Integer[] plus = plusOffset.toArray(new Integer[0]);
+        // Draw lines between values that have a score of zero
+        Integer[] start = startPoints.toArray(new Integer[0]);
+        Integer[] end = endPoints.toArray(new Integer[0]);
 
         G2D.setColor(Color.blue);
-        for (int i = 0; i < minus.length; i++) {
-            G2D.drawLine(yPoints[minus[i]], xPoints[minus[i]], yPoints[plus[i]], xPoints[plus[i]]);
+
+        // Draw lines where there are zeroes
+        for (int i = 0; i < start.length; i++) {
+            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+            // System.out.println(start[i]);
+            // System.out.println(end[i]);
         }
 
         // Plot radar, with loaded array(s)
@@ -128,6 +155,7 @@ public class Chart extends JPanel {
 
                 String txt = "" + (scores[i]);
                 G2D.setFont(new Font("Arial", Font.PLAIN, 18));
+                //String txt = (i + 1) + " X: " + Integer.toString(xPoints[i]) + ", Y:" + Integer.toString(yPoints[i]) + ".";
                 G2D.drawString(txt, yPoints[i] - 5, xPoints[i] + 4);
             }
 

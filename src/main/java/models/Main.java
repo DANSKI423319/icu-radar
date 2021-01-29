@@ -19,7 +19,7 @@ public class Main {
 
         Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
         Mrc mrc = new Mrc(0, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 51);
-        Sofa sofa = new Sofa(5, 2, 4, 1, 3, 4, 3);
+        Sofa sofa = new Sofa(5, 2, 4, 1, 3, 0, 3);
         Model m = new Model("1234", "John", "Smith", "5 Transfers with assistance", cpax, mrc, sofa);
         
         models.add(m);
@@ -44,8 +44,8 @@ public class Main {
 
         // Chart Scores
         // int scores[] = models.get(0).getPatientSofa().getScores();
-        // int scores[] = models.get(0).getPatientMrc().getScores();
-        int scores[] = models.get(0).getPatientCpax().getScores();
+        int scores[] = models.get(0).getPatientMrc().getScores();
+        // int scores[] = models.get(0).getPatientCpax().getScores();
         int slices = scores.length;
         int size = 500; 
 
