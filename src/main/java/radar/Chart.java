@@ -93,6 +93,7 @@ public class Chart extends JPanel {
 
             if (xCoord == 0) {
                 minusOffset.add(i - 1);
+                plusOffset.add(i + 1);
                 // If current I =... contue loop for next point
             } else {
                 xPoints[i] = -xCoord;

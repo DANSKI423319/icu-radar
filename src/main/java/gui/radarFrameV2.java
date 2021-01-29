@@ -15,6 +15,8 @@ import radar.Chart;
  */
 public class radarFrameV2 extends javax.swing.JFrame {
 
+    int counter = 0;
+    
     /**
      * Creates new form radarFrameV2
      */
@@ -125,7 +127,7 @@ public class radarFrameV2 extends javax.swing.JFrame {
 
         panel.add(radar);
         frame.add(panel);
-        
+          
         frame.pack();
         frame.setVisible(true);     
         
@@ -143,13 +145,19 @@ public class radarFrameV2 extends javax.swing.JFrame {
         Chart radar = new Chart(slices, scores, size);
         
         jPanel1.add(radar);
-        this.getContentPane().add(jPanel1);
-               
+        this.add(radar);
+        this.setTitle("AAAAAAAA");
+        // jPanel1.list();
+        // jPanel1.setBackground(Color.red);
+        // jPanel1.setVisible(true);
+        // this.getContentPane().add(jPanel1);
+        
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jPanel1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel1ComponentAdded
         // TODO add your handling code here:
-        System.out.println("Something supposed to happen?");
+        counter++;
+        System.out.println(counter);
     }//GEN-LAST:event_jPanel1ComponentAdded
 
     /**
