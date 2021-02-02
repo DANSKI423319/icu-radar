@@ -2,9 +2,7 @@ package radar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import models.Model;
 
 public class Chart extends JPanel {
 
@@ -156,7 +154,7 @@ public class Chart extends JPanel {
                 String txt = "" + (scores[i]);
                 G2D.setFont(new Font("Arial", Font.PLAIN, 18));
                 //String txt = (i + 1) + " X: " + Integer.toString(xPoints[i]) + ", Y:" + Integer.toString(yPoints[i]) + ".";
-                G2D.drawString(txt, yPoints[i] - 5, xPoints[i] + 4);
+                G2D.drawString(txt, yPoints[i] - 5, xPoints[i] + 6);
             }
 
         }

@@ -15,8 +15,6 @@ import radar.Chart;
  */
 public class radarFrameV2 extends javax.swing.JFrame {
 
-    int counter = 0;
-    
     /**
      * Creates new form radarFrameV2
      */
@@ -33,7 +31,6 @@ public class radarFrameV2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnNewWindow = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -41,13 +38,6 @@ public class radarFrameV2 extends javax.swing.JFrame {
         jMenuOther = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnNewWindow.setText("New Window");
-        btnNewWindow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewWindowActionPerformed(evt);
-            }
-        });
 
         btnUpdate.setText("Update Window");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -89,75 +79,47 @@ public class radarFrameV2 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNewWindow)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUpdate))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNewWindow)
-                    .addComponent(btnUpdate))
+                .addComponent(btnUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNewWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewWindowActionPerformed
-        // TODO add your handling code here:        
-        
-        JFrame frame = new JFrame();
-        JPanel panel = new JPanel();
-        
-        // Chart Scores
-        int scores[] = {5, 4, 3, 2, 3, 3, 2};
-        int slices = scores.length;
-        int range = 0;
-        int size = 500;   
-
-        Chart radar = new Chart(slices, scores, size);
-
-        panel.add(radar);
-        frame.add(panel);
-          
-        frame.pack();
-        frame.setVisible(true);     
-        
-    }//GEN-LAST:event_btnNewWindowActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        
+
         // Chart Scores
         int scores[] = {5, 4, 3, 2, 3, 3, 2};
         int slices = scores.length;
         int range = 0;
-        int size = 500;
-        
+        int size = jPanel1.getWidth();
+
         Chart radar = new Chart(slices, scores, size);
-        
+
+        FlowLayout experimentLayout = new FlowLayout();
+        jPanel1.setLayout(experimentLayout);
+
         jPanel1.add(radar);
-        this.add(radar);
-        this.setTitle("AAAAAAAA");
-        // jPanel1.list();
-        // jPanel1.setBackground(Color.red);
-        // jPanel1.setVisible(true);
-        // this.getContentPane().add(jPanel1);
-        
+
+        this.revalidate();
+        this.repaint();
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jPanel1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jPanel1ComponentAdded
         // TODO add your handling code here:
-        counter++;
-        System.out.println(counter);
+
     }//GEN-LAST:event_jPanel1ComponentAdded
 
     /**
@@ -196,7 +158,6 @@ public class radarFrameV2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnNewWindow;
     public javax.swing.JButton btnUpdate;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
