@@ -3,9 +3,9 @@ package models;
 public class Model {
     
     private String poid, firstName, lastName, machesterMobilityScore; 
-    private Cpax patientCpax = new Cpax();
-    private Mrc patientMrc = new Mrc();
-    private Sofa patientSofa = new Sofa();
+    private Cpax cpax = new Cpax();
+    private Mrc mrc = new Mrc();
+    private Sofa sofa = new Sofa();
 
     public String getPoid() {
         return poid;
@@ -39,38 +39,40 @@ public class Model {
         this.machesterMobilityScore = machesterMobilityScore;
     }
 
-    public Mrc getPatientMrc() {
-        return patientMrc;
+    public Cpax getCpax() {
+        return cpax;
     }
 
-    public void setPatientMrc(Mrc patientMrc) {
-        this.patientMrc = patientMrc;
+    public void setCpax(Cpax cpax) {
+        this.cpax = cpax;
     }
 
-    public Cpax getPatientCpax() {
-        return patientCpax;
+    public Mrc getMrc() {
+        return mrc;
     }
 
-    public void setPatientCpax(Cpax patientCpax) {
-        this.patientCpax = patientCpax;
+    public void setMrc(Mrc mrc) {
+        this.mrc = mrc;
     }
 
-    public Sofa getPatientSofa() {
-        return patientSofa;
+    public Sofa getSofa() {
+        return sofa;
     }
 
-    public void setPatientSofa(Sofa patientSofa) {
-        this.patientSofa = patientSofa;
+    public void setSofa(Sofa sofa) {
+        this.sofa = sofa;
     }
 
-    public Model(String poid, String firstName, String lastName, String machesterMobilityScore, Cpax patientCpax, Mrc patientMrc, Sofa patientSofa) {
+    public Model(String poid, String firstName, String lastName, String machesterMobilityScore, Cpax cpax, Mrc mrc, Sofa sofa) {
         this.poid = poid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.machesterMobilityScore = machesterMobilityScore;
-        this.patientCpax = patientCpax;
-        this.patientMrc = patientMrc;
-        this.patientSofa = patientSofa;
+        this.cpax = cpax;
+        this.mrc = mrc;
+        this.sofa = sofa;
     }
+
+    
     
 }

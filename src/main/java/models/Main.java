@@ -24,7 +24,7 @@ public class Main {
         
         models.add(m);
 
-        System.out.println(Arrays.toString(m.getPatientSofa().getScores()));
+        System.out.println(Arrays.toString(m.getSofa().getScores()));
 
         EventQueue.invokeLater(new Runnable() {
 
@@ -43,9 +43,9 @@ public class Main {
         mainPanel.setBackground(new Color(255, 255, 255, 255));
 
         // Chart Scores
-        // int scores[] = models.get(0).getPatientSofa().getScores();
-        int scores[] = models.get(0).getPatientMrc().getScores();
-        // int scores[] = models.get(0).getPatientCpax().getScores();
+        // int scores[] = models.get(0).getSofa().getScores();
+        int scores[] = models.get(0).getMrc().getScores();
+        // int scores[] = models.get(0).getCpax().getScores();
         int slices = scores.length;
         int size = 500; 
 

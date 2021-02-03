@@ -13,7 +13,6 @@ public class Chart extends JPanel {
     public Chart(int n, int input[], int size) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
-        this.setBackground(Color.lightGray);
         this.slices = n;
         this.scores = input;
     }
