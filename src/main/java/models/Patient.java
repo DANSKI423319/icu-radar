@@ -1,8 +1,8 @@
 package models;
 
-public class Model {
-    
-    private String poid, firstName, lastName, machesterMobilityScore; 
+public class Patient {
+
+    private String poid, firstName, lastName, machesterMobilityScore;
     private Cpax cpax = new Cpax();
     private Mrc mrc = new Mrc();
     private Sofa sofa = new Sofa();
@@ -63,7 +63,7 @@ public class Model {
         this.sofa = sofa;
     }
 
-    public Model(String poid, String firstName, String lastName, String machesterMobilityScore, Cpax cpax, Mrc mrc, Sofa sofa) {
+    public Patient(String poid, String firstName, String lastName, String machesterMobilityScore, Cpax cpax, Mrc mrc, Sofa sofa) {
         this.poid = poid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -73,6 +73,16 @@ public class Model {
         this.sofa = sofa;
     }
 
-    
-    
+    public Object[] getDataRow() {
+        Object[] row = {
+            this.poid,
+            this.firstName,
+            this.lastName,
+            this.getCpax().getTotal(),
+            this.getMrc().getTotal(),
+            this.getSofa().getTotal()
+        };
+
+        return row;
+    }
 }
