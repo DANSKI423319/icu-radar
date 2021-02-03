@@ -1,21 +1,9 @@
 package models;
 
-import static models.Main.sofas;
-
-public class Sofa extends Patient {
+public class Sofa {
 
     private int creatine, bilirubin, platelets, pulmonaryFunction, gcs,
-            noradrenaline;
-
-    public Sofa(int creatine, int bilirubin, int platelets, int pulmonaryFunction, int gcs, int noradrenaline, String firstName, String lastName, String patientID) {
-        super(firstName, lastName, patientID);
-        this.creatine = creatine;
-        this.bilirubin = bilirubin;
-        this.platelets = platelets;
-        this.pulmonaryFunction = pulmonaryFunction;
-        this.gcs = gcs;
-        this.noradrenaline = noradrenaline;
-    }
+            noradrenaline, total;
 
     public int getCreatine() {
         return creatine;
@@ -65,11 +53,38 @@ public class Sofa extends Patient {
         this.noradrenaline = noradrenaline;
     }
 
-    public int getSofaTotal(int index) {
-        int total = sofas.get(index).getCreatine() + sofas.get(index).getBilirubin() + sofas.get(index).getPlatelets()
-                + sofas.get(index).getPulmonaryFunction() + sofas.get(index).getGcs() + sofas.get(index).getNoradrenaline();
-
+    public int getTotal() {
         return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Sofa(int creatine, int bilirubin, int platelets, int pulmonaryFunction, int gcs, int noradrenaline, int total) {
+        this.creatine = creatine;
+        this.bilirubin = bilirubin;
+        this.platelets = platelets;
+        this.pulmonaryFunction = pulmonaryFunction;
+        this.gcs = gcs;
+        this.noradrenaline = noradrenaline;
+        this.total = total;
+    }
+
+    public Sofa() {
+    }
+
+    public int[] getScores() {
+        int[] array = {
+            this.creatine,
+            this.bilirubin,
+            this.platelets,
+            this.pulmonaryFunction,
+            this.gcs,
+            this.noradrenaline
+        };
+
+        return array;
     }
 
 }
