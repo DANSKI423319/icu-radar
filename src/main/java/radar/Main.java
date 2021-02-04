@@ -34,7 +34,7 @@ public class Main {
         int range = 0;
         int size = 500; 
 
-        mainPanel.add(new Chart(slices, scores, size));
+        mainPanel.add(new Chart(slices, scores, size, true, true));
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         
         mainFrame.pack();
