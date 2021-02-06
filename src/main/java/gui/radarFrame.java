@@ -16,8 +16,9 @@ import radar.Chart;
  */
 public class radarFrame extends javax.swing.JFrame {
 
-    public Patient[] patientArr = new Patient[2];
-    public DefaultListModel listModel = new DefaultListModel();
+    public Patient[] patientArr = new Patient[3];
+    public DefaultListModel patientListModel = new DefaultListModel();
+    public DefaultListModel patientVisitModel = new DefaultListModel();
     public DefaultTableModel tableModel = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total"}, 0);
 
     /**
@@ -65,7 +66,7 @@ public class radarFrame extends javax.swing.JFrame {
         radarPanel.setBackground(new java.awt.Color(204, 204, 204));
 
         patientList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        patientList.setModel(listModel);
+        patientList.setModel(patientListModel);
         patientList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 patientListMouseClicked(evt);
@@ -93,6 +94,12 @@ public class radarFrame extends javax.swing.JFrame {
         btnMrc.setText("MRC");
 
         patientVisitList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        patientVisitList.setModel(patientVisitModel);
+        patientVisitList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                patientVisitListMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(patientVisitList);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -182,50 +189,63 @@ public class radarFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void patientListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientListMouseClicked
-        // TODO add your handling code here:
+        
+        // Clear list and chart
+        patientVisitModel.removeAllElements();
         radarPanel.removeAll();
-        String selected = patientList.getSelectedValue();
-
+        
+        // Add dates of admissions when clicking on a patient ID
         for (int i = 0; i < patientArr.length; i++) {
-
-            if (patientArr[i].getPoid().equals(selected)) {
-
-                radarPanel.add(chartBuilder(i));
-                this.revalidate();
-                this.repaint();
-
-                if (tableModel.getRowCount() == 1) {
-                    tableModel.removeRow(0);
-                    tableModel.addRow(patientArr[i].getDataRow());
-                } else {
-                    tableModel.addRow(patientArr[i].getDataRow());
-                }
-
-                break;
-
+            if (patientArr[i].getPoid().equals(patientList.getSelectedValue())) {
+                patientVisitModel.addElement(patientArr[i].getAdmission());
             }
         }
 
-        /*
-        *   Idea:
-        *
-        *   Search by ID,
-        *   Add search count INT
-        *   if search count > 1, start adding dates
-        *   select data by date...?
-        *
-         */
     }//GEN-LAST:event_patientListMouseClicked
 
     private void replaceZeroCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_replaceZeroCBItemStateChanged
-        // TODO add your handling code here:
+
+        // Refresh the chart when option changed
         chartRefresh();
+        
     }//GEN-LAST:event_replaceZeroCBItemStateChanged
 
     private void drawScoresCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_drawScoresCBItemStateChanged
-        // TODO add your handling code here:
+        
+        // Refresh the chart when option changed
         chartRefresh();
+        
     }//GEN-LAST:event_drawScoresCBItemStateChanged
+
+    private void patientVisitListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientVisitListMouseClicked
+
+        String selectedID = patientList.getSelectedValue();
+        String selectedVisit = patientVisitList.getSelectedValue();
+
+        // Checks validity of admission and ID selected, shows chart
+        for (int i = 0; i < patientArr.length; i++) {
+            if (patientArr[i].getPoid().equals(selectedID)) {
+                if (patientArr[i].getAdmission().equals(selectedVisit)) {
+
+                    radarPanel.removeAll();
+
+                    radarPanel.add(chartBuilder(i));
+                    this.revalidate();
+                    this.repaint();
+
+                    // Empty table of information before showing new relevant information
+                    if (tableModel.getRowCount() == 1) {
+                        tableModel.removeRow(0);
+                        tableModel.addRow(patientArr[i].getDataRow());
+                    } else {
+                        tableModel.addRow(patientArr[i].getDataRow());
+                    }
+
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_patientVisitListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -264,25 +284,47 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     public void createData() {
+
         Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 4, 1, 0, 33);
         Mrc mrc = new Mrc(0, 5, 3, 0, 5, 5, 0, 4, 0, 5, 0, 4, 5, 3, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 59);
         Sofa sofa = new Sofa(4, 4, 3, 0, 1, 2, 14);
-        Patient John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", cpax, mrc, sofa);
+        Patient John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
         patientArr[0] = John;
 
         cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
         mrc = new Mrc(0, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 51);
         sofa = new Sofa(1, 2, 3, 0, 5, 4, 15);
-        Patient Jane = new Patient("2345", "Jane", "Doe", "10 Transfers with assistance", cpax, mrc, sofa);
+        Patient Jane = new Patient("2345", "Jane", "Doe", "10 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
         patientArr[1] = Jane;
+
+        cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 4, 1, 0, 33);
+        mrc = new Mrc(0, 5, 3, 0, 5, 5, 0, 4, 0, 5, 0, 4, 5, 3, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 59);
+        sofa = new Sofa(5, 5, 4, 1, 2, 3, 20);
+        John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "23/01/2015", cpax, mrc, sofa);
+        patientArr[2] = John;
     }
 
     public void loadList() {
 
-        System.out.println(patientArr.length);
+        int counter = 0;
 
         for (int i = 0; i < patientArr.length; i++) {
-            listModel.addElement(patientArr[i].getPoid());
+            patientListModel.addElement(patientArr[i].getPoid());
+        }
+
+        for (int i = 0; i < patientListModel.getSize(); i++) {
+            String patientID = patientListModel.getElementAt(i).toString();
+            for (int ii = 0; ii < patientListModel.getSize(); ii++) {
+                if (patientListModel.get(ii).toString() == patientID) {
+                    
+                    counter++;
+
+                    if (counter > 1) {
+                        patientListModel.removeElementAt(ii);
+                        counter = 0;
+                    }
+                }
+            }
         }
     }
 
@@ -292,6 +334,7 @@ public class radarFrame extends javax.swing.JFrame {
         int slices = scores.length;
         int size = 428;
 
+        // Build chart, check for changed options
         Chart chart = new Chart(slices, scores, size, replaceZeroCB.getState(), drawScoresCB.getState());
 
         return chart;
@@ -303,7 +346,6 @@ public class radarFrame extends javax.swing.JFrame {
         String selected = patientList.getSelectedValue();
 
         for (int i = 0; i < patientArr.length; i++) {
-
             if (patientArr[i].getPoid().equals(selected)) {
 
                 radarPanel.add(chartBuilder(i));
@@ -318,7 +360,6 @@ public class radarFrame extends javax.swing.JFrame {
                 }
 
                 break;
-
             }
         }
     }
