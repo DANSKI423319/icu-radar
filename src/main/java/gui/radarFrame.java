@@ -16,6 +16,8 @@ import radar.Chart;
  */
 public class radarFrame extends javax.swing.JFrame {
 
+    public boolean validSelection = false;
+    public int currentSelection = 0;
     public Patient[] patientArr = new Patient[3];
     public DefaultListModel patientListModel = new DefaultListModel();
     public DefaultListModel patientVisitModel = new DefaultListModel();
@@ -86,12 +88,27 @@ public class radarFrame extends javax.swing.JFrame {
 
         btnCpax.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCpax.setText("CPAX");
+        btnCpax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCpaxActionPerformed(evt);
+            }
+        });
 
         btnSofa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSofa.setText("SOFA");
+        btnSofa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSofaActionPerformed(evt);
+            }
+        });
 
         btnMrc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnMrc.setText("MRC");
+        btnMrc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMrcActionPerformed(evt);
+            }
+        });
 
         patientVisitList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         patientVisitList.setModel(patientVisitModel);
@@ -189,11 +206,12 @@ public class radarFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void patientListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientListMouseClicked
+        validSelection = false;
         
         // Clear list and chart
         patientVisitModel.removeAllElements();
         radarPanel.removeAll();
-        
+
         // Add dates of admissions when clicking on a patient ID
         for (int i = 0; i < patientArr.length; i++) {
             if (patientArr[i].getPoid().equals(patientList.getSelectedValue())) {
@@ -207,18 +225,19 @@ public class radarFrame extends javax.swing.JFrame {
 
         // Refresh the chart when option changed
         chartRefresh();
-        
+
     }//GEN-LAST:event_replaceZeroCBItemStateChanged
 
     private void drawScoresCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_drawScoresCBItemStateChanged
-        
+
         // Refresh the chart when option changed
         chartRefresh();
-        
+
     }//GEN-LAST:event_drawScoresCBItemStateChanged
 
     private void patientVisitListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientVisitListMouseClicked
 
+        validSelection = true;
         String selectedID = patientList.getSelectedValue();
         String selectedVisit = patientVisitList.getSelectedValue();
 
@@ -229,7 +248,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                     radarPanel.removeAll();
 
-                    radarPanel.add(chartBuilder(i));
+                    radarPanel.add(chartBuilder(i, 1));
                     this.revalidate();
                     this.repaint();
 
@@ -245,7 +264,32 @@ public class radarFrame extends javax.swing.JFrame {
                 }
             }
         }
+
     }//GEN-LAST:event_patientVisitListMouseClicked
+
+    private void btnCpaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCpaxActionPerformed
+        // TODO add your handling code here:
+        if (validSelection == true) {
+            currentSelection = 1;
+            chartSetup();
+        }
+    }//GEN-LAST:event_btnCpaxActionPerformed
+
+    private void btnMrcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMrcActionPerformed
+        // TODO add your handling code here:
+        if (validSelection == true) {
+            currentSelection = 2;
+            chartSetup();
+        }
+    }//GEN-LAST:event_btnMrcActionPerformed
+
+    private void btnSofaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSofaActionPerformed
+        // TODO add your handling code here:
+        if (validSelection == true) {
+            currentSelection = 3;
+            chartSetup();
+        }
+    }//GEN-LAST:event_btnSofaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,22 +328,21 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     public void createData() {
-
-        Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 4, 1, 0, 33);
-        Mrc mrc = new Mrc(0, 5, 3, 0, 5, 5, 0, 4, 0, 5, 0, 4, 5, 3, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 59);
+        Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 3, 0, 1, 28);
+        Mrc mrc = new Mrc(4, 5, 3, 3, 1, 3, 1, 4, 2, 5, 4, 2, 1, 3, 5, 3, 5, 4, 5, 4, 2, 5, 5, 3, 82);
         Sofa sofa = new Sofa(4, 4, 3, 0, 1, 2, 14);
         Patient John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
         patientArr[0] = John;
 
         cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
-        mrc = new Mrc(0, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 51);
+        mrc = new Mrc(5, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 65);
         sofa = new Sofa(1, 2, 3, 0, 5, 4, 15);
         Patient Jane = new Patient("2345", "Jane", "Doe", "10 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
         patientArr[1] = Jane;
 
-        cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 4, 1, 0, 33);
-        mrc = new Mrc(0, 5, 3, 0, 5, 5, 0, 4, 0, 5, 0, 4, 5, 3, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 59);
-        sofa = new Sofa(5, 5, 4, 1, 2, 3, 20);
+        cpax = new Cpax(4, 4, 1, 1, 3, 1, 1, 2, 0, 0, 33);
+        mrc = new Mrc(3, 4, 2, 2, 0, 2, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 4, 3, 4, 3, 1, 4, 4, 2, 58);
+        sofa = new Sofa(3, 3, 2, 0, 0, 2, 10);
         John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "23/01/2015", cpax, mrc, sofa);
         patientArr[2] = John;
     }
@@ -316,7 +359,7 @@ public class radarFrame extends javax.swing.JFrame {
             String patientID = patientListModel.getElementAt(i).toString();
             for (int ii = 0; ii < patientListModel.getSize(); ii++) {
                 if (patientListModel.get(ii).toString() == patientID) {
-                    
+
                     counter++;
 
                     if (counter > 1) {
@@ -328,9 +371,20 @@ public class radarFrame extends javax.swing.JFrame {
         }
     }
 
-    public Chart chartBuilder(int index) {
+    public Chart chartBuilder(int index, int chartType) {
 
-        int scores[] = patientArr[index].getSofa().getScores();
+        int scores[] = {};
+
+        if (chartType == 1) {
+            scores = patientArr[index].getCpax().getScores();
+        } else if (chartType == 2) {
+            scores = patientArr[index].getMrc().getScores();
+        } else if (chartType == 3) {
+            scores = patientArr[index].getSofa().getScores();
+        } else {
+            System.out.println("Unexpected slection");
+        }
+
         int slices = scores.length;
         int size = 428;
 
@@ -348,7 +402,7 @@ public class radarFrame extends javax.swing.JFrame {
         for (int i = 0; i < patientArr.length; i++) {
             if (patientArr[i].getPoid().equals(selected)) {
 
-                radarPanel.add(chartBuilder(i));
+                radarPanel.add(chartBuilder(i, currentSelection));
                 this.revalidate();
                 this.repaint();
 
@@ -362,6 +416,37 @@ public class radarFrame extends javax.swing.JFrame {
                 break;
             }
         }
+    }
+
+    public void chartSetup() {
+
+        String selectedID = patientList.getSelectedValue();
+        String selectedVisit = patientVisitList.getSelectedValue();
+
+        // Checks validity of admission and ID selected, shows chart
+        for (int i = 0; i < patientArr.length; i++) {
+            if (patientArr[i].getPoid().equals(selectedID)) {
+                if (patientArr[i].getAdmission().equals(selectedVisit)) {
+
+                    radarPanel.removeAll();
+
+                    radarPanel.add(chartBuilder(i, currentSelection));
+                    this.revalidate();
+                    this.repaint();
+
+                    // Empty table of information before showing new relevant information
+                    if (tableModel.getRowCount() == 1) {
+                        tableModel.removeRow(0);
+                        tableModel.addRow(patientArr[i].getDataRow());
+                    } else {
+                        tableModel.addRow(patientArr[i].getDataRow());
+                    }
+
+                    break;
+                }
+            }
+        }
+
     }
 
 

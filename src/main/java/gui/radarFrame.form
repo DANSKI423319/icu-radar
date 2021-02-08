@@ -243,6 +243,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="CPAX"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCpaxActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSofa">
       <Properties>
@@ -251,6 +254,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="SOFA"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSofaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnMrc">
       <Properties>
@@ -259,6 +265,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="MRC"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMrcActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
       <AuxValues>

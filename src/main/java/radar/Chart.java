@@ -79,7 +79,7 @@ public class Chart extends JPanel {
 
             G2D.drawLine(0, 0, yCoord, -xCoord); // Draw line
             G2D.setFont(new Font("Arial", Font.PLAIN, 14));
-            G2D.drawString(Integer.toString(i + 1) + ": " + yCoord + ", " + -xCoord + "", yCoord, -xCoord);
+            // G2D.drawString(Integer.toString(i + 1) + ": " + yCoord + ", " + -xCoord + "", yCoord, -xCoord);
         }
 
         ArrayList<Integer> startPoints = new ArrayList<>();
