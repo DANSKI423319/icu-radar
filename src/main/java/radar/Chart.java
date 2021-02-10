@@ -12,6 +12,7 @@ public class Chart extends JPanel {
     private int radius;
     private boolean drawLines;
     private boolean drawScores;
+    private boolean resumePhase;
 
     public Chart(int n, int input[], int size, boolean lines, boolean scores) {
         super(true);
@@ -95,30 +96,46 @@ public class Chart extends JPanel {
 
             if (xCoord == 0) {
 
-                /*
-                 *  Drawlines Procedure: 
-                 *  If a score is zero, take the previous point as a start point
-                 *  If a score is more than zero, take that point as an end point
-                 */
-                
-                if (drawLines == true) {
-
-                    if (scores[i] == 0) {
-                        startPoints.add(i - 1);
-
-                        for (int ii = i; ii < scores.length; ii++) {
-                            if (scores[ii] > 0) {
-                                endPoints.add(ii);
-                                break;
-                            }
-                        }
-                    }
-                }
-
             } else {
 
                 xPoints[i] = -xCoord;
                 yPoints[i] = yCoord;
+
+            }
+
+        }
+
+        /*
+           Drawlines Procedure
+        */
+        if (drawLines == true) {
+
+            for (int i = 0; i < scores.length; i++) {
+
+                // If a score is zero, take the previous point as a start point
+                // Loop for a score that is more than zero, take that point as an end point               
+                
+                if (scores[i] == 0) {
+                    startPoints.add(i - 1);
+
+                    for (int ii = i; ii < scores.length; ii++) {
+                        if (scores[ii] > 0) {
+                            endPoints.add(ii);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // If the final point is a zero, assign the first number above zero as an end point
+            if (scores[scores.length - 1] == 0) {
+
+                for (int j = 0; j < scores.length; j++) {
+                    if (scores[j] > 0) {
+                        endPoints.add(j);
+                        break;
+                    }
+                }
 
             }
 
