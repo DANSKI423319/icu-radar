@@ -3,6 +3,7 @@ package radar;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Chart extends JPanel {
 
@@ -92,30 +93,21 @@ public class Chart extends JPanel {
             xCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.cos(angle));
             yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
 
-            // Long drawn expression to draw lines between values where this is a zero
-            // Can this be shortened?
             if (xCoord == 0) {
 
+                /*
+                 *  Drawlines Procedure: 
+                 *  If a score is zero, take the previous point as a start point
+                 *  If a score is more than zero, take that point as an end point
+                 */
+                
                 if (drawLines == true) {
 
-                    if (i == 0) {
-                        startPoints.add(scores.length - 1);
-                    } else {
+                    if (scores[i] == 0) {
                         startPoints.add(i - 1);
-                    }
 
-                    for (int ii = i; ii < scores.length; ii++) {
-                        angle = 2 * Math.PI * ii / slices;
-                        xCoord = (int) Math.round(0 + (scores[ii] * superOrigin / range) * Math.cos(angle));
-
-                        if (ii == (scores.length - 1)) {
-                            endPoints.add(scores.length - 1);
-                        } else {
-                            if (xCoord > 0) {
-                                endPoints.add(ii);
-                                break;
-                            }
-                            if (xCoord < 0) {
+                        for (int ii = i; ii < scores.length; ii++) {
+                            if (scores[ii] > 0) {
                                 endPoints.add(ii);
                                 break;
                             }
@@ -142,17 +134,27 @@ public class Chart extends JPanel {
             for (int i = 0; i < start.length; i++) {
                 G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
             }
+
+            System.out.println(Arrays.toString(scores));
+            System.out.println("End: " + Arrays.toString(end));
+            System.out.println("Start: " + Arrays.toString(start));
+
         }
         // Plot radar, with loaded array(s)
+
         G2D.setColor(Color.green);
+
         G2D.drawPolygon(yPoints, xPoints, slices);
+
         G2D.setColor(myColor);
+
         G2D.fillPolygon(yPoints, xPoints, slices);
 
         int radiusSum = Math.abs(superOrigin - radius) / 3;
 
         // Plot scores
-        if (drawScores == true) {
+        if (drawScores
+                == true) {
 
             for (int i = 0; i < scores.length; i++) {
                 G2D.setColor(Color.green);
