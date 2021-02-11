@@ -107,21 +107,37 @@ public class Chart extends JPanel {
 
         /*
            Drawlines Procedure
-        */
+         */
         if (drawLines == true) {
 
-            for (int i = 0; i < scores.length; i++) {
+            for (int i = 0; i < (scores.length); i++) {
 
+                // If the first score is a zero, go backwards to find the start point
+                if (scores[0] == 0) {
+                    // for (int ii = scores.length)
+                    
+                    for (int ii = (scores.length - 1); ii > 0; ii--) {
+                        if (scores[ii] > 0) {
+                            startPoints.add(ii);
+                            break;
+                        }
+                    }
+                    
+                }
+                
                 // If a score is zero, take the previous point as a start point
                 // Loop for a score that is more than zero, take that point as an end point               
-                
                 if (scores[i] == 0) {
-                    startPoints.add(i - 1);
+                    if (scores[(i - 1)] == 0) {
+                        // Skip over if true...
+                    } else {
+                        startPoints.add(i - 1);
 
-                    for (int ii = i; ii < scores.length; ii++) {
-                        if (scores[ii] > 0) {
-                            endPoints.add(ii);
-                            break;
+                        for (int ii = i; ii < (scores.length); ii++) {
+                            if (scores[ii] > 0) {
+                                endPoints.add(ii);
+                                break;
+                            }
                         }
                     }
                 }
@@ -136,7 +152,6 @@ public class Chart extends JPanel {
                         break;
                     }
                 }
-
             }
 
         }
