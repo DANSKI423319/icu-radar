@@ -110,21 +110,8 @@ public class Chart extends JPanel {
          */
         if (drawLines == true) {
 
-            for (int i = 0; i < (scores.length); i++) {
+            for (int i = 1; i < (scores.length); i++) {
 
-                // If the first score is a zero, go backwards to find the start point
-                if (scores[0] == 0) {
-                    // for (int ii = scores.length)
-                    
-                    for (int ii = (scores.length - 1); ii > 0; ii--) {
-                        if (scores[ii] > 0) {
-                            startPoints.add(ii);
-                            break;
-                        }
-                    }
-                    
-                }
-                
                 // If a score is zero, take the previous point as a start point
                 // Loop for a score that is more than zero, take that point as an end point               
                 if (scores[i] == 0) {
@@ -133,7 +120,7 @@ public class Chart extends JPanel {
                     } else {
                         startPoints.add(i - 1);
 
-                        for (int ii = i; ii < (scores.length); ii++) {
+                        for (int ii = i; ii < scores.length; ii++) {
                             if (scores[ii] > 0) {
                                 endPoints.add(ii);
                                 break;
@@ -154,6 +141,24 @@ public class Chart extends JPanel {
                 }
             }
 
+            // If the first score is a zero, go backwards to find the start point
+            if (scores[0] == 0) {
+                // for (int ii = scores.length)
+                for (int ii = (scores.length - 1); ii > 0; ii--) {
+                    if (scores[ii] > 0) {
+                        startPoints.add(ii);
+                        
+                        for (int iii = 0; iii < scores.length; iii++) {
+                            if (scores[iii] > 0) {
+                                endPoints.add(iii);
+                                break;
+                            }
+                        }
+                        break;
+                        
+                    }
+                }
+            }
         }
 
         // Draw lines between values that have a score of zero
@@ -170,16 +175,12 @@ public class Chart extends JPanel {
             System.out.println(Arrays.toString(scores));
             System.out.println("End: " + Arrays.toString(end));
             System.out.println("Start: " + Arrays.toString(start));
-
         }
+        
         // Plot radar, with loaded array(s)
-
         G2D.setColor(Color.green);
-
         G2D.drawPolygon(yPoints, xPoints, slices);
-
         G2D.setColor(myColor);
-
         G2D.fillPolygon(yPoints, xPoints, slices);
 
         int radiusSum = Math.abs(superOrigin - radius) / 3;
