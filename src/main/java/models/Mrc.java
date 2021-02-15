@@ -22,6 +22,33 @@ public class Mrc {
 
     private int total;
 
+    private String[] items = {
+        "(R) Shoulder Abduction 11036",
+        "(R) Shoulder Abduction 11074",
+        "(L) Shoulder Abduction 11073",
+        "(L) Shoulder Abduction 11935",
+        "(R) Elbow Flexion 11030",
+        "(R) Elbow Flexion 11068",
+        "(L) Elbow Flexion 11029",
+        "(L) Elbow Flexion 11067",
+        "(R) Wrist Extension 11038",
+        "(R) Wrist Extension 11077",
+        "(L) Wrist Extension 11037",
+        "(L) Wrist Extension 11076",
+        "(R) Hip Flexion 11070",
+        "(R) Hip Flexion 11032",
+        "(L) Hip Flexion 11069",
+        "(L) Hip Flexion 11031",
+        "(R) Knee Extension 11072",
+        "(R) Knee Extension 11034",
+        "(L) Knee Extension 11071",
+        "(L) Knee Extension 11033",
+        "(L) Ankle Dorsi Flexion 11027",
+        "(L) Ankle Dorsi Flexion 11065",
+        "(R) Ankle Dorsi Flexion 11066",
+        "(R) Ankle Dorsi Flexion 11028"
+    };
+
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getShoulderAbductionRight_11036() {
         return shoulderAbductionRight_11036;
@@ -222,6 +249,14 @@ public class Mrc {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public void setItems(String[] items) {
+        this.items = items;
+    }   
     // </editor-fold>
 
     public Mrc(int shoulderAbductionRight_11036, int shoulderAbductionRight_11074, int shoulderAbductionLeft_11073, int shoulderAbductionLeft_11035, int elbowFlexionRight_11030, int elbowFlexionRight_11068, int elbowFlexionLeft_11029, int elbowFlexionLeft_11067, int wristExtensionRight_11038, int wristExtensionRight_11077, int wristExtensionLeft_11037, int wristExtensionLeft_11076, int hipFlexionRight_11070, int hipFlexionRight_11032, int hipFlexionLeft_11069, int hipFlexionLeft_11031, int kneeExtensionRight_11072, int kneeExtensionRight_11034, int kneeExtensionLeft_11071, int kneeExtensionLeft_11033, int ankleDorsiflexionLeft_11027, int ankleDorsiflexionLeft_11065, int ankleDorsiflexionRight_11066, int ankleDorsiflexionRight_11028, int total) {

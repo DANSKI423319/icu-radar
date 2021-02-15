@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import models.*;
@@ -17,11 +18,13 @@ import radar.Chart;
 public class radarFrame extends javax.swing.JFrame {
 
     public boolean validSelection = false;
+    public boolean tableIsFull = false;
+
     public int currentSelection = 0;
     public Patient[] patientArr = new Patient[3];
     public DefaultListModel patientListModel = new DefaultListModel();
     public DefaultListModel patientVisitModel = new DefaultListModel();
-    
+
     public DefaultTableModel tablePatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total", "Manchester Mobility Score"}, 0);
     public DefaultTableModel tablePatientScores = new DefaultTableModel(new String[]{"Item", "Score"}, 0);
 
@@ -56,7 +59,7 @@ public class radarFrame extends javax.swing.JFrame {
         btnMrc = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         patientVisitList = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
+        lblPatientVisits = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         scoreTable = new javax.swing.JTable();
         lblScoreSheet = new javax.swing.JLabel();
@@ -81,6 +84,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(patientList);
 
+        patientTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         patientTable.setModel(tablePatientOverview);
         patientTable.setEnabled(false);
         jScrollPane2.setViewportView(patientTable);
@@ -124,9 +128,10 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(patientVisitList);
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel1.setText("Patient Visits");
+        lblPatientVisits.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblPatientVisits.setText("Patient Visits");
 
+        scoreTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         scoreTable.setModel(tablePatientScores);
         jScrollPane5.setViewportView(scoreTable);
 
@@ -175,7 +180,7 @@ public class radarFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel1))
+                            .addComponent(lblPatientVisits))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblRadarChart)
@@ -187,9 +192,11 @@ public class radarFrame extends javax.swing.JFrame {
                                 .addComponent(btnSofa, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblScoreSheet)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblScoreSheet)
+                                .addGap(192, 192, 192))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -200,7 +207,7 @@ public class radarFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPatientList)
                     .addComponent(lblRadarChart)
-                    .addComponent(jLabel1)
+                    .addComponent(lblPatientVisits)
                     .addComponent(lblScoreSheet))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +232,7 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void patientListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientListMouseClicked
         validSelection = false;
-        
+
         // Clear list and chart
         patientVisitModel.removeAllElements();
         radarPanel.removeAll();
@@ -290,6 +297,7 @@ public class radarFrame extends javax.swing.JFrame {
         if (validSelection == true) {
             currentSelection = 1;
             chartChange();
+            setChartScoreTable(currentSelection);
         }
     }//GEN-LAST:event_btnCpaxActionPerformed
 
@@ -298,6 +306,7 @@ public class radarFrame extends javax.swing.JFrame {
         if (validSelection == true) {
             currentSelection = 2;
             chartChange();
+            setChartScoreTable(currentSelection);
         }
     }//GEN-LAST:event_btnMrcActionPerformed
 
@@ -306,6 +315,7 @@ public class radarFrame extends javax.swing.JFrame {
         if (validSelection == true) {
             currentSelection = 3;
             chartChange();
+            setChartScoreTable(currentSelection);
         }
     }//GEN-LAST:event_btnSofaActionPerformed
 
@@ -368,7 +378,7 @@ public class radarFrame extends javax.swing.JFrame {
     /*
         Loads data for the lists, ideally needs to be replaced with a Json serialisation
         Best case scenario, even some kind of excel CSV conversion
-    */
+     */
     public void loadList() {
         int counter = 0;
 
@@ -394,7 +404,7 @@ public class radarFrame extends javax.swing.JFrame {
     /*
         Used to build the chart, 'chartType' is used to determine if the user
         is trying to view the Cpax, Mrc, or Sofa
-    */
+     */
     public Chart chartBuilder(int index, int chartType) {
         int scores[] = {};
 
@@ -420,7 +430,7 @@ public class radarFrame extends javax.swing.JFrame {
     /*
         Chart refresh procedure that is commonly used for when something the user
         has clicked should change particular parts of the chart
-    */
+     */
     public void chartRefresh() {
         radarPanel.removeAll();
         String selected = patientList.getSelectedValue();
@@ -447,7 +457,7 @@ public class radarFrame extends javax.swing.JFrame {
 
     /*
         Ran when a new type of chart is selected, runs the chartBuilder procedure too
-    */
+     */
     public void chartChange() {
 
         String selectedID = patientList.getSelectedValue();
@@ -478,13 +488,59 @@ public class radarFrame extends javax.swing.JFrame {
         }
     }
 
+    public void setChartScoreTable(int chartSelection) {
+        String selectedID = patientList.getSelectedValue();
+        String selectedVisit = patientVisitList.getSelectedValue();
 
+        for (int i = 0; i < patientArr.length; i++) {
+            if (patientArr[i].getPoid().equals(selectedID)) {
+                if (patientArr[i].getAdmission().equals(selectedVisit)) {
+
+                    String[] items = {};
+                    int[] scores = {};
+
+                    if (chartSelection == 1) {
+                        items = patientArr[i].getCpax().getItems();
+                        scores = patientArr[i].getCpax().getScores();
+                    } else if (chartSelection == 2) {
+                        items = patientArr[i].getMrc().getItems();
+                        scores = patientArr[i].getMrc().getScores();
+                    } else if (chartSelection == 3) {
+                        items = patientArr[i].getSofa().getItems();
+                        scores = patientArr[i].getSofa().getScores();
+                    }
+
+                    if (tableIsFull == false) {
+
+                        for (int ii = 0; ii < items.length; ii++) {
+                            tablePatientScores.addRow(new Object[]{items[ii], scores[ii]});
+                        }
+
+                        tableIsFull = true;
+
+                    } else {
+
+                        for (int ii = (tablePatientScores.getRowCount() - 1); ii > 0; ii--) {
+                            tablePatientScores.removeRow(ii);
+
+                            if (tablePatientScores.getRowCount() == 1) {
+                                tablePatientScores.removeRow(0);
+                            }
+                        }
+
+                        tableIsFull = false;
+                        setChartScoreTable(currentSelection);
+
+                    }
+                }
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCpax;
     private javax.swing.JButton btnMrc;
     private javax.swing.JButton btnSofa;
     private javax.swing.JCheckBoxMenuItem drawScoresCB;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuOther;
@@ -493,6 +549,7 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblPatientList;
+    private javax.swing.JLabel lblPatientVisits;
     private javax.swing.JLabel lblRadarChart;
     private javax.swing.JLabel lblScoreSheet;
     private javax.swing.JList<String> patientList;
