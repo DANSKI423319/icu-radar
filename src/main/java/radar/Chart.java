@@ -32,14 +32,13 @@ public class Chart extends JPanel {
         int alpha = 80;
         Color myColor = new Color(0, 255, 0, alpha);
 
-        // Smooth lines
         G2D.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         int range = 0;
 
-        // Set range for chart
+        // Set range for chart if more than 5
         for (int i = 0; i < scores.length; i++) {
 
             if (scores[i] > range) {
@@ -52,7 +51,6 @@ public class Chart extends JPanel {
 
         }
 
-        // Cuts window size in half to get origin
         int xOrigin = getWidth() / 2;
         int yOrigin = getHeight() / 2;
 
@@ -71,23 +69,25 @@ public class Chart extends JPanel {
         int yPoints[] = new int[slices];
         int xCoord, yCoord;
 
-        // Cut slices into radar
+        G2D.setColor(Color.black);
+        G2D.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        /*
+            Creates lines for points on the radar
+         */
         for (int i = 0; i < slices; i++) {
-            G2D.setColor(Color.black);
             double angle = 2 * Math.PI * i / slices;
 
-            xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.cos(angle)); // Get angles
-            yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.sin(angle)); // and coordinates
+            xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.sin(angle));
 
-            G2D.drawLine(0, 0, yCoord, -xCoord); // Draw line
-            G2D.setFont(new Font("Arial", Font.PLAIN, 14));
-            // G2D.drawString(Integer.toString(i + 1) + ": " + yCoord + ", " + -xCoord + "", yCoord, -xCoord);
+            G2D.drawLine(0, 0, yCoord, -xCoord);
+            G2D.drawString(Integer.toString(i), yCoord, -xCoord);
         }
 
-        ArrayList<Integer> startPoints = new ArrayList<>();
-        ArrayList<Integer> endPoints = new ArrayList<>();
-
-        // Get scores, load array(s)
+        /*
+            Get coordinates for the scores
+        */
         for (int i = 0; i < scores.length; i++) {
 
             double angle = 2 * Math.PI * i / slices;
@@ -95,20 +95,27 @@ public class Chart extends JPanel {
             yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
 
             if (xCoord == 0) {
-
+                if (scores[i] > 0) {
+                    // Score validation check
+                    xPoints[i] = -xCoord;
+                    yPoints[i] = yCoord;
+                }
             } else {
-
                 xPoints[i] = -xCoord;
                 yPoints[i] = yCoord;
-
             }
 
         }
 
+
         /*
-           Drawlines Procedure
+           Draw lines between zeros
          */
         if (drawLines == true) {
+
+            // Array for lines between zeros
+            ArrayList<Integer> startPoints = new ArrayList<>();
+            ArrayList<Integer> endPoints = new ArrayList<>();
 
             for (int i = 1; i < (scores.length); i++) {
 
@@ -119,7 +126,6 @@ public class Chart extends JPanel {
                         // Skip over if true...
                     } else {
                         startPoints.add(i - 1);
-
                         for (int ii = i; ii < scores.length; ii++) {
                             if (scores[ii] > 0) {
                                 endPoints.add(ii);
@@ -143,11 +149,11 @@ public class Chart extends JPanel {
 
             // If the first score is a zero, go backwards to find the start point
             if (scores[0] == 0) {
-                // for (int ii = scores.length)
+
                 for (int ii = (scores.length - 1); ii > 0; ii--) {
                     if (scores[ii] > 0) {
                         startPoints.add(ii);
-                        
+
                         for (int iii = 0; iii < scores.length; iii++) {
                             if (scores[iii] > 0) {
                                 endPoints.add(iii);
@@ -155,29 +161,26 @@ public class Chart extends JPanel {
                             }
                         }
                         break;
-                        
+
                     }
                 }
             }
-        }
 
-        // Draw lines between values that have a score of zero
-        Integer[] start = startPoints.toArray(new Integer[0]);
-        Integer[] end = endPoints.toArray(new Integer[0]);
+            // Reassign array list to actual array
+            Integer[] start = startPoints.toArray(new Integer[0]);
+            Integer[] end = endPoints.toArray(new Integer[0]);
 
-        if (drawLines == true) {
-            // Draw lines where there are zeroes
             G2D.setColor(Color.green);
+
             for (int i = 0; i < start.length; i++) {
                 G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
             }
 
-            System.out.println(Arrays.toString(scores));
-            System.out.println("End: " + Arrays.toString(end));
-            System.out.println("Start: " + Arrays.toString(start));
         }
-        
-        // Plot radar, with loaded array(s)
+
+        /*
+            Plot radar with loaded arrays
+        */
         G2D.setColor(Color.green);
         G2D.drawPolygon(yPoints, xPoints, slices);
         G2D.setColor(myColor);
@@ -185,9 +188,11 @@ public class Chart extends JPanel {
 
         int radiusSum = Math.abs(superOrigin - radius) / 3;
 
-        // Plot scores
-        if (drawScores
-                == true) {
+
+        /*
+            Draw scores onto the chart
+        */
+        if (drawScores == true) {
 
             for (int i = 0; i < scores.length; i++) {
                 G2D.setColor(Color.green);
@@ -206,10 +211,7 @@ public class Chart extends JPanel {
 
         }
 
-        // String txt = (i + 1) + " X: " + Integer.toString(xPoints[i]) + ", Y:" + Integer.toString(yPoints[i]) + ".";
-        /*
-            int pointVal = scores[i];
-            String stringVal = Integer.toString(pointVal);
-         */
+        System.out.println("X " + Arrays.toString(xPoints));
+        System.out.println("Y " + Arrays.toString(yPoints));
     }
 }

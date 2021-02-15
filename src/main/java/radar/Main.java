@@ -30,7 +30,7 @@ public class Main {
         
         // Chart Scores
         // 4, 3, 2, 2, 0, 2, 2, 3, 5, 4
-        int scores[] = {0, 3, 2, 2, 0, 2, 2, 3, 5, 4};
+        int scores[] = {4, 5, 3, 3, 1, 3, 1, 4, 2, 5, 4, 2};
         int slices = scores.length;
         int range = 0;
         int size = 500; 
