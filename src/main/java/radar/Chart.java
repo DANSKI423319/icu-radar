@@ -210,8 +210,6 @@ public class Chart extends JPanel {
             }
 
         }
-
-        System.out.println("X " + Arrays.toString(xPoints));
-        System.out.println("Y " + Arrays.toString(yPoints));
     }
+    
 }

@@ -21,7 +21,9 @@ public class radarFrame extends javax.swing.JFrame {
     public Patient[] patientArr = new Patient[3];
     public DefaultListModel patientListModel = new DefaultListModel();
     public DefaultListModel patientVisitModel = new DefaultListModel();
-    public DefaultTableModel tableModel = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total"}, 0);
+    
+    public DefaultTableModel tablePatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total", "Manchester Mobility Score"}, 0);
+    public DefaultTableModel tablePatientScores = new DefaultTableModel(new String[]{"Item", "Score"}, 0);
 
     /**
      * Creates new form radarFrame
@@ -55,6 +57,9 @@ public class radarFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         patientVisitList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        scoreTable = new javax.swing.JTable();
+        lblScoreSheet = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuOther = new javax.swing.JMenu();
@@ -76,7 +81,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(patientList);
 
-        patientTable.setModel(tableModel);
+        patientTable.setModel(tablePatientOverview);
         patientTable.setEnabled(false);
         jScrollPane2.setViewportView(patientTable);
 
@@ -122,6 +127,12 @@ public class radarFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("Patient Visits");
 
+        scoreTable.setModel(tablePatientScores);
+        jScrollPane5.setViewportView(scoreTable);
+
+        lblScoreSheet.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblScoreSheet.setText("Score Sheet");
+
         jMenuFile.setText("File");
         jMenuBar1.add(jMenuFile);
 
@@ -156,15 +167,14 @@ public class radarFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblPatientList)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -175,8 +185,13 @@ public class radarFrame extends javax.swing.JFrame {
                                 .addComponent(btnMrc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSofa, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblScoreSheet)))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,18 +200,21 @@ public class radarFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPatientList)
                     .addComponent(lblRadarChart)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(lblScoreSheet))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                             .addComponent(btnCpax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSofa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnSofa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addContainerGap())
@@ -253,11 +271,11 @@ public class radarFrame extends javax.swing.JFrame {
                     this.repaint();
 
                     // Empty table of information before showing new relevant information
-                    if (tableModel.getRowCount() == 1) {
-                        tableModel.removeRow(0);
-                        tableModel.addRow(patientArr[i].getDataRow());
+                    if (tablePatientOverview.getRowCount() == 1) {
+                        tablePatientOverview.removeRow(0);
+                        tablePatientOverview.addRow(patientArr[i].getOverviewRow());
                     } else {
-                        tableModel.addRow(patientArr[i].getDataRow());
+                        tablePatientOverview.addRow(patientArr[i].getOverviewRow());
                     }
 
                     break;
@@ -271,7 +289,7 @@ public class radarFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (validSelection == true) {
             currentSelection = 1;
-            chartSetup();
+            chartChange();
         }
     }//GEN-LAST:event_btnCpaxActionPerformed
 
@@ -279,7 +297,7 @@ public class radarFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (validSelection == true) {
             currentSelection = 2;
-            chartSetup();
+            chartChange();
         }
     }//GEN-LAST:event_btnMrcActionPerformed
 
@@ -287,7 +305,7 @@ public class radarFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (validSelection == true) {
             currentSelection = 3;
-            chartSetup();
+            chartChange();
         }
     }//GEN-LAST:event_btnSofaActionPerformed
 
@@ -347,8 +365,11 @@ public class radarFrame extends javax.swing.JFrame {
         patientArr[2] = John;
     }
 
+    /*
+        Loads data for the lists, ideally needs to be replaced with a Json serialisation
+        Best case scenario, even some kind of excel CSV conversion
+    */
     public void loadList() {
-
         int counter = 0;
 
         for (int i = 0; i < patientArr.length; i++) {
@@ -359,7 +380,6 @@ public class radarFrame extends javax.swing.JFrame {
             String patientID = patientListModel.getElementAt(i).toString();
             for (int ii = 0; ii < patientListModel.getSize(); ii++) {
                 if (patientListModel.get(ii).toString() == patientID) {
-
                     counter++;
 
                     if (counter > 1) {
@@ -371,8 +391,11 @@ public class radarFrame extends javax.swing.JFrame {
         }
     }
 
+    /*
+        Used to build the chart, 'chartType' is used to determine if the user
+        is trying to view the Cpax, Mrc, or Sofa
+    */
     public Chart chartBuilder(int index, int chartType) {
-
         int scores[] = {};
 
         if (chartType == 1) {
@@ -392,13 +415,17 @@ public class radarFrame extends javax.swing.JFrame {
         Chart chart = new Chart(slices, scores, size, replaceZeroCB.getState(), drawScoresCB.getState());
 
         return chart;
-
     }
 
+    /*
+        Chart refresh procedure that is commonly used for when something the user
+        has clicked should change particular parts of the chart
+    */
     public void chartRefresh() {
         radarPanel.removeAll();
         String selected = patientList.getSelectedValue();
 
+        // Find the right patient by looping for the selected value
         for (int i = 0; i < patientArr.length; i++) {
             if (patientArr[i].getPoid().equals(selected)) {
 
@@ -406,11 +433,11 @@ public class radarFrame extends javax.swing.JFrame {
                 this.revalidate();
                 this.repaint();
 
-                if (tableModel.getRowCount() == 1) {
-                    tableModel.removeRow(0);
-                    tableModel.addRow(patientArr[i].getDataRow());
+                if (tablePatientOverview.getRowCount() == 1) {
+                    tablePatientOverview.removeRow(0);
+                    tablePatientOverview.addRow(patientArr[i].getOverviewRow());
                 } else {
-                    tableModel.addRow(patientArr[i].getDataRow());
+                    tablePatientOverview.addRow(patientArr[i].getOverviewRow());
                 }
 
                 break;
@@ -418,7 +445,10 @@ public class radarFrame extends javax.swing.JFrame {
         }
     }
 
-    public void chartSetup() {
+    /*
+        Ran when a new type of chart is selected, runs the chartBuilder procedure too
+    */
+    public void chartChange() {
 
         String selectedID = patientList.getSelectedValue();
         String selectedVisit = patientVisitList.getSelectedValue();
@@ -435,18 +465,17 @@ public class radarFrame extends javax.swing.JFrame {
                     this.repaint();
 
                     // Empty table of information before showing new relevant information
-                    if (tableModel.getRowCount() == 1) {
-                        tableModel.removeRow(0);
-                        tableModel.addRow(patientArr[i].getDataRow());
+                    if (tablePatientOverview.getRowCount() == 1) {
+                        tablePatientOverview.removeRow(0);
+                        tablePatientOverview.addRow(patientArr[i].getOverviewRow());
                     } else {
-                        tableModel.addRow(patientArr[i].getDataRow());
+                        tablePatientOverview.addRow(patientArr[i].getOverviewRow());
                     }
 
                     break;
                 }
             }
         }
-
     }
 
 
@@ -462,12 +491,15 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblPatientList;
     private javax.swing.JLabel lblRadarChart;
+    private javax.swing.JLabel lblScoreSheet;
     private javax.swing.JList<String> patientList;
     public javax.swing.JTable patientTable;
     private javax.swing.JList<String> patientVisitList;
     public javax.swing.JPanel radarPanel;
     private javax.swing.JCheckBoxMenuItem replaceZeroCB;
+    private javax.swing.JTable scoreTable;
     // End of variables declaration//GEN-END:variables
 }

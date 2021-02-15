@@ -73,7 +73,7 @@ public class Patient {
     public void setSofa(Sofa sofa) {
         this.sofa = sofa;
     }
-// </editor-fold> 
+    // </editor-fold> 
 
     public Patient(String poid, String firstName, String lastName, String machesterMobilityScore, String admission, Cpax cpax, Mrc mrc, Sofa sofa) {
         this.poid = poid;
@@ -86,16 +86,18 @@ public class Patient {
         this.sofa = sofa;
     }
 
-    public Object[] getDataRow() {
+    public Object[] getOverviewRow() {
         Object[] row = {
             this.poid,
             this.firstName,
             this.lastName,
             this.getCpax().getTotal(),
             this.getMrc().getTotal(),
-            this.getSofa().getTotal()
+            this.getSofa().getTotal(),
+            this.getMachesterMobilityScore()
         };
 
         return row;
     }
+    
 }
