@@ -51,6 +51,7 @@ public class Chart extends JPanel {
 
         }
 
+        int textRange = range;
         int xOrigin = getWidth() / 2;
         int yOrigin = getHeight() / 2;
 
@@ -82,12 +83,18 @@ public class Chart extends JPanel {
             yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.sin(angle));
 
             G2D.drawLine(0, 0, yCoord, -xCoord);
-            G2D.drawString(Integer.toString(i), yCoord, -xCoord);
+            
+            /*
+                Find a way to put points on the end of the circle
+            */
+            
+            //G2D.drawString(Integer.toString(i), yCoord, -xCoord);
+
         }
 
         /*
             Get coordinates for the scores
-        */
+         */
         for (int i = 0; i < scores.length; i++) {
 
             double angle = 2 * Math.PI * i / slices;
@@ -180,7 +187,7 @@ public class Chart extends JPanel {
 
         /*
             Plot radar with loaded arrays
-        */
+         */
         G2D.setColor(Color.green);
         G2D.drawPolygon(yPoints, xPoints, slices);
         G2D.setColor(myColor);
@@ -191,7 +198,7 @@ public class Chart extends JPanel {
 
         /*
             Draw scores onto the chart
-        */
+         */
         if (drawScores == true) {
 
             for (int i = 0; i < scores.length; i++) {
@@ -211,5 +218,5 @@ public class Chart extends JPanel {
 
         }
     }
-    
+
 }
