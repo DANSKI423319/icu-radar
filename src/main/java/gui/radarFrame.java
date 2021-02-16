@@ -20,8 +20,9 @@ public class radarFrame extends javax.swing.JFrame {
     public boolean validSelection = false;
     public boolean tableIsFull = false;
 
-    public int currentSelection = 0;
+    public int currentSelection = 1;
     public Patient[] patientArr = new Patient[3];
+
     public DefaultListModel patientListModel = new DefaultListModel();
     public DefaultListModel patientVisitModel = new DefaultListModel();
 
@@ -60,9 +61,9 @@ public class radarFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         patientVisitList = new javax.swing.JList<>();
         lblPatientVisits = new javax.swing.JLabel();
+        lblScoreSheet = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         scoreTable = new javax.swing.JTable();
-        lblScoreSheet = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuOther = new javax.swing.JMenu();
@@ -129,14 +130,14 @@ public class radarFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(patientVisitList);
 
         lblPatientVisits.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblPatientVisits.setText("Patient Visits");
+        lblPatientVisits.setText("Visits");
+
+        lblScoreSheet.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblScoreSheet.setText("Score Sheet");
 
         scoreTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         scoreTable.setModel(tablePatientScores);
         jScrollPane5.setViewportView(scoreTable);
-
-        lblScoreSheet.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblScoreSheet.setText("Score Sheet");
 
         jMenuFile.setText("File");
         jMenuBar1.add(jMenuFile);
@@ -175,30 +176,28 @@ public class radarFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPatientList)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPatientList))
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(lblPatientVisits))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblRadarChart)
+                            .addComponent(lblPatientVisits)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCpax, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnMrc, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSofa, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblScoreSheet)
-                                .addGap(192, 192, 192))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
+                            .addComponent(lblRadarChart))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblScoreSheet)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,22 +207,21 @@ public class radarFrame extends javax.swing.JFrame {
                     .addComponent(lblPatientList)
                     .addComponent(lblRadarChart)
                     .addComponent(lblPatientVisits)
-                    .addComponent(lblScoreSheet))
+                    .addComponent(lblScoreSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                            .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCpax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSofa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                            .addComponent(btnSofa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -233,9 +231,22 @@ public class radarFrame extends javax.swing.JFrame {
     private void patientListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientListMouseClicked
         validSelection = false;
 
-        // Clear list and chart
+        // Clear previous information
         patientVisitModel.removeAllElements();
-        radarPanel.removeAll();
+
+        for (int i = tablePatientScores.getRowCount(); i > 0; i--) {
+            tablePatientScores.removeRow(i - 1);
+        }
+
+        for (int i = tablePatientOverview.getRowCount(); i > 0; i--) {
+            tablePatientOverview.removeRow(i - 1);
+        }
+
+        if (radarPanel.getComponentCount() > 0) {
+            radarPanel.remove(0);
+            this.revalidate();
+            this.repaint();
+        }
 
         // Add dates of admissions when clicking on a patient ID
         for (int i = 0; i < patientArr.length; i++) {
@@ -273,9 +284,11 @@ public class radarFrame extends javax.swing.JFrame {
 
                     radarPanel.removeAll();
 
-                    radarPanel.add(chartBuilder(i, 1));
+                    radarPanel.add(chartBuilder(i, currentSelection));
                     this.revalidate();
                     this.repaint();
+
+                    setChartScoreTable(1);
 
                     // Empty table of information before showing new relevant information
                     if (tablePatientOverview.getRowCount() == 1) {
