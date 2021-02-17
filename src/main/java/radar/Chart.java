@@ -12,15 +12,16 @@ public class Chart extends JPanel {
     private int radius;
     private boolean drawLines;
     private boolean drawScores;
-    private boolean resumePhase;
+    private boolean drawKey;
 
-    public Chart(int n, int input[], int size, boolean lines, boolean scores) {
+    public Chart(int n, int input[], int size, boolean lines, boolean scores, boolean key) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.slices = n;
         this.scores = input;
         this.drawLines = lines;
         this.drawScores = scores;
+        this.drawKey = key;
     }
 
     @Override
@@ -51,7 +52,10 @@ public class Chart extends JPanel {
 
         }
 
-        int textRange = range;
+        // Adding a number makes the chart smaller, minusing a number makes it bigger
+        int rangeScaled = range + 1;
+        int rangeText = range;
+
         int xOrigin = getWidth() / 2;
         int yOrigin = getHeight() / 2;
 
@@ -61,7 +65,7 @@ public class Chart extends JPanel {
 
         // Draw circle loop
         for (int i = 0; i < (range); i++) { // Range is the maximum score given, tells how many circles to make
-            radius = i * superOrigin / (range);
+            radius = i * superOrigin / (rangeScaled);
             G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
         }
 
@@ -79,17 +83,30 @@ public class Chart extends JPanel {
         for (int i = 0; i < slices; i++) {
             double angle = 2 * Math.PI * i / slices;
 
-            xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.cos(angle));
-            yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / range) * Math.sin(angle));
+            xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeScaled) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeScaled) * Math.sin(angle));
 
             G2D.drawLine(0, 0, yCoord, -xCoord);
-            
-            /*
-                Find a way to put points on the end of the circle
-            */
-            
-            //G2D.drawString(Integer.toString(i), yCoord, -xCoord);
 
+        }
+
+        /*
+            Draws numbers at the end of slices to show the user how they
+            can be reviewed from a table in the GUI
+         */
+        if (drawKey == true) {
+            for (int i = 0; i < slices; i++) {
+                double angle = 2 * Math.PI * i / slices;
+
+                xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.cos(angle));
+                yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.sin(angle));
+
+                if (i < 9) {
+                    G2D.drawString("0" + Integer.toString(i + 1), yCoord - 7, -xCoord);
+                } else {
+                    G2D.drawString(Integer.toString(i + 1), yCoord - 7, -xCoord);
+                }
+            }
         }
 
         /*
@@ -98,8 +115,8 @@ public class Chart extends JPanel {
         for (int i = 0; i < scores.length; i++) {
 
             double angle = 2 * Math.PI * i / slices;
-            xCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.cos(angle));
-            yCoord = (int) Math.round(0 + (scores[i] * superOrigin / range) * Math.sin(angle));
+            xCoord = (int) Math.round(0 + (scores[i] * superOrigin / rangeScaled) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + (scores[i] * superOrigin / rangeScaled) * Math.sin(angle));
 
             if (xCoord == 0) {
                 if (scores[i] > 0) {
@@ -113,7 +130,6 @@ public class Chart extends JPanel {
             }
 
         }
-
 
         /*
            Draw lines between zeros
@@ -193,13 +209,15 @@ public class Chart extends JPanel {
         G2D.setColor(myColor);
         G2D.fillPolygon(yPoints, xPoints, slices);
 
-        int radiusSum = Math.abs(superOrigin - radius) / 3;
+        int radiusSum = Math.abs(superOrigin - radius) / 5;
 
 
         /*
             Draw scores onto the chart
          */
         if (drawScores == true) {
+
+            G2D.setFont(new Font("Arial", Font.BOLD, 15));
 
             for (int i = 0; i < scores.length; i++) {
                 G2D.setColor(Color.green);
@@ -209,13 +227,11 @@ public class Chart extends JPanel {
                     G2D.setColor(Color.blue);
 
                     String txt = "" + (scores[i]);
-                    G2D.setFont(new Font("Arial", Font.PLAIN, 18));
+
                     //String txt = (i + 1) + " X: " + Integer.toString(xPoints[i]) + ", Y:" + Integer.toString(yPoints[i]) + ".";
-                    G2D.drawString(txt, yPoints[i] - 5, xPoints[i] + 6);
+                    G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
                 }
-
             }
-
         }
     }
 

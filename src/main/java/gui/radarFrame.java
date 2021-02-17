@@ -27,7 +27,7 @@ public class radarFrame extends javax.swing.JFrame {
     public DefaultListModel patientVisitModel = new DefaultListModel();
 
     public DefaultTableModel tablePatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total", "Manchester Mobility Score"}, 0);
-    public DefaultTableModel tablePatientScores = new DefaultTableModel(new String[]{"Item", "Score"}, 0);
+    public DefaultTableModel tablePatientScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
 
     /**
      * Creates new form radarFrame
@@ -69,6 +69,7 @@ public class radarFrame extends javax.swing.JFrame {
         jMenuOther = new javax.swing.JMenu();
         replaceZeroCB = new javax.swing.JCheckBoxMenuItem();
         drawScoresCB = new javax.swing.JCheckBoxMenuItem();
+        drawKeyCB = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Medical Chart");
@@ -163,6 +164,15 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jMenuOther.add(drawScoresCB);
 
+        drawKeyCB.setSelected(true);
+        drawKeyCB.setText("Draw item key");
+        drawKeyCB.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                drawKeyCBItemStateChanged(evt);
+            }
+        });
+        jMenuOther.add(drawKeyCB);
+
         jMenuBar1.add(jMenuOther);
 
         setJMenuBar(jMenuBar1);
@@ -203,11 +213,12 @@ public class radarFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPatientList)
-                    .addComponent(lblRadarChart)
-                    .addComponent(lblPatientVisits)
-                    .addComponent(lblScoreSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblScoreSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPatientList)
+                        .addComponent(lblRadarChart)
+                        .addComponent(lblPatientVisits)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,14 +245,17 @@ public class radarFrame extends javax.swing.JFrame {
         // Clear previous information
         patientVisitModel.removeAllElements();
 
+        // Removes scores
         for (int i = tablePatientScores.getRowCount(); i > 0; i--) {
             tablePatientScores.removeRow(i - 1);
         }
 
+        // Removes overview
         for (int i = tablePatientOverview.getRowCount(); i > 0; i--) {
             tablePatientOverview.removeRow(i - 1);
         }
 
+        // Removes radar chart
         if (radarPanel.getComponentCount() > 0) {
             radarPanel.remove(0);
             this.revalidate();
@@ -254,21 +268,16 @@ public class radarFrame extends javax.swing.JFrame {
                 patientVisitModel.addElement(patientArr[i].getAdmission());
             }
         }
-
     }//GEN-LAST:event_patientListMouseClicked
 
     private void replaceZeroCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_replaceZeroCBItemStateChanged
-
         // Refresh the chart when option changed
         chartRefresh();
-
     }//GEN-LAST:event_replaceZeroCBItemStateChanged
 
     private void drawScoresCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_drawScoresCBItemStateChanged
-
         // Refresh the chart when option changed
         chartRefresh();
-
     }//GEN-LAST:event_drawScoresCBItemStateChanged
 
     private void patientVisitListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientVisitListMouseClicked
@@ -331,6 +340,11 @@ public class radarFrame extends javax.swing.JFrame {
             setChartScoreTable(currentSelection);
         }
     }//GEN-LAST:event_btnSofaActionPerformed
+
+    private void drawKeyCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_drawKeyCBItemStateChanged
+        // Refresh the chart when option changed
+        chartRefresh();
+    }//GEN-LAST:event_drawKeyCBItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -435,7 +449,7 @@ public class radarFrame extends javax.swing.JFrame {
         int size = 428;
 
         // Build chart, check for changed options
-        Chart chart = new Chart(slices, scores, size, replaceZeroCB.getState(), drawScoresCB.getState());
+        Chart chart = new Chart(slices, scores, size, replaceZeroCB.getState(), drawScoresCB.getState(), drawKeyCB.getState());
 
         return chart;
     }
@@ -515,18 +529,21 @@ public class radarFrame extends javax.swing.JFrame {
                     if (chartSelection == 1) {
                         items = patientArr[i].getCpax().getItems();
                         scores = patientArr[i].getCpax().getScores();
+                        lblRadarChart.setText("Radar Chart (CPAX)");
                     } else if (chartSelection == 2) {
                         items = patientArr[i].getMrc().getItems();
                         scores = patientArr[i].getMrc().getScores();
+                        lblRadarChart.setText("Radar Chart (MRC)");
                     } else if (chartSelection == 3) {
                         items = patientArr[i].getSofa().getItems();
                         scores = patientArr[i].getSofa().getScores();
+                        lblRadarChart.setText("Radar Chart (SOFA)");
                     }
 
                     if (tableIsFull == false) {
 
                         for (int ii = 0; ii < items.length; ii++) {
-                            tablePatientScores.addRow(new Object[]{items[ii], scores[ii]});
+                            tablePatientScores.addRow(new Object[]{(ii + 1), items[ii], scores[ii]});
                         }
 
                         tableIsFull = true;
@@ -553,6 +570,7 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCpax;
     private javax.swing.JButton btnMrc;
     private javax.swing.JButton btnSofa;
+    private javax.swing.JCheckBoxMenuItem drawKeyCB;
     private javax.swing.JCheckBoxMenuItem drawScoresCB;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;

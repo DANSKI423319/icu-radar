@@ -32,7 +32,7 @@ public class randomRadarFrame extends javax.swing.JFrame {
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         mainFrame.add(lblTitle, BorderLayout.NORTH);
-        mainPanel.add(new Chart(slices, scores, size, true, true));
+        mainPanel.add(new Chart(slices, scores, size, true, true, true));
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         
         mainFrame.pack();
