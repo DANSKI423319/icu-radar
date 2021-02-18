@@ -4,7 +4,21 @@ public class Cpax {
 
     private int respiratory, cough, bedRolling, supineEdge, dynamicSitting,
             balance, sitToStand, bedToChair, stepping, grip, total;
+    
+    private String[] items = {
+            "Respiratory",
+            "Cough",
+            "Bed Rolling",
+            "Supine Edge",
+            "Dynamic Sitting",
+            "Balance",
+            "Sit to Stand",
+            "Bed to Chair",
+            "Stepping",
+            "Grip Strength"
+        };
 
+    // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getRespiratory() {
         return respiratory;
     }
@@ -92,6 +106,15 @@ public class Cpax {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public void setItems(String[] items) {
+        this.items = items;
+    }
+    // </editor-fold>
 
     public Cpax(int respiratory, int cough, int bedRolling, int supineEdge, int dynamicSitting, int balance, int sitToStand, int bedToChair, int stepping, int grip, int total) {
         this.respiratory = respiratory;

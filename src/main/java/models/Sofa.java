@@ -5,6 +5,15 @@ public class Sofa {
     private int creatine, bilirubin, platelets, pulmonaryFunction, gcs,
             noradrenaline, total;
 
+    private String[] items = {
+        "Creatine",
+        "Bilirubin",
+        "Platelets",
+        "Pulmonary Function",
+        "GCS",
+        "Noradrenaline"
+    };
+
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getCreatine() {
         return creatine;
@@ -61,6 +70,14 @@ public class Sofa {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public void setItems(String[] items) {
+        this.items = items;
+    }
     // </editor-fold>
 
     public Sofa(int creatine, int bilirubin, int platelets, int pulmonaryFunction, int gcs, int noradrenaline, int total) {
@@ -87,19 +104,6 @@ public class Sofa {
         };
 
         return array;
-    }
-
-    public String[] getRows() {
-        String[] rows = {
-            "Creatine",
-            "Bilirubin",
-            "Platelets",
-            "Pulmonary Function",
-            "GCS",
-            "Noradrenaline"
-        };
-                
-        return rows;
     }
 
 }
