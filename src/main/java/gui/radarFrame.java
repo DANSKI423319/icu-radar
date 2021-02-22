@@ -26,7 +26,7 @@ public class radarFrame extends javax.swing.JFrame {
     public DefaultListModel patientListModel = new DefaultListModel();
     public DefaultListModel patientVisitModel = new DefaultListModel();
 
-    public DefaultTableModel tablePatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total", "Manchester Mobility Score"}, 0);
+    public DefaultTableModel tablePatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total"}, 0);
     public DefaultTableModel tablePatientScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
 
     /**
@@ -226,12 +226,12 @@ public class radarFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(radarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnCpax, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                             .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCpax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSofa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                            .addComponent(btnSofa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -386,19 +386,19 @@ public class radarFrame extends javax.swing.JFrame {
         Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 3, 0, 1, 28);
         Mrc mrc = new Mrc(4, 5, 3, 3, 1, 3, 1, 4, 2, 5, 4, 2, 1, 3, 5, 3, 5, 4, 5, 4, 2, 5, 5, 3, 82);
         Sofa sofa = new Sofa(4, 4, 3, 0, 1, 2, 14);
-        Patient John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
+        Patient John = new Patient("1234", "John", "Smith", "22/01/2015", cpax, mrc, sofa);
         patientArr[0] = John;
 
         cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
         mrc = new Mrc(5, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 65);
         sofa = new Sofa(1, 2, 3, 0, 5, 4, 15);
-        Patient Jane = new Patient("2345", "Jane", "Doe", "10 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
+        Patient Jane = new Patient("2345", "Jane", "Doe", "22/01/2015", cpax, mrc, sofa);
         patientArr[1] = Jane;
 
         cpax = new Cpax(4, 4, 1, 1, 3, 1, 1, 2, 0, 0, 33);
         mrc = new Mrc(3, 4, 2, 2, 0, 2, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 4, 3, 4, 3, 1, 4, 4, 2, 58);
         sofa = new Sofa(3, 3, 2, 0, 0, 2, 10);
-        John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "23/01/2015", cpax, mrc, sofa);
+        John = new Patient("1234", "John", "Smith", "23/01/2015", cpax, mrc, sofa);
         patientArr[2] = John;
     }
 

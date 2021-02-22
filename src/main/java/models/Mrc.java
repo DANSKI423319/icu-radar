@@ -320,5 +320,37 @@ public class Mrc {
 
         return array;
     }
+    
+    public int[] getAll() {
+        int[] array = {
+            this.shoulderAbductionRight_11036,
+            this.shoulderAbductionRight_11074,
+            this.shoulderAbductionLeft_11073,
+            this.shoulderAbductionLeft_11035,
+            this.elbowFlexionRight_11030,
+            this.elbowFlexionRight_11068,
+            this.elbowFlexionLeft_11029,
+            this.elbowFlexionLeft_11067,
+            this.wristExtensionRight_11038,
+            this.wristExtensionRight_11077,
+            this.wristExtensionLeft_11037,
+            this.wristExtensionLeft_11076,
+            this.hipFlexionRight_11070,
+            this.hipFlexionRight_11032,
+            this.hipFlexionLeft_11069,
+            this.hipFlexionLeft_11031,
+            this.kneeExtensionRight_11072,
+            this.kneeExtensionRight_11034,
+            this.kneeExtensionLeft_11071,
+            this.kneeExtensionLeft_11033,
+            this.ankleDorsiflexionLeft_11027,
+            this.ankleDorsiflexionLeft_11065,
+            this.ankleDorsiflexionRight_11066,
+            this.ankleDorsiflexionRight_11028,
+            this.total
+        };
+
+        return array;
+    }
 
 }

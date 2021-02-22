@@ -4,19 +4,19 @@ public class Cpax {
 
     private int respiratory, cough, bedRolling, supineEdge, dynamicSitting,
             balance, sitToStand, bedToChair, stepping, grip, total;
-    
+
     private String[] items = {
-            "Respiratory",
-            "Cough",
-            "Bed Rolling",
-            "Supine Edge",
-            "Dynamic Sitting",
-            "Balance",
-            "Sit to Stand",
-            "Bed to Chair",
-            "Stepping",
-            "Grip Strength"
-        };
+        "Respiratory",
+        "Cough",
+        "Bed Rolling",
+        "Supine Edge",
+        "Dynamic Sitting",
+        "Balance",
+        "Sit to Stand",
+        "Bed to Chair",
+        "Stepping",
+        "Grip Strength"
+    };
 
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public int getRespiratory() {
@@ -145,6 +145,24 @@ public class Cpax {
             this.bedToChair,
             this.stepping,
             this.grip
+        };
+
+        return array;
+    }
+
+    public int[] getAll() {
+        int[] array = {
+            this.respiratory,
+            this.cough,
+            this.bedRolling,
+            this.supineEdge,
+            this.dynamicSitting,
+            this.balance,
+            this.sitToStand,
+            this.bedToChair,
+            this.stepping,
+            this.grip,
+            this.total
         };
 
         return array;

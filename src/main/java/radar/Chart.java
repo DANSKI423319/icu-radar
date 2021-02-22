@@ -111,9 +111,9 @@ public class Chart extends JPanel {
                 yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.sin(angle));
 
                 if (i < 9) {
-                    G2D.drawString("0" + Integer.toString(i + 1), yCoord - 7, -xCoord);
+                    G2D.drawString("0" + Integer.toString(i + 1), yCoord - 7, -xCoord + 3);
                 } else {
-                    G2D.drawString(Integer.toString(i + 1), yCoord - 7, -xCoord);
+                    G2D.drawString(Integer.toString(i + 1), yCoord - 7, -xCoord + 3);
                 }
             }
         }
