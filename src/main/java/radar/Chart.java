@@ -3,7 +3,6 @@ package radar;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Chart extends JPanel {
 
@@ -13,10 +12,12 @@ public class Chart extends JPanel {
     private boolean drawLines;
     private boolean drawScores;
     private boolean drawNumbers;
+    private Color transparent = new Color(0,0,0,0);
 
     public Chart(int n, int input[], int size, boolean lines, boolean scores, boolean numbers) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
+        this.setBackground(transparent);
         this.slices = n;
         this.scores = input;
         this.drawLines = lines;
@@ -31,7 +32,7 @@ public class Chart extends JPanel {
         Graphics2D G2D = (Graphics2D) g;
 
         int alpha = 80;
-        Color myColor = new Color(0, 255, 0, alpha);
+        Color transparentGreen = new Color(0, 255, 0, alpha);
 
         G2D.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
@@ -83,7 +84,6 @@ public class Chart extends JPanel {
         int yPoints[] = new int[slices];
         int xCoord, yCoord;
 
-        G2D.setColor(Color.black);
         G2D.setFont(new Font("Arial", Font.PLAIN, 14));
 
         /*
@@ -211,7 +211,7 @@ public class Chart extends JPanel {
          */
         G2D.setColor(Color.green);
         G2D.drawPolygon(yPoints, xPoints, slices);
-        G2D.setColor(myColor);
+        G2D.setColor(transparentGreen);
         G2D.fillPolygon(yPoints, xPoints, slices);
 
 
