@@ -1,5 +1,9 @@
 package models;
 
+/**
+ *
+ * @author Daniel
+ */
 public class Sofa {
 
     private int creatine, bilirubin, platelets, pulmonaryFunction, gcs,

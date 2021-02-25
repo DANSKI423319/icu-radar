@@ -1,7 +1,9 @@
 package models;
 
-import java.util.Date;
-
+/**
+ *
+ * @author Daniel
+ */
 public class Patient {
 
     private String poid, firstName, lastName, machesterMobilityScore, admission;
