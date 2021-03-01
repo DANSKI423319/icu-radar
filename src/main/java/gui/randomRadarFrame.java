@@ -11,7 +11,7 @@ import radar.Chart;
 
 /**
  *
- * @author clair
+ * @author Daniel
  */
 public class randomRadarFrame extends javax.swing.JFrame {
         
@@ -32,7 +32,7 @@ public class randomRadarFrame extends javax.swing.JFrame {
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         mainFrame.add(lblTitle, BorderLayout.NORTH);
-        mainPanel.add(new Chart(slices, scores, size, true, true, true));
+        // mainPanel.add(new Chart(slices, scores, size, true));
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         
         mainFrame.pack();

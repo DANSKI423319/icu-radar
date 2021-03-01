@@ -1,5 +1,9 @@
 package models;
 
+/**
+ *
+ * @author Daniel
+ */
 public class Mrc {
 
     private int shoulderAbductionRight_11036, shoulderAbductionRight_11074;

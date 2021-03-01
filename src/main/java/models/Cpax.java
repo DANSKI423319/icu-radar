@@ -1,5 +1,9 @@
 package models;
 
+/**
+ *
+ * @author Daniel
+ */
 public class Cpax {
 
     private int respiratory, cough, bedRolling, supineEdge, dynamicSitting,
