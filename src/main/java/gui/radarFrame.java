@@ -31,6 +31,7 @@ public class radarFrame extends javax.swing.JFrame {
     public DefaultTableModel tableModelPatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total"}, 0);
     public DefaultTableModel tableModelPatientScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
 
+
     /**
      * Creates new form radarFrame
      */
@@ -617,11 +618,13 @@ public class radarFrame extends javax.swing.JFrame {
         Patient John = new Patient("1234", "John", "Smith", "22/01/2015", cpax, mrc, sofa);
         arrayPatients[0] = John;
 
+
         cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
         mrc = new Mrc(5, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 65);
         sofa = new Sofa(1, 2, 3, 0, 5, 4, 15);
         Patient Jane = new Patient("2345", "Jane", "Doe", "22/01/2015", cpax, mrc, sofa);
         arrayPatients[1] = Jane;
+
 
         cpax = new Cpax(4, 4, 1, 1, 3, 1, 1, 2, 0, 0, 33);
         mrc = new Mrc(3, 4, 2, 2, 0, 2, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 4, 3, 4, 3, 1, 4, 4, 2, 58);

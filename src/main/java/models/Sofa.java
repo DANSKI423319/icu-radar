@@ -109,5 +109,19 @@ public class Sofa {
 
         return array;
     }
+    
+    public int[] getAll() {
+        int[] array = {
+            this.creatine,
+            this.bilirubin,
+            this.platelets,
+            this.pulmonaryFunction,
+            this.gcs,
+            this.noradrenaline,
+            this.total
+        };
+
+        return array;
+    }
 
 }
