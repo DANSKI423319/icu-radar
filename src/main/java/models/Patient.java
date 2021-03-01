@@ -6,7 +6,7 @@ package models;
  */
 public class Patient {
 
-    private String poid, firstName, lastName, machesterMobilityScore, admission;
+    private String poid, firstName, lastName, admission;
     private Cpax cpax = new Cpax();
     private Mrc mrc = new Mrc();
     private Sofa sofa = new Sofa();
@@ -34,14 +34,6 @@ public class Patient {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getMachesterMobilityScore() {
-        return machesterMobilityScore;
-    }
-
-    public void setMachesterMobilityScore(String machesterMobilityScore) {
-        this.machesterMobilityScore = machesterMobilityScore;
     }
 
     public String getAdmission() {
@@ -77,11 +69,10 @@ public class Patient {
     }
     // </editor-fold> 
 
-    public Patient(String poid, String firstName, String lastName, String machesterMobilityScore, String admission, Cpax cpax, Mrc mrc, Sofa sofa) {
+    public Patient(String poid, String firstName, String lastName, String admission, Cpax cpax, Mrc mrc, Sofa sofa) {
         this.poid = poid;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.machesterMobilityScore = machesterMobilityScore;
         this.admission = admission;
         this.cpax = cpax;
         this.mrc = mrc;
@@ -96,7 +87,6 @@ public class Patient {
             this.getCpax().getTotal(),
             this.getMrc().getTotal(),
             this.getSofa().getTotal(),
-            this.getMachesterMobilityScore()
         };
 
         return row;
