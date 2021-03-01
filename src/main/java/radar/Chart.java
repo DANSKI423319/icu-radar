@@ -18,13 +18,13 @@ public class Chart extends JPanel {
     private final boolean drawLines;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Chart(int nSlices, int[] nScores, int size, boolean boolNums, boolean boolLines) {
+    public Chart(int nSlices, int[] nScores, int size, boolean boolNumbers, boolean boolLines) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.setBackground(transparent);
         this.slices = nSlices;
         this.scores = nScores;
-        this.drawNumbers = boolNums;
+        this.drawNumbers = boolNumbers;
         this.drawLines = boolLines;
     }
 
@@ -69,7 +69,8 @@ public class Chart extends JPanel {
         // Change to Cartesian coordinates...
         int superOrigin = Math.min(xOrigin, yOrigin);
         G2D.translate(superOrigin, superOrigin);
-
+        G2D.setColor(Color.GRAY);
+        
         // Draw circle loop
         for (int i = 0; i < (range); i++) { // Range is the maximum score given, tells how many circles to make
             radius = i * superOrigin / (finalRange);

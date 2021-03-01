@@ -6,7 +6,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import models.*;
@@ -18,25 +17,23 @@ import radar.*;
  */
 public class radarFrame extends javax.swing.JFrame {
 
-    public boolean validSelection = false;
     public boolean tableIsFull = false;
 
-    public int currentSelection = 1;
-    public Patient[] patientArr = new Patient[3];
+    public Patient[] arrayPatients = new Patient[3];
 
-    public DefaultListModel patientListModel = new DefaultListModel();
-    public DefaultListModel patientVisitModel = new DefaultListModel();
+    public DefaultListModel listModelPatients = new DefaultListModel();
+    public DefaultListModel listModelPatientVisits = new DefaultListModel();
 
-    public DefaultTableModel tablePatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total", "Manchester Mobility Score"}, 0);
-    public DefaultTableModel tablePatientScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
+    public DefaultTableModel tableModelPatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total", "Manchester Mobility Score"}, 0);
+    public DefaultTableModel tableModelPatientScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
 
     /**
      * Creates new form radarFrame
      */
     public radarFrame() {
         this.setLocationRelativeTo(null);
-        createData();
-        loadList();
+        dataCreate();
+        dataLoad();
         initComponents();
     }
 
@@ -52,7 +49,7 @@ public class radarFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listPatients = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        patientTable = new javax.swing.JTable();
+        tableModelPatient = new javax.swing.JTable();
         lblPatientList = new javax.swing.JLabel();
         lblRadarChart = new javax.swing.JLabel();
         btnCpax = new javax.swing.JButton();
@@ -76,6 +73,7 @@ public class radarFrame extends javax.swing.JFrame {
         optionDrawGaps = new javax.swing.JCheckBoxMenuItem();
         optionShowScores = new javax.swing.JCheckBoxMenuItem();
         optionShowKey = new javax.swing.JCheckBoxMenuItem();
+        optionShowPolygons = new javax.swing.JCheckBoxMenuItem();
         jMenuChartOptions = new javax.swing.JMenu();
         optionRemoveLines = new javax.swing.JCheckBoxMenuItem();
 
@@ -85,7 +83,7 @@ public class radarFrame extends javax.swing.JFrame {
         setResizable(false);
 
         listPatients.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        listPatients.setModel(patientListModel);
+        listPatients.setModel(listModelPatients);
         listPatients.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listPatientsMouseClicked(evt);
@@ -93,10 +91,10 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listPatients);
 
-        patientTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        patientTable.setModel(tablePatientOverview);
-        patientTable.setEnabled(false);
-        jScrollPane2.setViewportView(patientTable);
+        tableModelPatient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tableModelPatient.setModel(tableModelPatientOverview);
+        tableModelPatient.setEnabled(false);
+        jScrollPane2.setViewportView(tableModelPatient);
 
         lblPatientList.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblPatientList.setText("Patient List");
@@ -129,7 +127,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
 
         listPatientVisits.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        listPatientVisits.setModel(patientVisitModel);
+        listPatientVisits.setModel(listModelPatientVisits);
         listPatientVisits.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listPatientVisitsMouseClicked(evt);
@@ -144,10 +142,11 @@ public class radarFrame extends javax.swing.JFrame {
         lblScoreSheet.setText("Score Sheet");
 
         scoreTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        scoreTable.setModel(tablePatientScores);
+        scoreTable.setModel(tableModelPatientScores);
         jScrollPane5.setViewportView(scoreTable);
 
         checkBoxCpax.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        checkBoxCpax.setForeground(new java.awt.Color(255, 0, 0));
         checkBoxCpax.setSelected(true);
         checkBoxCpax.setText("CPAX");
         checkBoxCpax.addItemListener(new java.awt.event.ItemListener() {
@@ -157,6 +156,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
 
         checkBoxMrc.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        checkBoxMrc.setForeground(new java.awt.Color(0, 255, 0));
         checkBoxMrc.setText("MRC");
         checkBoxMrc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -165,6 +165,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
 
         checkBoxSofa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        checkBoxSofa.setForeground(new java.awt.Color(0, 0, 255));
         checkBoxSofa.setText("SOFA");
         checkBoxSofa.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -194,6 +195,7 @@ public class radarFrame extends javax.swing.JFrame {
 
         optionDrawGaps.setSelected(true);
         optionDrawGaps.setText("Draw gaps on zeros");
+        optionDrawGaps.setToolTipText("Enable or disable gaps that are filled when a zero is present");
         optionDrawGaps.setActionCommand("");
         optionDrawGaps.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -204,6 +206,7 @@ public class radarFrame extends javax.swing.JFrame {
 
         optionShowScores.setSelected(true);
         optionShowScores.setText("Show scores");
+        optionShowScores.setToolTipText("Enable or disable numerical scores on the plot");
         optionShowScores.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 optionShowScoresItemStateChanged(evt);
@@ -212,12 +215,23 @@ public class radarFrame extends javax.swing.JFrame {
         jMenuPlotOptions.add(optionShowScores);
 
         optionShowKey.setText("Show line key");
+        optionShowKey.setToolTipText("Enable or disable a key around the circle");
         optionShowKey.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 optionShowKeyItemStateChanged(evt);
             }
         });
         jMenuPlotOptions.add(optionShowKey);
+
+        optionShowPolygons.setSelected(true);
+        optionShowPolygons.setText("Show polygons");
+        optionShowPolygons.setToolTipText("Enable or disable plot shapes");
+        optionShowPolygons.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                optionShowPolygonsItemStateChanged(evt);
+            }
+        });
+        jMenuPlotOptions.add(optionShowPolygons);
 
         jMenuOther.add(jMenuPlotOptions);
 
@@ -244,7 +258,7 @@ public class radarFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,8 +291,8 @@ public class radarFrame extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblScoreSheet)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(227, Short.MAX_VALUE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,20 +329,22 @@ public class radarFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     *  Resets the JPanels and tables that are used, re-displays the
+     *  selected patients visits...
+     */
     private void listPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listPatientsMouseClicked
-        validSelection = false;
-
         // Clear previous information
-        patientVisitModel.removeAllElements();
+        listModelPatientVisits.removeAllElements();
 
         // Removes scores
-        for (int i = tablePatientScores.getRowCount(); i > 0; i--) {
-            tablePatientScores.removeRow(i - 1);
+        for (int i = tableModelPatientScores.getRowCount(); i > 0; i--) {
+            tableModelPatientScores.removeRow(i - 1);
         }
 
         // Removes overview
-        for (int i = tablePatientOverview.getRowCount(); i > 0; i--) {
-            tablePatientOverview.removeRow(i - 1);
+        for (int i = tableModelPatientOverview.getRowCount(); i > 0; i--) {
+            tableModelPatientOverview.removeRow(i - 1);
         }
 
         // Removes radar chart
@@ -341,9 +357,9 @@ public class radarFrame extends javax.swing.JFrame {
         lblRadarChart.setText("Radar Chart");
 
         // Add dates of admissions when clicking on a patient ID
-        for (int i = 0; i < patientArr.length; i++) {
-            if (patientArr[i].getPoid().equals(listPatients.getSelectedValue())) {
-                patientVisitModel.addElement(patientArr[i].getAdmission());
+        for (int i = 0; i < arrayPatients.length; i++) {
+            if (arrayPatients[i].getPoid().equals(listPatients.getSelectedValue())) {
+                listModelPatientVisits.addElement(arrayPatients[i].getAdmission());
             }
         }
     }//GEN-LAST:event_listPatientsMouseClicked
@@ -359,30 +375,28 @@ public class radarFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_optionShowScoresItemStateChanged
 
     private void listPatientVisitsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listPatientVisitsMouseClicked
-
-        validSelection = true;
         String selectedID = listPatients.getSelectedValue();
         String selectedVisit = listPatientVisits.getSelectedValue();
 
         // Checks validity of admission and ID selected, shows chart
-        for (int i = 0; i < patientArr.length; i++) {
-            if (patientArr[i].getPoid().equals(selectedID)) {
-                if (patientArr[i].getAdmission().equals(selectedVisit)) {
+        for (int i = 0; i < arrayPatients.length; i++) {
+            if (arrayPatients[i].getPoid().equals(selectedID)) {
+                if (arrayPatients[i].getAdmission().equals(selectedVisit)) {
 
                     jLayeredPane1.removeAll();
                     chartPlotter(i);
                     chartBuilder(i);
                     this.revalidate();
                     this.repaint();
-                    
+
                     lblRadarChart.setText("Radar Chart: " + selectedVisit);
 
                     // Empty table of information before showing new relevant information
-                    if (tablePatientOverview.getRowCount() == 1) {
-                        tablePatientOverview.removeRow(0);
-                        tablePatientOverview.addRow(patientArr[i].getOverviewRow());
+                    if (tableModelPatientOverview.getRowCount() == 1) {
+                        tableModelPatientOverview.removeRow(0);
+                        tableModelPatientOverview.addRow(arrayPatients[i].getOverviewRow());
                     } else {
-                        tablePatientOverview.addRow(patientArr[i].getOverviewRow());
+                        tableModelPatientOverview.addRow(arrayPatients[i].getOverviewRow());
                     }
 
                     break;
@@ -394,20 +408,16 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void btnCpaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCpaxActionPerformed
         // Change to CPAX chart
-        if (validSelection == true) {
-            checkBoxCpax.setSelected(true);
-            checkBoxMrc.setSelected(false);
-            checkBoxSofa.setSelected(false);
-        }
+        checkBoxCpax.setSelected(true);
+        checkBoxMrc.setSelected(false);
+        checkBoxSofa.setSelected(false);
     }//GEN-LAST:event_btnCpaxActionPerformed
 
     private void btnSofaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSofaActionPerformed
         // Change to SOFA chart
-        if (validSelection == true) {
-            checkBoxCpax.setSelected(false);
-            checkBoxMrc.setSelected(false);
-            checkBoxSofa.setSelected(true);
-        }
+        checkBoxCpax.setSelected(false);
+        checkBoxMrc.setSelected(false);
+        checkBoxSofa.setSelected(true);
     }//GEN-LAST:event_btnSofaActionPerformed
 
     private void optionShowKeyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionShowKeyItemStateChanged
@@ -416,42 +426,43 @@ public class radarFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_optionShowKeyItemStateChanged
 
     private void checkBoxCpaxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxCpaxItemStateChanged
-        // TODO add your handling code here:
+        // Refresh the chart when plot selection changed
         chartRefresh();
     }//GEN-LAST:event_checkBoxCpaxItemStateChanged
 
     private void checkBoxMrcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxMrcItemStateChanged
-        // TODO add your handling code here:
+        // Refresh the chart when plot selection changed
         chartRefresh();
     }//GEN-LAST:event_checkBoxMrcItemStateChanged
 
     private void checkBoxSofaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxSofaItemStateChanged
-        // TODO add your handling code here:
+        // Refresh the chart when plot selection changed
         chartRefresh();
     }//GEN-LAST:event_checkBoxSofaItemStateChanged
 
     private void btnAllFieldsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllFieldsActionPerformed
         // Change chart to all fields
-        if (validSelection == true) {
-            checkBoxCpax.setSelected(true);
-            checkBoxMrc.setSelected(true);
-            checkBoxSofa.setSelected(true);
-        }
+        checkBoxCpax.setSelected(true);
+        checkBoxMrc.setSelected(true);
+        checkBoxSofa.setSelected(true);
     }//GEN-LAST:event_btnAllFieldsActionPerformed
 
     private void btnMrcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMrcActionPerformed
         // Change to MRC chart
-        if (validSelection == true) {
-            checkBoxCpax.setSelected(false);
-            checkBoxMrc.setSelected(true);
-            checkBoxSofa.setSelected(false);
-        }
+        checkBoxCpax.setSelected(false);
+        checkBoxMrc.setSelected(true);
+        checkBoxSofa.setSelected(false);
     }//GEN-LAST:event_btnMrcActionPerformed
 
     private void optionRemoveLinesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionRemoveLinesItemStateChanged
-        // TODO add your handling code here:
-         chartRefresh();
+        // Refresh the chart when option changed
+        chartRefresh();
     }//GEN-LAST:event_optionRemoveLinesItemStateChanged
+
+    private void optionShowPolygonsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionShowPolygonsItemStateChanged
+        // Refresh the chart when option changed
+        chartRefresh();
+    }//GEN-LAST:event_optionShowPolygonsItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -489,45 +500,45 @@ public class radarFrame extends javax.swing.JFrame {
         });
     }
 
-    public void createData() {
+    public void dataCreate() {
         Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 3, 0, 1, 28);
         Mrc mrc = new Mrc(4, 5, 3, 3, 1, 3, 1, 4, 2, 5, 4, 2, 1, 3, 5, 3, 5, 4, 5, 4, 2, 5, 5, 3, 82);
         Sofa sofa = new Sofa(4, 4, 3, 0, 1, 2, 14);
         Patient John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
-        patientArr[0] = John;
+        arrayPatients[0] = John;
 
         cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
         mrc = new Mrc(5, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 65);
         sofa = new Sofa(1, 2, 3, 0, 5, 4, 15);
         Patient Jane = new Patient("2345", "Jane", "Doe", "10 Transfers with assistance", "22/01/2015", cpax, mrc, sofa);
-        patientArr[1] = Jane;
+        arrayPatients[1] = Jane;
 
         cpax = new Cpax(4, 4, 1, 1, 3, 1, 1, 2, 0, 0, 33);
         mrc = new Mrc(3, 4, 2, 2, 0, 2, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 4, 3, 4, 3, 1, 4, 4, 2, 58);
         sofa = new Sofa(3, 3, 2, 0, 0, 2, 10);
         John = new Patient("1234", "John", "Smith", "5 Transfers with assistance", "23/01/2015", cpax, mrc, sofa);
-        patientArr[2] = John;
+        arrayPatients[2] = John;
     }
 
     /*
      *  Loads data for the lists, ideally needs to be replaced with a Json serialisation
      *  Best case scenario, even some kind of excel CSV conversion
      */
-    public void loadList() {
+    public void dataLoad() {
         int counter = 0;
 
-        for (int i = 0; i < patientArr.length; i++) {
-            patientListModel.addElement(patientArr[i].getPoid());
+        for (int i = 0; i < arrayPatients.length; i++) {
+            listModelPatients.addElement(arrayPatients[i].getPoid());
         }
 
-        for (int i = 0; i < patientListModel.getSize(); i++) {
-            String patientID = patientListModel.getElementAt(i).toString();
-            for (int ii = 0; ii < patientListModel.getSize(); ii++) {
-                if (patientListModel.get(ii).toString() == patientID) {
+        for (int i = 0; i < listModelPatients.getSize(); i++) {
+            String patientID = listModelPatients.getElementAt(i).toString();
+            for (int ii = 0; ii < listModelPatients.getSize(); ii++) {
+                if (listModelPatients.get(ii).toString() == patientID) {
                     counter++;
 
                     if (counter > 1) {
-                        patientListModel.removeElementAt(ii);
+                        listModelPatients.removeElementAt(ii);
                         counter = 0;
                     }
                 }
@@ -536,78 +547,82 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     /*
-     *  Used to build the chart, 'chartType' is used to determine if the user
-     *  is trying to view the Cpax, Mrc, or Sofa
+     *  Used to build the chart, checks which boxes are checked and builds
      */
     public void chartBuilder(int index) {
-        
         int size = 428;
-        
+
         if (checkBoxCpax.isSelected() == true) {
-            int scores[] = patientArr[index].getCpax().getScores();
+            int scores[] = arrayPatients[index].getCpax().getScores();
             int slices = scores.length;
-            Chart CpaxChart = new Chart(slices, scores, size, 
-                    optionShowKey.getState(), 
+            Chart CpaxChart = new Chart(slices, scores, size,
+                    optionShowKey.getState(),
                     optionRemoveLines.getState());
-            
+
             jLayeredPane1.add(CpaxChart);
         }
-        
+
         if (checkBoxMrc.isSelected() == true) {
-            int scores[] = patientArr[index].getMrc().getScores();
+            int scores[] = arrayPatients[index].getMrc().getScores();
             int slices = scores.length;
-            Chart MrcChart = new Chart(slices, scores, size, 
-                    optionShowKey.getState(), 
+            Chart MrcChart = new Chart(slices, scores, size,
+                    optionShowKey.getState(),
                     optionRemoveLines.getState());
-            
+
             jLayeredPane1.add(MrcChart);
         }
-        
+
         if (checkBoxSofa.isSelected() == true) {
-            int scores[] = patientArr[index].getSofa().getScores();
+            int scores[] = arrayPatients[index].getSofa().getScores();
             int slices = scores.length;
-            Chart SofaChart = new Chart(slices, scores, size, 
-                    optionShowKey.getState(), 
+            Chart SofaChart = new Chart(slices, scores, size,
+                    optionShowKey.getState(),
                     optionRemoveLines.getState());
-            
+
             jLayeredPane1.add(SofaChart);
         }
-        
+
     }
 
+    /*
+     *  Used to build the chart, checks which boxes are checked and plots
+     */
     public void chartPlotter(int index) {
         int size = 428;
-        
+
         if (checkBoxCpax.isSelected() == true) {
-            int scores[] = patientArr[index].getCpax().getScores();
+            int scores[] = arrayPatients[index].getCpax().getScores();
             int points = scores.length;
-            Plot cpaxPlot = new Plot(Color.RED, points, scores, size, 
-                    optionDrawGaps.getState(), 
-                    optionShowScores.getState(), 
-                    optionShowKey.getState());
-            
+            Plot cpaxPlot = new Plot(Color.RED, points, scores, size,
+                    optionDrawGaps.getState(),
+                    optionShowScores.getState(),
+                    optionShowKey.getState(),
+                    optionShowPolygons.getState());
+
             jLayeredPane1.add(cpaxPlot);
         }
-        
+
         if (checkBoxMrc.isSelected() == true) {
-            int scores[] = patientArr[index].getMrc().getScores();
+            int scores[] = arrayPatients[index].getMrc().getScores();
             int points = scores.length;
-            Plot mrcPlot = new Plot(Color.GREEN, points, scores, size, 
-                    optionDrawGaps.getState(), 
-                    optionShowScores.getState(), 
-                    optionShowKey.getState());
-            
+            Plot mrcPlot = new Plot(Color.GREEN, points, scores, size,
+                    optionDrawGaps.getState(),
+                    optionShowScores.getState(),
+                    optionShowKey.getState(),
+                    optionShowPolygons.getState());
+
             jLayeredPane1.add(mrcPlot);
         }
-        
+
         if (checkBoxSofa.isSelected() == true) {
-            int scores[] = patientArr[index].getSofa().getScores();
+            int scores[] = arrayPatients[index].getSofa().getScores();
             int points = scores.length;
-            Plot sofaPlot = new Plot(Color.BLUE, points, scores, size, 
-                    optionDrawGaps.getState(), 
-                    optionShowScores.getState(), 
-                    optionShowKey.getState());
-            
+            Plot sofaPlot = new Plot(Color.BLUE, points, scores, size,
+                    optionDrawGaps.getState(),
+                    optionShowScores.getState(),
+                    optionShowKey.getState(),
+                    optionShowPolygons.getState());
+
             jLayeredPane1.add(sofaPlot);
         }
     }
@@ -621,8 +636,8 @@ public class radarFrame extends javax.swing.JFrame {
         String selected = listPatients.getSelectedValue();
 
         // Find the right patient by looping for the selected value
-        for (int i = 0; i < patientArr.length; i++) {
-            if (patientArr[i].getPoid().equals(selected)) {
+        for (int i = 0; i < arrayPatients.length; i++) {
+            if (arrayPatients[i].getPoid().equals(selected)) {
 
                 jLayeredPane1.removeAll();
                 chartPlotter(i);
@@ -630,11 +645,11 @@ public class radarFrame extends javax.swing.JFrame {
                 this.revalidate();
                 this.repaint();
 
-                if (tablePatientOverview.getRowCount() == 1) {
-                    tablePatientOverview.removeRow(0);
-                    tablePatientOverview.addRow(patientArr[i].getOverviewRow());
+                if (tableModelPatientOverview.getRowCount() == 1) {
+                    tableModelPatientOverview.removeRow(0);
+                    tableModelPatientOverview.addRow(arrayPatients[i].getOverviewRow());
                 } else {
-                    tablePatientOverview.addRow(patientArr[i].getOverviewRow());
+                    tableModelPatientOverview.addRow(arrayPatients[i].getOverviewRow());
                 }
 
                 break;
@@ -697,50 +712,6 @@ public class radarFrame extends javax.swing.JFrame {
          */
     }
 
-    /*
-     *  Prepares an array that is built of the scores that have been selected 
-     *  for viewing by the user
-     
-    public int[] ScoreBuilder(int index, boolean cpaxCheck, boolean mrcCheck, boolean sofaCheck) {
-
-        int totalLength = 0;
-        int arrayPos = 0;
-
-        if (cpaxCheck == true) {
-            totalLength = totalLength + patientArr[index].getCpax().getScores().length;
-        }
-        if (mrcCheck == true) {
-            totalLength = totalLength + patientArr[index].getMrc().getScores().length;
-        }
-        if (sofaCheck == true) {
-            totalLength = totalLength + patientArr[index].getSofa().getScores().length;
-        }
-
-        int[] radarScores = new int[totalLength];
-
-        if (cpaxCheck == true) {
-            for (int i : patientArr[index].getCpax().getScores()) {
-                radarScores[arrayPos] = i;
-                arrayPos++;
-            }
-        }
-        if (mrcCheck == true) {
-            for (int i : patientArr[index].getMrc().getScores()) {
-                radarScores[arrayPos] = i;
-                arrayPos++;
-            }
-        }
-        if (sofaCheck == true) {
-            for (int i : patientArr[index].getSofa().getScores()) {
-                radarScores[arrayPos] = i;
-                arrayPos++;
-            }
-        }
-
-        return radarScores;
-    }
-*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAllFields;
     private javax.swing.JButton btnCpax;
@@ -768,8 +739,9 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem optionDrawGaps;
     private javax.swing.JCheckBoxMenuItem optionRemoveLines;
     private javax.swing.JCheckBoxMenuItem optionShowKey;
+    private javax.swing.JCheckBoxMenuItem optionShowPolygons;
     private javax.swing.JCheckBoxMenuItem optionShowScores;
-    public javax.swing.JTable patientTable;
     private javax.swing.JTable scoreTable;
+    private javax.swing.JTable tableModelPatient;
     // End of variables declaration//GEN-END:variables
 }

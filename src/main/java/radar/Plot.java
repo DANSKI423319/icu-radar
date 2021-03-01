@@ -16,20 +16,23 @@ public class Plot extends JPanel {
     private int radius;
     private final boolean drawLines;
     private final boolean drawScores;
-    private final boolean keyCheck;
+    private final boolean drawNumbers;
+    private final boolean drawPolygons;
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Plot(Color color, int nPoints, int[] nScores, int scale, boolean boolLines, boolean boolScores, boolean boolKey) {
+    public Plot(Color color, int nPoints, int[] nScores, int scale,
+            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons) {
         super(true);
         this.setPreferredSize(new Dimension(scale, scale));
         this.setBackground(transparent);
         this.selectedColor = color;
-        this.points  = nPoints;
+        this.points = nPoints;
         this.scores = nScores;
         this.drawLines = boolLines;
         this.drawScores = boolScores;
-        this.keyCheck = boolKey;
+        this.drawNumbers = boolNumbers;
+        this.drawPolygons = boolPolygons;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class Plot extends JPanel {
         // Range check
         int rangeText = 0;
         // Adding a number makes the chart smaller, minusing a number makes it bigger
-        if (keyCheck == true) {
+        if (drawNumbers == true) {
             finalRange = range + 1;
             rangeText = range;
         } else {
@@ -67,7 +70,7 @@ public class Plot extends JPanel {
         }
 
         // Adding a number makes the chart smaller, minusing a number makes it bigger
-        if (keyCheck == true) {
+        if (drawNumbers == true) {
             finalRange = range + 1;
             rangeText = range;
         } else {
@@ -167,10 +170,12 @@ public class Plot extends JPanel {
         }
 
         // Plot radar with loaded arrays
-        G2D.setColor(selectedColor);
-        G2D.drawPolygon(yPoints, xPoints, points);
-        G2D.setColor(new Color(selectedColor.getRed(), selectedColor.getGreen(), selectedColor.getBlue(), 80));
-        G2D.fillPolygon(yPoints, xPoints, points);
+        if (drawPolygons == true) {
+            G2D.setColor(selectedColor);
+            G2D.drawPolygon(yPoints, xPoints, points);
+            G2D.setColor(new Color(selectedColor.getRed(), selectedColor.getGreen(), selectedColor.getBlue(), 40));
+            G2D.fillPolygon(yPoints, xPoints, points);
+        }
 
         //   Draw scores onto the chart
         if (drawScores == true) {
@@ -181,7 +186,7 @@ public class Plot extends JPanel {
                 G2D.setColor(selectedColor);
 
                 if (scores[i] > 0) {
-                    if (keyCheck == true) {
+                    if (drawNumbers == true) {
                         ovalSize = Math.abs(superOrigin - radius) / 23;
                     } else {
                         ovalSize = Math.abs(superOrigin - radius) / 25;
