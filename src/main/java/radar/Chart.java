@@ -16,9 +16,10 @@ public class Chart extends JPanel {
     private int finalRange = 0;
     private final boolean drawNumbers;
     private final boolean drawLines;
+    private final boolean drawCircles;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Chart(int nSlices, int[] nScores, int size, boolean boolNumbers, boolean boolLines) {
+    public Chart(int nSlices, int[] nScores, int size, boolean boolNumbers, boolean boolLines, boolean boolCircles) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.setBackground(transparent);
@@ -26,6 +27,7 @@ public class Chart extends JPanel {
         this.scores = nScores;
         this.drawNumbers = boolNumbers;
         this.drawLines = boolLines;
+        this.drawCircles = boolCircles;
     }
 
     @Override
@@ -70,11 +72,13 @@ public class Chart extends JPanel {
         int superOrigin = Math.min(xOrigin, yOrigin);
         G2D.translate(superOrigin, superOrigin);
         G2D.setColor(Color.GRAY);
-        
+
         // Draw circle loop
-        for (int i = 0; i < (range); i++) { // Range is the maximum score given, tells how many circles to make
-            radius = i * superOrigin / (finalRange);
-            G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
+        if (drawCircles == true) {
+            for (int i = 0; i < (range); i++) { // Range is the maximum score given, tells how many circles to make
+                radius = i * superOrigin / (finalRange);
+                G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
+            }
         }
 
         // Plot points

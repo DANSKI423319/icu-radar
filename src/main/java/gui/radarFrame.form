@@ -66,13 +66,23 @@
                 <Property name="text" type="java.lang.String" value="Chart"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionRemoveLines">
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionShowLines">
                   <Properties>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Show lines"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Show lines on the chart"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="optionRemoveLinesItemStateChanged"/>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="optionShowLinesItemStateChanged"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionShowCircles">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Show circles"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Show circles on the chart"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="optionShowCirclesItemStateChanged"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
@@ -138,7 +148,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="btnCpax" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                              <Component id="jPanelColorCpax" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Component id="jPanelColorCpax" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="checkBoxCpax" min="-2" pref="125" max="-2" attributes="0"/>
                       </Group>
@@ -146,12 +156,12 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="checkBoxMrc" max="32767" attributes="0"/>
                           <Component id="btnMrc" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanelColorMrc" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="jPanelColorMrc" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnSofa" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="jPanelColorSofa" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="jPanelColorSofa" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="checkBoxSofa" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -191,7 +201,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jPanelColorCpax" max="32767" attributes="0"/>
-                              <Component id="jPanelColorMrc" pref="12" max="32767" attributes="0"/>
+                              <Component id="jPanelColorMrc" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jPanelColorSofa" min="-2" max="-2" attributes="0"/>
                       </Group>

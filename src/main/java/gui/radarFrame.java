@@ -83,7 +83,8 @@ public class radarFrame extends javax.swing.JFrame {
         optionShowKey = new javax.swing.JCheckBoxMenuItem();
         optionShowPolygons = new javax.swing.JCheckBoxMenuItem();
         jMenuChartOptions = new javax.swing.JMenu();
-        optionRemoveLines = new javax.swing.JCheckBoxMenuItem();
+        optionShowLines = new javax.swing.JCheckBoxMenuItem();
+        optionShowCircles = new javax.swing.JCheckBoxMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -300,14 +301,24 @@ public class radarFrame extends javax.swing.JFrame {
 
         jMenuChartOptions.setText("Chart");
 
-        optionRemoveLines.setSelected(true);
-        optionRemoveLines.setText("Show lines");
-        optionRemoveLines.addItemListener(new java.awt.event.ItemListener() {
+        optionShowLines.setSelected(true);
+        optionShowLines.setText("Show lines");
+        optionShowLines.setToolTipText("Show lines on the chart");
+        optionShowLines.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                optionRemoveLinesItemStateChanged(evt);
+                optionShowLinesItemStateChanged(evt);
             }
         });
-        jMenuChartOptions.add(optionRemoveLines);
+        jMenuChartOptions.add(optionShowLines);
+
+        optionShowCircles.setText("Show circles");
+        optionShowCircles.setToolTipText("Show circles on the chart");
+        optionShowCircles.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                optionShowCirclesItemStateChanged(evt);
+            }
+        });
+        jMenuChartOptions.add(optionShowCircles);
 
         jMenuOther.add(jMenuChartOptions);
 
@@ -345,17 +356,17 @@ public class radarFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(btnCpax, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPanelColorCpax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanelColorCpax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(checkBoxCpax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(checkBoxMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelColorMrc, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanelColorMrc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelColorSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanelColorSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(checkBoxSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnAllFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -386,7 +397,7 @@ public class radarFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jPanelColorCpax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanelColorMrc, javax.swing.GroupLayout.DEFAULT_SIZE, 12, Short.MAX_VALUE))
+                                .addComponent(jPanelColorMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jPanelColorSofa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -535,10 +546,10 @@ public class radarFrame extends javax.swing.JFrame {
         checkBoxSofa.setSelected(false);
     }//GEN-LAST:event_btnMrcActionPerformed
 
-    private void optionRemoveLinesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionRemoveLinesItemStateChanged
+    private void optionShowLinesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionShowLinesItemStateChanged
         // Refresh the chart when option changed
         chartRefresh();
-    }//GEN-LAST:event_optionRemoveLinesItemStateChanged
+    }//GEN-LAST:event_optionShowLinesItemStateChanged
 
     private void optionShowPolygonsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionShowPolygonsItemStateChanged
         // Refresh the chart when option changed
@@ -574,6 +585,11 @@ public class radarFrame extends javax.swing.JFrame {
         jPanelColorSofa.setBackground(colSelSofa);
         chartRefresh();
     }//GEN-LAST:event_jPanelColorSofaMouseClicked
+
+    private void optionShowCirclesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionShowCirclesItemStateChanged
+        // Refresh the chart when option changed
+        chartRefresh();
+    }//GEN-LAST:event_optionShowCirclesItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -670,7 +686,8 @@ public class radarFrame extends javax.swing.JFrame {
             int slices = scores.length;
             Chart CpaxChart = new Chart(slices, scores, size,
                     optionShowKey.getState(),
-                    optionRemoveLines.getState());
+                    optionShowLines.getState(),
+                    optionShowCircles.getState());
 
             jLayeredPane1.add(CpaxChart);
         }
@@ -680,7 +697,8 @@ public class radarFrame extends javax.swing.JFrame {
             int slices = scores.length;
             Chart MrcChart = new Chart(slices, scores, size,
                     optionShowKey.getState(),
-                    optionRemoveLines.getState());
+                    optionShowLines.getState(),
+                    optionShowCircles.getState());
 
             jLayeredPane1.add(MrcChart);
         }
@@ -690,7 +708,8 @@ public class radarFrame extends javax.swing.JFrame {
             int slices = scores.length;
             Chart SofaChart = new Chart(slices, scores, size,
                     optionShowKey.getState(),
-                    optionRemoveLines.getState());
+                    optionShowLines.getState(),
+                    optionShowCircles.getState());
 
             jLayeredPane1.add(SofaChart);
         }
@@ -868,8 +887,9 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> listPatientVisits;
     private javax.swing.JList<String> listPatients;
     private javax.swing.JCheckBoxMenuItem optionDrawGaps;
-    private javax.swing.JCheckBoxMenuItem optionRemoveLines;
+    private javax.swing.JCheckBoxMenuItem optionShowCircles;
     private javax.swing.JCheckBoxMenuItem optionShowKey;
+    private javax.swing.JCheckBoxMenuItem optionShowLines;
     private javax.swing.JCheckBoxMenuItem optionShowPolygons;
     private javax.swing.JCheckBoxMenuItem optionShowScores;
     private javax.swing.JTable scoreTable;
