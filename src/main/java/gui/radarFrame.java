@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import models.*;
 import radar.*;
+import dataReader.*;
 
 /**
  *
@@ -17,27 +18,30 @@ import radar.*;
  */
 public class radarFrame extends javax.swing.JFrame {
 
-    public boolean tableIsFull = false;
+    public boolean tablesAreFull = false;
 
     public Color colSelCpax = Color.RED;
     public Color colSelMrc = Color.GREEN;
     public Color colSelSofa = Color.BLUE;
 
-    public Patient[] arrayPatients = new Patient[3];
+    public String path = "D:/Documents/University Archive/Bsc Computing Year 3/COMP3000 Computing Project/Project/data.csv";
+    public int dataCount = dataReader.Main.countData(path);
+    public Patient[] arrayPatients = dataReader.Main.loadData(path, dataCount);
 
     public DefaultListModel listModelPatients = new DefaultListModel();
     public DefaultListModel listModelPatientVisits = new DefaultListModel();
 
     public DefaultTableModel tableModelPatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total"}, 0);
-    public DefaultTableModel tableModelPatientScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
-
+    public DefaultTableModel tableModelCpaxScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
+    public DefaultTableModel tableModelMrcScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
+    public DefaultTableModel tableModelSofaScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
 
     /**
      * Creates new form radarFrame
      */
     public radarFrame() {
         this.setLocationRelativeTo(null);
-        dataCreate();
+        // dataCreate();
         dataLoad();
         initComponents();
     }
@@ -65,7 +69,7 @@ public class radarFrame extends javax.swing.JFrame {
         lblPatientVisits = new javax.swing.JLabel();
         lblInformation = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        scoreTable = new javax.swing.JTable();
+        tableModelSofa = new javax.swing.JTable();
         checkBoxCpax = new javax.swing.JCheckBox();
         checkBoxMrc = new javax.swing.JCheckBox();
         checkBoxSofa = new javax.swing.JCheckBox();
@@ -74,6 +78,13 @@ public class radarFrame extends javax.swing.JFrame {
         jPanelColorCpax = new javax.swing.JPanel();
         jPanelColorMrc = new javax.swing.JPanel();
         jPanelColorSofa = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tableModelCpax = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tableModelMrc = new javax.swing.JTable();
+        jPanelColorSofa1 = new javax.swing.JPanel();
+        jPanelColorCpax1 = new javax.swing.JPanel();
+        jPanelColorMrc1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuOther = new javax.swing.JMenu();
@@ -151,9 +162,10 @@ public class radarFrame extends javax.swing.JFrame {
         lblInformation.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblInformation.setText("Information");
 
-        scoreTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        scoreTable.setModel(tableModelPatientScores);
-        jScrollPane5.setViewportView(scoreTable);
+        tableModelSofa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tableModelSofa.setModel(tableModelSofaScores);
+        tableModelSofa.setShowGrid(true);
+        jScrollPane5.setViewportView(tableModelSofa);
 
         checkBoxCpax.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         checkBoxCpax.setSelected(true);
@@ -165,6 +177,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
 
         checkBoxMrc.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        checkBoxMrc.setSelected(true);
         checkBoxMrc.setText("MRC");
         checkBoxMrc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -173,6 +186,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
 
         checkBoxSofa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        checkBoxSofa.setSelected(true);
         checkBoxSofa.setText("SOFA");
         checkBoxSofa.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -209,7 +223,7 @@ public class radarFrame extends javax.swing.JFrame {
         );
         jPanelColorCpaxLayout.setVerticalGroup(
             jPanelColorCpaxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 12, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanelColorMrc.setBackground(new java.awt.Color(0, 255, 0));
@@ -247,6 +261,72 @@ public class radarFrame extends javax.swing.JFrame {
         );
         jPanelColorSofaLayout.setVerticalGroup(
             jPanelColorSofaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        tableModelCpax.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tableModelCpax.setModel(tableModelCpaxScores);
+        tableModelCpax.setEnabled(false);
+        jScrollPane6.setViewportView(tableModelCpax);
+
+        tableModelMrc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tableModelMrc.setModel(tableModelMrcScores);
+        jScrollPane7.setViewportView(tableModelMrc);
+
+        jPanelColorSofa1.setBackground(new java.awt.Color(0, 0, 255));
+        jPanelColorSofa1.setToolTipText("Change color");
+        jPanelColorSofa1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelColorSofa1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelColorSofa1Layout = new javax.swing.GroupLayout(jPanelColorSofa1);
+        jPanelColorSofa1.setLayout(jPanelColorSofa1Layout);
+        jPanelColorSofa1Layout.setHorizontalGroup(
+            jPanelColorSofa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 307, Short.MAX_VALUE)
+        );
+        jPanelColorSofa1Layout.setVerticalGroup(
+            jPanelColorSofa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 12, Short.MAX_VALUE)
+        );
+
+        jPanelColorCpax1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanelColorCpax1.setToolTipText("Change color");
+        jPanelColorCpax1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelColorCpax1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelColorCpax1Layout = new javax.swing.GroupLayout(jPanelColorCpax1);
+        jPanelColorCpax1.setLayout(jPanelColorCpax1Layout);
+        jPanelColorCpax1Layout.setHorizontalGroup(
+            jPanelColorCpax1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanelColorCpax1Layout.setVerticalGroup(
+            jPanelColorCpax1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 12, Short.MAX_VALUE)
+        );
+
+        jPanelColorMrc1.setBackground(new java.awt.Color(0, 255, 0));
+        jPanelColorMrc1.setToolTipText("Change color");
+        jPanelColorMrc1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelColorMrc1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelColorMrc1Layout = new javax.swing.GroupLayout(jPanelColorMrc1);
+        jPanelColorMrc1.setLayout(jPanelColorMrc1Layout);
+        jPanelColorMrc1Layout.setHorizontalGroup(
+            jPanelColorMrc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanelColorMrc1Layout.setVerticalGroup(
+            jPanelColorMrc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 12, Short.MAX_VALUE)
         );
 
@@ -257,7 +337,6 @@ public class radarFrame extends javax.swing.JFrame {
 
         jMenuPlotOptions.setText("Plot");
 
-        optionDrawGaps.setSelected(true);
         optionDrawGaps.setText("Draw gaps on zeros");
         optionDrawGaps.setToolTipText("Enable or disable gaps that are filled when a zero is present");
         optionDrawGaps.setActionCommand("");
@@ -311,6 +390,7 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jMenuChartOptions.add(optionShowLines);
 
+        optionShowCircles.setSelected(true);
         optionShowCircles.setText("Show circles");
         optionShowCircles.setToolTipText("Show circles on the chart");
         optionShowCircles.addItemListener(new java.awt.event.ItemListener() {
@@ -342,38 +422,54 @@ public class radarFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPatientList))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblPatientList)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPatientVisits)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 10, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblRadarChart)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanelColorSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnCpax, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPanelColorCpax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(checkBoxCpax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(checkBoxMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelColorMrc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(checkBoxCpax, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCpax, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanelColorCpax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnMrc, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanelColorMrc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkBoxMrc, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelColorSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkBoxSofa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSofa, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(checkBoxSofa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(btnAllFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblInformation)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInformation)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(jPanelColorCpax1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanelColorSofa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                            .addComponent(jPanelColorMrc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -381,40 +477,53 @@ public class radarFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblPatientList)
-                        .addComponent(lblRadarChart)
-                        .addComponent(lblPatientVisits)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPanelColorCpax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanelColorMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jPanelColorSofa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblPatientVisits)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSofa)
-                            .addComponent(btnMrc)
-                            .addComponent(btnCpax))
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkBoxCpax)
-                            .addComponent(checkBoxMrc)
-                            .addComponent(checkBoxSofa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAllFields))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblPatientList)
+                                .addComponent(lblRadarChart)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPanelColorCpax1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanelColorSofa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanelColorMrc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jPanelColorCpax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanelColorMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanelColorSofa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnSofa)
+                                    .addComponent(btnMrc)
+                                    .addComponent(btnCpax))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(checkBoxCpax)
+                                    .addComponent(checkBoxMrc)
+                                    .addComponent(checkBoxSofa))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAllFields)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -430,8 +539,14 @@ public class radarFrame extends javax.swing.JFrame {
         listModelPatientVisits.removeAllElements();
 
         // Removes scores
-        for (int i = tableModelPatientScores.getRowCount(); i > 0; i--) {
-            tableModelPatientScores.removeRow(i - 1);
+        for (int i = tableModelMrcScores.getRowCount(); i > 0; i--) {
+            tableModelMrcScores.removeRow(i - 1);
+        }
+        for (int i = tableModelCpaxScores.getRowCount(); i > 0; i--) {
+            tableModelCpaxScores.removeRow(i - 1);
+        }
+        for (int i = tableModelSofaScores.getRowCount(); i > 0; i--) {
+            tableModelSofaScores.removeRow(i - 1);
         }
 
         // Removes overview
@@ -454,6 +569,20 @@ public class radarFrame extends javax.swing.JFrame {
                 listModelPatientVisits.addElement(arrayPatients[i].getAdmission());
             }
         }
+
+        System.out.println("Before Filter: " + listModelPatientVisits.getSize());
+
+        for (int i = 0; i < listModelPatientVisits.getSize(); i++) {
+            String patientVisit = listModelPatientVisits.getElementAt(i).toString();
+            for (int ii = 0; ii < listModelPatientVisits.getSize(); ii++) {
+                if (listModelPatientVisits.get(ii).toString().equals(patientVisit)) {
+                    listModelPatientVisits.remove(ii);
+                }
+            }
+        }
+
+        System.out.println("After Filter: " + listModelPatientVisits.getSize() + "\n_");
+
     }//GEN-LAST:event_listPatientsMouseClicked
 
     private void optionDrawGapsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionDrawGapsItemStateChanged
@@ -481,6 +610,7 @@ public class radarFrame extends javax.swing.JFrame {
                     this.revalidate();
                     this.repaint();
 
+                    setDataTables(i);
                     lblRadarChart.setText("Radar Chart: " + selectedVisit);
 
                     // Empty table of information before showing new relevant information
@@ -560,10 +690,13 @@ public class radarFrame extends javax.swing.JFrame {
         // Change plot colors back to their original values
         colSelCpax = Color.RED;
         jPanelColorCpax.setBackground(colSelCpax);
+        jPanelColorCpax1.setBackground(colSelCpax);
         colSelMrc = Color.GREEN;
         jPanelColorMrc.setBackground(colSelMrc);
+        jPanelColorMrc1.setBackground(colSelMrc);
         colSelSofa = Color.BLUE;
         jPanelColorSofa.setBackground(colSelSofa);
+        jPanelColorSofa1.setBackground(colSelSofa);
         chartRefresh();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -571,18 +704,21 @@ public class radarFrame extends javax.swing.JFrame {
         // Color selection for CPAX
         colSelCpax = selectColorRoutine(colSelCpax);
         jPanelColorCpax.setBackground(colSelCpax);
+        jPanelColorCpax1.setBackground(colSelCpax);
         chartRefresh();
     }//GEN-LAST:event_jPanelColorCpaxMouseClicked
 
     private void jPanelColorMrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorMrcMouseClicked
         colSelMrc = selectColorRoutine(colSelMrc);
         jPanelColorMrc.setBackground(colSelMrc);
+        jPanelColorMrc1.setBackground(colSelMrc);
         chartRefresh();
     }//GEN-LAST:event_jPanelColorMrcMouseClicked
 
     private void jPanelColorSofaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorSofaMouseClicked
         colSelSofa = selectColorRoutine(colSelSofa);
         jPanelColorSofa.setBackground(colSelSofa);
+        jPanelColorSofa1.setBackground(colSelSofa);
         chartRefresh();
     }//GEN-LAST:event_jPanelColorSofaMouseClicked
 
@@ -590,6 +726,18 @@ public class radarFrame extends javax.swing.JFrame {
         // Refresh the chart when option changed
         chartRefresh();
     }//GEN-LAST:event_optionShowCirclesItemStateChanged
+
+    private void jPanelColorSofa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorSofa1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelColorSofa1MouseClicked
+
+    private void jPanelColorCpax1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorCpax1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelColorCpax1MouseClicked
+
+    private void jPanelColorMrc1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorMrc1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelColorMrc1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -630,17 +778,15 @@ public class radarFrame extends javax.swing.JFrame {
     public void dataCreate() {
         Cpax cpax = new Cpax(5, 5, 2, 2, 4, 2, 4, 3, 0, 1, 28);
         Mrc mrc = new Mrc(4, 5, 3, 3, 1, 3, 1, 4, 2, 5, 4, 2, 1, 3, 5, 3, 5, 4, 5, 4, 2, 5, 5, 3, 82);
-        Sofa sofa = new Sofa(4, 4, 3, 0, 1, 2, 14);
+        Sofa sofa = new Sofa(0, 0, 0, 0, 0, 0, 0);
         Patient John = new Patient("1234", "John", "Smith", "22/01/2015", cpax, mrc, sofa);
         arrayPatients[0] = John;
-
 
         cpax = new Cpax(5, 5, 2, 2, 4, 2, 2, 2, 1, 0, 25);
         mrc = new Mrc(5, 5, 3, 0, 0, 5, 0, 4, 0, 5, 0, 4, 5, 0, 5, 0, 5, 0, 5, 0, 0, 5, 5, 0, 65);
         sofa = new Sofa(1, 2, 3, 0, 5, 4, 15);
         Patient Jane = new Patient("2345", "Jane", "Doe", "22/01/2015", cpax, mrc, sofa);
         arrayPatients[1] = Jane;
-
 
         cpax = new Cpax(4, 4, 1, 1, 3, 1, 1, 2, 0, 0, 33);
         mrc = new Mrc(3, 4, 2, 2, 0, 2, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 4, 3, 4, 3, 1, 4, 4, 2, 58);
@@ -650,8 +796,7 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     /*
-     *  Loads data for the lists, ideally needs to be replaced with a Json serialisation
-     *  Best case scenario, even some kind of excel CSV conversion
+     *  Loads data for the lists
      */
     public void dataLoad() {
         int counter = 0;
@@ -660,19 +805,21 @@ public class radarFrame extends javax.swing.JFrame {
             listModelPatients.addElement(arrayPatients[i].getPoid());
         }
 
+        System.out.println("BEFORE FILTER: " + listModelPatients.getSize());
+
         for (int i = 0; i < listModelPatients.getSize(); i++) {
             String patientID = listModelPatients.getElementAt(i).toString();
-            for (int ii = 0; ii < listModelPatients.getSize(); ii++) {
-                if (listModelPatients.get(ii).toString() == patientID) {
-                    counter++;
 
-                    if (counter > 1) {
-                        listModelPatients.removeElementAt(ii);
-                        counter = 0;
-                    }
+            for (int ii = i; ii < listModelPatients.getSize(); ii++) {
+
+                if (listModelPatients.get(ii).toString().equals(patientID)) {
+                    listModelPatients.remove(ii);
                 }
+
             }
         }
+
+        System.out.println("AFTER FILTER: " + listModelPatients.getSize());
     }
 
     /*
@@ -803,60 +950,66 @@ public class radarFrame extends javax.swing.JFrame {
         return color;
     }
 
-    // CURRENTLY VOIDED
-    public void setChartScoreTable(int chartSelection) {
-        /*
-        String selectedID = patientList.getSelectedValue();
-        String selectedVisit = patientVisitList.getSelectedValue();
+    /*
+     *   Sets up the tables of data to go with the chart... 
+     *   There must be a way to shorten this?
+     */
+    public void setDataTables(int patientIndex) {
 
-        for (int i = 0; i < patientArr.length; i++) {
-            if (patientArr[i].getPoid().equals(selectedID)) {
-                if (patientArr[i].getAdmission().equals(selectedVisit)) {
+        String[] items = {};
+        int[] scores = {};
 
-                    String[] items = {};
-                    int[] scores = {};
+        if (tablesAreFull == false) {
 
-                    if (chartSelection == 1) {
-                        items = patientArr[i].getCpax().getItems();
-                        scores = patientArr[i].getCpax().getScores();
-                        lblRadarChart.setText("Radar Chart (CPAX)");
-                    } else if (chartSelection == 2) {
-                        items = patientArr[i].getMrc().getItems();
-                        scores = patientArr[i].getMrc().getScores();
-                        lblRadarChart.setText("Radar Chart (MRC)");
-                    } else if (chartSelection == 3) {
-                        items = patientArr[i].getSofa().getItems();
-                        scores = patientArr[i].getSofa().getScores();
-                        lblRadarChart.setText("Radar Chart (SOFA)");
-                    }
+            items = arrayPatients[patientIndex].getCpax().getItems();
+            scores = arrayPatients[patientIndex].getCpax().getScores();
+            for (int ii = 0; ii < items.length; ii++) {
+                tableModelCpaxScores.addRow(new Object[]{(ii + 1), items[ii], scores[ii]});
+            }
 
-                    if (tableIsFull == false) {
+            items = arrayPatients[patientIndex].getMrc().getItems();
+            scores = arrayPatients[patientIndex].getMrc().getScores();
+            for (int ii = 0; ii < items.length; ii++) {
+                tableModelMrcScores.addRow(new Object[]{(ii + 1), items[ii], scores[ii]});
+            }
 
-                        for (int ii = 0; ii < items.length; ii++) {
-                            tablePatientScores.addRow(new Object[]{(ii + 1), items[ii], scores[ii]});
-                        }
+            items = arrayPatients[patientIndex].getSofa().getItems();
+            scores = arrayPatients[patientIndex].getSofa().getScores();
+            for (int ii = 0; ii < items.length; ii++) {
+                tableModelSofaScores.addRow(new Object[]{(ii + 1), items[ii], scores[ii]});
+            }
 
-                        tableIsFull = true;
+            tablesAreFull = true;
 
-                    } else {
+        } else {
 
-                        for (int ii = (tablePatientScores.getRowCount() - 1); ii > 0; ii--) {
-                            tablePatientScores.removeRow(ii);
-
-                            if (tablePatientScores.getRowCount() == 1) {
-                                tablePatientScores.removeRow(0);
-                            }
-                        }
-
-                        tableIsFull = false;
-                        setChartScoreTable(currentSelection);
-
-                    }
+            for (int ii = (tableModelCpaxScores.getRowCount() - 1); ii > 0; ii--) {
+                tableModelCpaxScores.removeRow(ii);
+                if (tableModelCpaxScores.getRowCount() == 1) {
+                    tableModelCpaxScores.removeRow(0);
                 }
             }
+
+            for (int ii = (tableModelMrcScores.getRowCount() - 1); ii > 0; ii--) {
+                tableModelMrcScores.removeRow(ii);
+                if (tableModelMrcScores.getRowCount() == 1) {
+                    tableModelMrcScores.removeRow(0);
+                }
+            }
+
+            for (int ii = (tableModelSofaScores.getRowCount() - 1); ii > 0; ii--) {
+                tableModelSofaScores.removeRow(ii);
+                if (tableModelSofaScores.getRowCount() == 1) {
+                    tableModelSofaScores.removeRow(0);
+                }
+            }
+
+            tablesAreFull = false;
+            setDataTables(patientIndex);
+
         }
-         */
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAllFields;
@@ -874,12 +1027,17 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuOther;
     private javax.swing.JMenu jMenuPlotOptions;
     private javax.swing.JPanel jPanelColorCpax;
+    private javax.swing.JPanel jPanelColorCpax1;
     private javax.swing.JPanel jPanelColorMrc;
+    private javax.swing.JPanel jPanelColorMrc1;
     private javax.swing.JPanel jPanelColorSofa;
+    private javax.swing.JPanel jPanelColorSofa1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lblInformation;
     private javax.swing.JLabel lblPatientList;
     private javax.swing.JLabel lblPatientVisits;
@@ -892,7 +1050,9 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem optionShowLines;
     private javax.swing.JCheckBoxMenuItem optionShowPolygons;
     private javax.swing.JCheckBoxMenuItem optionShowScores;
-    private javax.swing.JTable scoreTable;
+    private javax.swing.JTable tableModelCpax;
+    private javax.swing.JTable tableModelMrc;
     private javax.swing.JTable tableModelPatient;
+    private javax.swing.JTable tableModelSofa;
     // End of variables declaration//GEN-END:variables
 }

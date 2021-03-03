@@ -59,22 +59,18 @@ public class Plot extends JPanel {
             }
         }
 
+        if (range == 0) {
+            range = 5 + 1;
+        }
+
+        finalRange = range;
+
         // Range check
         int rangeText = 0;
         // Adding a number makes the chart smaller, minusing a number makes it bigger
         if (drawNumbers == true) {
             finalRange = range + 1;
             rangeText = range;
-        } else {
-            finalRange = range;
-        }
-
-        // Adding a number makes the chart smaller, minusing a number makes it bigger
-        if (drawNumbers == true) {
-            finalRange = range + 1;
-            rangeText = range;
-        } else {
-            finalRange = range;
         }
 
         int xOrigin = getWidth() / 2;

@@ -48,21 +48,24 @@ public class Chart extends JPanel {
                 range = scores[i];
                 range = range + 1;
                 if (range <= 5) {
-                    range = 5;
-                    range = range + 1;
+                    range = 5 + 1;
                 }
             }
+        }
+
+        if (range == 0) {
+            range = 5 + 1;
         }
 
         // Range check
         int rangeText = 0;
 
+        finalRange = range;
+
         // Adding a number makes the chart smaller, minusing a number makes it bigger
         if (drawNumbers == true) {
             finalRange = range + 1;
             rangeText = range;
-        } else {
-            finalRange = range;
         }
 
         int xOrigin = getWidth() / 2;
@@ -99,7 +102,6 @@ public class Chart extends JPanel {
                 yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.sin(angle));
 
                 G2D.drawLine(0, 0, yCoord, -xCoord);
-
             }
         }
 
