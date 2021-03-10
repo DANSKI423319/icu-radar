@@ -570,18 +570,22 @@ public class radarFrame extends javax.swing.JFrame {
             }
         }
 
-        System.out.println("Before Filter: " + listModelPatientVisits.getSize());
+        System.out.println("Before Date Filter: " + listModelPatientVisits.getSize());
 
         for (int i = 0; i < listModelPatientVisits.getSize(); i++) {
             String patientVisit = listModelPatientVisits.getElementAt(i).toString();
             for (int ii = 0; ii < listModelPatientVisits.getSize(); ii++) {
                 if (listModelPatientVisits.get(ii).toString().equals(patientVisit)) {
-                    listModelPatientVisits.remove(ii);
+                    if (listModelPatientVisits.getSize() == 1) {
+
+                    } else {
+                        listModelPatientVisits.remove(ii);
+                    }
                 }
             }
         }
 
-        System.out.println("After Filter: " + listModelPatientVisits.getSize() + "\n_");
+        System.out.println("After Date Filter: " + listModelPatientVisits.getSize() + "\n_");
 
     }//GEN-LAST:event_listPatientsMouseClicked
 
@@ -799,7 +803,6 @@ public class radarFrame extends javax.swing.JFrame {
      *  Loads data for the lists
      */
     public void dataLoad() {
-        int counter = 0;
 
         for (int i = 0; i < arrayPatients.length; i++) {
             listModelPatients.addElement(arrayPatients[i].getPoid());
@@ -807,15 +810,13 @@ public class radarFrame extends javax.swing.JFrame {
 
         System.out.println("BEFORE FILTER: " + listModelPatients.getSize());
 
+        int counterr = 0;
         for (int i = 0; i < listModelPatients.getSize(); i++) {
             String patientID = listModelPatients.getElementAt(i).toString();
-
-            for (int ii = i; ii < listModelPatients.getSize(); ii++) {
-
+            for (int ii = 0; ii < listModelPatients.getSize(); ii++) {
                 if (listModelPatients.get(ii).toString().equals(patientID)) {
                     listModelPatients.remove(ii);
                 }
-
             }
         }
 
