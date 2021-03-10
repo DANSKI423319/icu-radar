@@ -10,16 +10,18 @@ import java.util.ArrayList;
  */
 public class Chart extends JPanel {
 
-    private final int[] scores;
+    private final Point[] scores;
     private final int slices;
     private int radius;
     private int finalRange = 0;
     private final boolean drawNumbers;
     private final boolean drawLines;
     private final boolean drawCircles;
+    private final boolean drawColLines;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Chart(int nSlices, int[] nScores, int size, boolean boolNumbers, boolean boolLines, boolean boolCircles) {
+    public Chart(int nSlices, Point[] nScores, int size, 
+            boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines) {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.setBackground(transparent);
@@ -28,6 +30,7 @@ public class Chart extends JPanel {
         this.drawNumbers = boolNumbers;
         this.drawLines = boolLines;
         this.drawCircles = boolCircles;
+        this.drawColLines = boolColLines;
     }
 
     @Override
@@ -44,8 +47,8 @@ public class Chart extends JPanel {
 
         // Set range for chart if more than 5
         for (int i = 0; i < scores.length; i++) {
-            if (scores[i] > range) {
-                range = scores[i];
+            if (scores[i].getScore() > range) {
+                range = scores[i].getScore();
                 range = range + 1;
                 if (range <= 5) {
                     range = 5 + 1;
@@ -96,6 +99,10 @@ public class Chart extends JPanel {
          */
         if (drawLines == true) {
             for (int i = 0; i < slices; i++) {
+                if (drawColLines == true) {
+                    G2D.setColor(scores[i].getColor());
+                }
+                
                 double angle = 2 * Math.PI * i / slices;
 
                 xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.cos(angle));
