@@ -101,13 +101,14 @@ public class Chart extends JPanel {
             for (int i = 0; i < slices; i++) {
                 if (drawColLines == true) {
                     G2D.setColor(scores[i].getColor());
+                    // Fill Arc could be an interesting thing?
                 }
                 
                 double angle = 2 * Math.PI * i / slices;
 
                 xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.cos(angle));
                 yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.sin(angle));
-
+                
                 G2D.drawLine(0, 0, yCoord, -xCoord);
             }
         }

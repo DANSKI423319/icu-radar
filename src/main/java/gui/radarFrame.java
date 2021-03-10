@@ -274,11 +274,6 @@ public class radarFrame extends javax.swing.JFrame {
 
         jPanelColorSofa1.setBackground(new java.awt.Color(0, 0, 255));
         jPanelColorSofa1.setToolTipText("Change color");
-        jPanelColorSofa1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelColorSofa1MouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanelColorSofa1Layout = new javax.swing.GroupLayout(jPanelColorSofa1);
         jPanelColorSofa1.setLayout(jPanelColorSofa1Layout);
@@ -293,11 +288,6 @@ public class radarFrame extends javax.swing.JFrame {
 
         jPanelColorCpax1.setBackground(new java.awt.Color(255, 0, 0));
         jPanelColorCpax1.setToolTipText("Change color");
-        jPanelColorCpax1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelColorCpax1MouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanelColorCpax1Layout = new javax.swing.GroupLayout(jPanelColorCpax1);
         jPanelColorCpax1.setLayout(jPanelColorCpax1Layout);
@@ -312,11 +302,6 @@ public class radarFrame extends javax.swing.JFrame {
 
         jPanelColorMrc1.setBackground(new java.awt.Color(0, 255, 0));
         jPanelColorMrc1.setToolTipText("Change color");
-        jPanelColorMrc1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelColorMrc1MouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanelColorMrc1Layout = new javax.swing.GroupLayout(jPanelColorMrc1);
         jPanelColorMrc1.setLayout(jPanelColorMrc1Layout);
@@ -753,25 +738,13 @@ public class radarFrame extends javax.swing.JFrame {
         chartRefresh();
     }//GEN-LAST:event_optionShowCirclesItemStateChanged
 
-    private void jPanelColorSofa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorSofa1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanelColorSofa1MouseClicked
-
-    private void jPanelColorCpax1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorCpax1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanelColorCpax1MouseClicked
-
-    private void jPanelColorMrc1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColorMrc1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanelColorMrc1MouseClicked
-
     private void jRadioAlternateViewItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioAlternateViewItemStateChanged
-        // TODO add your handling code here:
+        // Refresh the chart when option changed
         chartRefresh();
     }//GEN-LAST:event_jRadioAlternateViewItemStateChanged
 
     private void optionColourLinesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionColourLinesItemStateChanged
-        // TODO add your handling code here:
+        // Refresh the chart when option changed
         chartRefresh();
     }//GEN-LAST:event_optionColourLinesItemStateChanged
 
@@ -840,7 +813,6 @@ public class radarFrame extends javax.swing.JFrame {
             listModelPatients.addElement(arrayPatients[i].getPoid());
         }
 
-        // System.out.println("BEFORE FILTER: " + listModelPatients.getSize());
         int counter = 0;
 
         for (int i = 0; i < listModelPatients.getSize(); i++) {
@@ -855,16 +827,16 @@ public class radarFrame extends javax.swing.JFrame {
                 }
             }
         }
-
-        // System.out.println("AFTER FILTER: " + listModelPatients.getSize());
     }
 
     /*
      *  Used to build the chart, checks which boxes are checked and builds
+     *  the appropiate charts based on the selection...
      */
     public void chartBuilder(int index) {
         int size = 428;
 
+        // Check to see which version of the chart is being made
         if (jRadioAlternateView.isSelected() == false) {
 
             if (checkBoxCpax.isSelected() == true) {
@@ -923,6 +895,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 jLayeredPane1.add(SofaChart);
             }
+            
         } else {
 
             int cpaxLength = 0;
@@ -942,14 +915,17 @@ public class radarFrame extends javax.swing.JFrame {
             }
 
             int totalLength = cpaxLength + mrcLength + sofaLength;
-            Point[] totalScores = new Point[totalLength];
+            Point[] chartScores = new Point[totalLength];
+            
+            // Use this 'pos' variable as a position for where the procedure
+            // puts the next score in the array...
             int pos = 0;
 
             if (checkBoxCpax.isSelected() == true) {
                 int scores[] = arrayPatients[index].getCpax().getScores();
                 for (int i = 0; i < scores.length; i++) {
                     Point newPoint = new Point(scores[i], colSelCpax);
-                    totalScores[pos] = newPoint;
+                    chartScores[pos] = newPoint;
                     pos++;
                 }
             }
@@ -958,7 +934,7 @@ public class radarFrame extends javax.swing.JFrame {
                 int scores[] = arrayPatients[index].getMrc().getScores();
                 for (int i = 0; i < scores.length; i++) {
                     Point newPoint = new Point(scores[i], colSelMrc);
-                    totalScores[pos] = newPoint;
+                    chartScores[pos] = newPoint;
                     pos++;
                 }
             }
@@ -967,15 +943,13 @@ public class radarFrame extends javax.swing.JFrame {
                 int scores[] = arrayPatients[index].getSofa().getScores();
                 for (int i = 0; i < scores.length; i++) {
                     Point newPoint = new Point(scores[i], colSelSofa);
-                    totalScores[pos] = newPoint;
+                    chartScores[pos] = newPoint;
                     pos++;
                 }
             }
 
-            pos = 0;
-
-            int slices = totalScores.length;
-            Chart totalChart = new Chart(slices, totalScores, size,
+            int slices = chartScores.length;
+            Chart totalChart = new Chart(slices, chartScores, size,
                     optionShowKey.getState(),
                     optionShowLines.getState(),
                     optionShowCircles.getState(),
@@ -991,6 +965,7 @@ public class radarFrame extends javax.swing.JFrame {
     public void chartPlotter(int index, Color colCpax, Color colMrc, Color colSofa) {
         int size = 428;
 
+        // Check to see which version of the chart is being made
         if (jRadioAlternateView.isSelected() == false) {
             if (checkBoxCpax.isSelected() == true) {
                 int scores[] = arrayPatients[index].getCpax().getScores();

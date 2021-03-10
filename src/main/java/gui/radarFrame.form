@@ -637,9 +637,6 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Change color"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColorSofa1MouseClicked"/>
-      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -661,9 +658,6 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Change color"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColorCpax1MouseClicked"/>
-      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -685,9 +679,6 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Change color"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColorMrc1MouseClicked"/>
-      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
