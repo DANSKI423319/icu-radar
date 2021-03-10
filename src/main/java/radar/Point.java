@@ -36,5 +36,10 @@ public class Point {
         this.score = score;
         this.color = color;
     }
+
+    public Point() {
+    }
+    
+    
     
 }

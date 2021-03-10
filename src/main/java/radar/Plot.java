@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Plot extends JPanel {
 
     private final Color selectedColor;
-    private final int[] scores;
+    private final Point[] scores;
     private final int points;
     private int radius;
     private final boolean drawLines;
@@ -21,7 +21,7 @@ public class Plot extends JPanel {
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Plot(Color color, int nPoints, int[] nScores, int scale,
+    public Plot(Color color, int nPoints, Point[] nScores, int scale,
             boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons) {
         super(true);
         this.setPreferredSize(new Dimension(scale, scale));
@@ -49,8 +49,8 @@ public class Plot extends JPanel {
 
         // Set range for chart if more than 5
         for (int i = 0; i < scores.length; i++) {
-            if (scores[i] > range) {
-                range = scores[i];
+            if (scores[i].getScore() > range) {
+                range = scores[i].getScore();
                 range = range + 1;
                 if (range <= 5) {
                     range = 5;
@@ -86,11 +86,11 @@ public class Plot extends JPanel {
         for (int i = 0; i < scores.length; i++) {
 
             double angle = 2 * Math.PI * i / points;
-            xCoord = (int) Math.round(0 + (scores[i] * superOrigin / finalRange) * Math.cos(angle));
-            yCoord = (int) Math.round(0 + (scores[i] * superOrigin / finalRange) * Math.sin(angle));
+            xCoord = (int) Math.round(0 + (scores[i].getScore() * superOrigin / finalRange) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + (scores[i].getScore() * superOrigin / finalRange) * Math.sin(angle));
 
             if (xCoord == 0) {
-                if (scores[i] > 0) {
+                if (scores[i].getScore() > 0) {
                     // Score validation check
                     xPoints[i] = -xCoord;
                     yPoints[i] = yCoord;
@@ -113,13 +113,13 @@ public class Plot extends JPanel {
 
                 // If a score is zero, take the previous point as a start point
                 // Loop for a score that is more than zero, take that point as an end point               
-                if (scores[i] == 0) {
-                    if (scores[(i - 1)] == 0) {
+                if (scores[i].getScore() == 0) {
+                    if (scores[(i - 1)].getScore() == 0) {
                         // Skip over if true...
                     } else {
                         startPoints.add(i - 1);
                         for (int ii = i; ii < scores.length; ii++) {
-                            if (scores[ii] > 0) {
+                            if (scores[ii].getScore() > 0) {
                                 endPoints.add(ii);
                                 break;
                             }
@@ -129,9 +129,9 @@ public class Plot extends JPanel {
             }
 
             // If the final point is a zero, assign the first number above zero as an end point
-            if (scores[scores.length - 1] == 0) {
+            if (scores[scores.length - 1].getScore() == 0) {
                 for (int j = 0; j < scores.length; j++) {
-                    if (scores[j] > 0) {
+                    if (scores[j].getScore() > 0) {
                         endPoints.add(j);
                         break;
                     }
@@ -139,12 +139,12 @@ public class Plot extends JPanel {
             }
 
             // If the first score is a zero, go backwards to find the start point
-            if (scores[0] == 0) {
+            if (scores[0].getScore() == 0) {
                 for (int ii = (scores.length - 1); ii > 0; ii--) {
-                    if (scores[ii] > 0) {
+                    if (scores[ii].getScore() > 0) {
                         startPoints.add(ii);
                         for (int iii = 0; iii < scores.length; iii++) {
-                            if (scores[iii] > 0) {
+                            if (scores[iii].getScore() > 0) {
                                 endPoints.add(iii);
                                 break;
                             }
@@ -179,9 +179,9 @@ public class Plot extends JPanel {
 
             G2D.setFont(new Font("Arial", Font.BOLD, 15));
             for (int i = 0; i < scores.length; i++) {
-                G2D.setColor(selectedColor);
+                G2D.setColor(scores[i].getColor());
 
-                if (scores[i] > 0) {
+                if (scores[i].getScore() > 0) {
                     if (drawNumbers == true) {
                         ovalSize = Math.abs(superOrigin - radius) / 23;
                     } else {
@@ -190,7 +190,7 @@ public class Plot extends JPanel {
                     G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
                     G2D.setColor(Color.WHITE);
 
-                    String txt = "" + (scores[i]);
+                    String txt = "" + (scores[i].getScore());
                     G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
                 }
             }
