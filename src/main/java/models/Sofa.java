@@ -110,6 +110,19 @@ public class Sofa {
         return array;
     }
     
+    public String[] getScoresStrings() {
+        String[] array = {
+            String.valueOf(this.creatine),
+            String.valueOf(this.bilirubin),
+            String.valueOf(this.platelets),
+            String.valueOf(this.pulmonaryFunction),
+            String.valueOf(this.gcs),
+            String.valueOf(this.noradrenaline)
+        };
+        
+        return array;
+    }
+    
     public int[] getAll() {
         int[] array = {
             this.creatine,

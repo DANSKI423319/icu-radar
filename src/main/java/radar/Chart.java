@@ -45,6 +45,13 @@ public class Chart extends JPanel {
 
         int range = 0;
 
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i].getScore() == 12345) {
+                scores[i].setScore(0);
+                scores[i].setMissing(true);
+            }
+        }
+        
         // Set range for chart if more than 5
         for (int i = 0; i < scores.length; i++) {
             if (scores[i].getScore() > range) {
@@ -118,6 +125,7 @@ public class Chart extends JPanel {
             can be reviewed from a table in the GUI
          */
         if (drawNumbers == true) {
+            G2D.setColor(Color.BLACK);
             for (int i = 0; i < slices; i++) {
                 double angle = 2 * Math.PI * i / slices;
 

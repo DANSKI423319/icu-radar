@@ -15,6 +15,8 @@ public class Point {
     
     private int score;
     private Color color;
+    private Boolean zero;
+    private Boolean missing;
 
     public int getScore() {
         return score;
@@ -32,9 +34,27 @@ public class Point {
         this.color = color;
     }
 
+    public Boolean getZero() {
+        return zero;
+    }
+
+    public void setZero(Boolean isZero) {
+        this.zero = isZero;
+    }
+
+    public Boolean getMissing() {
+        return missing;
+    }
+
+    public void setMissing(Boolean missing) {
+        this.missing = missing;
+    }
+
     public Point(int score, Color color) {
         this.score = score;
         this.color = color;
+        this.zero = false;
+        this.missing = false;
     }
 
     public Point() {

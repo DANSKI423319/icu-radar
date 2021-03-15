@@ -19,14 +19,24 @@
                 <Property name="text" type="java.lang.String" value="Plot"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionDrawGaps">
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionCoverZeros">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Draw gaps on zeros"/>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Cover zeros"/>
                     <Property name="toolTipText" type="java.lang.String" value="Enable or disable gaps that are filled when a zero is present"/>
                     <Property name="actionCommand" type="java.lang.String" value=""/>
                   </Properties>
                   <Events>
-                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="optionDrawGapsItemStateChanged"/>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="optionCoverZerosItemStateChanged"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionCoverNulls">
+                  <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Cover missing values"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="optionCoverNullsItemStateChanged"/>
                   </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionShowScores">
@@ -87,7 +97,6 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="optionColourLines">
                   <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Colour Lines"/>
                   </Properties>
                   <Events>
@@ -153,39 +162,37 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jPanelColorSofa" min="-2" max="-2" attributes="0"/>
+                      <Component id="jPanelColourSofa" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLayeredPane1" min="-2" pref="437" max="-2" attributes="0"/>
+                          <Component id="radarPane" min="-2" pref="437" max="-2" attributes="0"/>
                           <Component id="lblRadarChart" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnAllFields" alignment="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="checkBoxCpax" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnCpax" alignment="0" pref="125" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jPanelColorCpax" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btnMrc" min="-2" pref="125" max="-2" attributes="0"/>
-                                      <Component id="jPanelColorMrc" min="-2" max="-2" attributes="0"/>
-                                      <Component id="checkBoxMrc" min="-2" pref="145" max="-2" attributes="0"/>
-                                  </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="checkBoxCpax" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnCpax" alignment="0" pref="125" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jPanelColourCpax" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnMrc" pref="125" max="32767" attributes="0"/>
+                                  <Component id="jPanelColourMrc" max="32767" attributes="0"/>
+                                  <Component id="checkBoxMrc" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="btnAllFields" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnSofa" pref="125" max="32767" attributes="0"/>
-                          <Component id="checkBoxSofa" max="32767" attributes="0"/>
-                          <Component id="jRadioAlternateView" max="32767" attributes="0"/>
+                          <Component id="btnSofa" max="32767" attributes="0"/>
+                          <Component id="checkBoxSofa" pref="125" max="32767" attributes="0"/>
+                          <Component id="jRadioAlternateView" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -197,18 +204,18 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane6" pref="0" max="32767" attributes="0"/>
-                              <Component id="jPanelColorCpax1" max="32767" attributes="0"/>
+                              <Component id="jPanelColourCpax1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanelColorSofa1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanelColourSofa1" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane5" min="-2" pref="307" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jScrollPane7" pref="577" max="32767" attributes="0"/>
-                      <Component id="jPanelColorMrc1" max="32767" attributes="0"/>
+                      <Component id="jPanelColourMrc1" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -228,13 +235,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane3" min="-2" pref="438" max="-2" attributes="0"/>
-                          <Component id="jLayeredPane1" min="-2" pref="438" max="-2" attributes="0"/>
+                          <Component id="radarPane" min="-2" pref="438" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jPanelColorCpax" max="32767" attributes="0"/>
-                          <Component id="jPanelColorMrc" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jPanelColorSofa" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanelColourCpax" max="32767" attributes="0"/>
+                          <Component id="jPanelColourMrc" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jPanelColourSofa" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -265,8 +272,8 @@
                               <Component id="jScrollPane2" min="-2" pref="48" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jPanelColorCpax1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jPanelColorSofa1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanelColourCpax1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanelColourSofa1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -274,7 +281,7 @@
                                   <Component id="jScrollPane5" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanelColorMrc1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanelColourMrc1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane7" min="-2" pref="280" max="-2" attributes="0"/>
                           </Group>
@@ -286,7 +293,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -507,7 +514,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllFieldsActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanelColorCpax">
+    <Container class="javax.swing.JPanel" name="jPanelColourCpax">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -515,7 +522,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Change color"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColorCpaxMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColourCpaxMouseClicked"/>
       </Events>
 
       <Layout>
@@ -531,7 +538,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanelColorMrc">
+    <Container class="javax.swing.JPanel" name="jPanelColourMrc">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="ff" red="0" type="rgb"/>
@@ -539,7 +546,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Change color"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColorMrcMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColourMrcMouseClicked"/>
       </Events>
 
       <Layout>
@@ -555,7 +562,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanelColorSofa">
+    <Container class="javax.swing.JPanel" name="jPanelColourSofa">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="0" red="0" type="rgb"/>
@@ -563,7 +570,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Change color"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColorSofaMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelColourSofaMouseClicked"/>
       </Events>
 
       <Layout>
@@ -630,7 +637,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanelColorSofa1">
+    <Container class="javax.swing.JPanel" name="jPanelColourSofa1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="0" red="0" type="rgb"/>
@@ -651,7 +658,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanelColorCpax1">
+    <Container class="javax.swing.JPanel" name="jPanelColourCpax1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -672,7 +679,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanelColorMrc1">
+    <Container class="javax.swing.JPanel" name="jPanelColourMrc1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="ff" red="0" type="rgb"/>
@@ -693,7 +700,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JLayeredPane" name="jLayeredPane1">
+    <Container class="javax.swing.JLayeredPane" name="radarPane">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -705,11 +712,11 @@
       </Properties>
       <LayoutCode>
         <CodeStatement>
-          <CodeExpression id="1_jLayeredPane1">
-            <CodeVariable name="jLayeredPane1" type="8194" declaredType="javax.swing.JLayeredPane"/>
+          <CodeExpression id="1_radarPane">
+            <CodeVariable name="radarPane" type="8194" declaredType="javax.swing.JLayeredPane"/>
             <ExpressionOrigin>
               <ExpressionProvider type="ComponentRef">
-                <ComponentRef name="jLayeredPane1"/>
+                <ComponentRef name="radarPane"/>
               </ExpressionProvider>
             </ExpressionOrigin>
           </CodeExpression>
@@ -723,7 +730,7 @@
                   <CodeConstructor class="javax.swing.OverlayLayout" parameterTypes="java.awt.Container"/>
                 </ExpressionProvider>
                 <Parameters>
-                  <CodeExpression id="1_jLayeredPane1"/>
+                  <CodeExpression id="1_radarPane"/>
                 </Parameters>
               </ExpressionOrigin>
             </CodeExpression>
@@ -734,7 +741,7 @@
     <Component class="javax.swing.JRadioButton" name="jRadioAlternateView">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="11" style="1"/>
+          <Font name="Arial" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Alternate View"/>
       </Properties>

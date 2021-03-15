@@ -18,11 +18,12 @@ public class Plot extends JPanel {
     private final boolean drawScores;
     private final boolean drawNumbers;
     private final boolean drawPolygons;
+    private final boolean drawMissing;
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
     public Plot(Color color, int nPoints, Point[] nScores, int scale,
-            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons) {
+            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing) {
         super(true);
         this.setPreferredSize(new Dimension(scale, scale));
         this.setBackground(transparent);
@@ -33,6 +34,7 @@ public class Plot extends JPanel {
         this.drawScores = boolScores;
         this.drawNumbers = boolNumbers;
         this.drawPolygons = boolPolygons;
+        this.drawMissing = boolMissing;
     }
 
     @Override
@@ -45,7 +47,20 @@ public class Plot extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        G2D.setStroke(new BasicStroke(2));
+
         int range = 0;
+
+        // Check for zeros, set boolean
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i].getScore() == 0) {
+                scores[i].setZero(true);
+            }
+            if (scores[i].getScore() == 12345) {
+                scores[i].setScore(0);
+                scores[i].setMissing(true);
+            }
+        }
 
         // Set range for chart if more than 5
         for (int i = 0; i < scores.length; i++) {
@@ -104,7 +119,7 @@ public class Plot extends JPanel {
 
         // Draw lines between zeros
         if (drawLines == true) {
-
+            // <editor-fold defaultstate="collapsed" desc="Draw Lines Procedure">
             // Array for lines between zeros
             ArrayList<Integer> startPoints = new ArrayList<>();
             ArrayList<Integer> endPoints = new ArrayList<>();
@@ -113,8 +128,8 @@ public class Plot extends JPanel {
 
                 // If a score is zero, take the previous point as a start point
                 // Loop for a score that is more than zero, take that point as an end point               
-                if (scores[i].getScore() == 0) {
-                    if (scores[(i - 1)].getScore() == 0) {
+                if (scores[i].getZero() == true) {
+                    if (scores[(i - 1)].getZero() == true) {
                         // Skip over if true...
                     } else {
                         startPoints.add(i - 1);
@@ -129,7 +144,7 @@ public class Plot extends JPanel {
             }
 
             // If the final point is a zero, assign the first number above zero as an end point
-            if (scores[scores.length - 1].getScore() == 0) {
+            if (scores[scores.length - 1].getZero() == true) {
                 for (int j = 0; j < scores.length; j++) {
                     if (scores[j].getScore() > 0) {
                         endPoints.add(j);
@@ -139,7 +154,7 @@ public class Plot extends JPanel {
             }
 
             // If the first score is a zero, go backwards to find the start point
-            if (scores[0].getScore() == 0) {
+            if (scores[0].getZero() == true) {
                 for (int ii = (scores.length - 1); ii > 0; ii--) {
                     if (scores[ii].getScore() > 0) {
                         startPoints.add(ii);
@@ -160,9 +175,86 @@ public class Plot extends JPanel {
 
             G2D.setColor(selectedColor);
 
-            for (int i = 0; i < start.length; i++) {
-                G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+            if (start.length > end.length || start.length < end.length) {
+                // Do nothing... bad if this happens
+            } else {
+                for (int i = 0; i < start.length; i++) {
+                    G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                }
             }
+            // </editor-fold>
+        }
+
+        if (drawMissing == true) {
+            // <editor-fold defaultstate="collapsed" desc="Draw Lines Procedure">
+            // Array for lines between zeros
+            ArrayList<Integer> startPoints = new ArrayList<>();
+            ArrayList<Integer> endPoints = new ArrayList<>();
+
+            for (int i = 1; i < (scores.length); i++) {
+
+                // If a score is zero, take the previous point as a start point
+                // Loop for a score that is more than zero, take that point as an end point               
+                if (scores[i].getMissing() == true) {
+                    if (scores[(i - 1)].getMissing() == true) {
+                        // Skip over if true...
+                    } else {
+                        startPoints.add(i - 1);
+                        for (int ii = i; ii < scores.length; ii++) {
+                            if (scores[ii].getScore() > 0) {
+                                endPoints.add(ii);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If the final point is a zero, assign the first number above zero as an end point
+            if (scores[scores.length - 1].getMissing() == true) {
+                for (int j = 0; j < scores.length; j++) {
+                    if (scores[j].getScore() > 0) {
+                        endPoints.add(j);
+                        break;
+                    }
+                }
+            }
+
+            // If the first score is a zero, go backwards to find the start point
+            if (scores[0].getMissing() == true) {
+                for (int ii = (scores.length - 1); ii > 0; ii--) {
+                    if (scores[ii].getScore() > 0) {
+                        startPoints.add(ii);
+                        for (int iii = 0; iii < scores.length; iii++) {
+                            if (scores[iii].getScore() > 0) {
+                                endPoints.add(iii);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // Reassign array list to actual array
+            Integer[] start = startPoints.toArray(new Integer[0]);
+            Integer[] end = endPoints.toArray(new Integer[0]);
+
+            G2D.setColor(Color.BLACK);
+            var defaultStroke = G2D.getStroke();
+
+            if (start.length > end.length || start.length < end.length) {
+                // Do nothing... bad if this happens
+            } else {
+                Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0);
+                G2D.setStroke(dashed);
+                for (int i = 0; i < start.length; i++) {
+                    G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                }
+                G2D.setStroke(defaultStroke);
+            }
+
+            // </editor-fold>
         }
 
         // Plot radar with loaded arrays

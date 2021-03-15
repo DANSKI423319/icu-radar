@@ -83,7 +83,7 @@ public class Main {
                 for (int i = 0; i < column.length; i++) {
                     // Re-assign blanks to zero.. for now
                     if (column[i].isBlank() == true) {
-                        column[i] = "0";
+                        column[i] = "12345";
                         // System.out.println(i + " was blank, now equals: " + val[i]);
                     } else {
                         // System.out.println(i + " " + val[i].toString());
