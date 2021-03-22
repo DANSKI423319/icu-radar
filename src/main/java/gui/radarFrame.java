@@ -798,9 +798,9 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     public void dataCreate() {
-        Cpax cpax = new Cpax(12345, 4, 1, 0, 3, 1, 1, 2, 12345, 12345, 33);
-        Mrc mrc = new Mrc(3, 4, 12345, 12345, 0, 12345, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 0, 0, 4, 3, 1, 0, 4, 2, 58);
-        Sofa sofa = new Sofa(3, 12345, 2, 0, 0, 2, 10);
+        Cpax cpax = new Cpax(12345, 4, 1, 0, 3, 1, 1, 2, 12345, 12345, 12);
+        Mrc mrc = new Mrc(3, 4, 12345, 12345, 0, 12345, 0, 3, 1, 4, 3, 1, 0, 2, 4, 2, 0, 0, 4, 3, 1, 0, 4, 2, 41);
+        Sofa sofa = new Sofa(3, 12345, 2, 0, 0, 2, 7);
         Patient John = new Patient("1234", "John", "Smith", "24/01/2015", cpax, mrc, sofa);
         arrayPatients[0] = John;
 
