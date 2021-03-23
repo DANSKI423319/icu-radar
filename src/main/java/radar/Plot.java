@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Plot extends JPanel {
 
     private final Color selectedColor;
+    private final String plotName;
     private final Point[] scores;
     private final int points;
     private int radius;
@@ -22,12 +23,13 @@ public class Plot extends JPanel {
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Plot(Color color, int nPoints, Point[] nScores, int scale,
+    public Plot(Color color, String name, int nPoints, Point[] nScores, int scale,
             boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing) {
         super(true);
         this.setPreferredSize(new Dimension(scale, scale));
         this.setBackground(transparent);
         this.selectedColor = color;
+        this.plotName = name;
         this.points = nPoints;
         this.scores = nScores;
         this.drawLines = boolLines;
@@ -239,6 +241,11 @@ public class Plot extends JPanel {
             // Reassign array list to actual array
             Integer[] start = startPoints.toArray(new Integer[0]);
             Integer[] end = endPoints.toArray(new Integer[0]);
+            
+            // Make a loop here somewhere
+            /*
+                For loop, if start[i] and end[i] names do not match, do not draw
+            */
 
             G2D.setColor(Color.BLACK);
             var defaultStroke = G2D.getStroke();
@@ -246,6 +253,7 @@ public class Plot extends JPanel {
             if (start.length > end.length || start.length < end.length) {
                 // Do nothing... bad if this happens
             } else {
+                // MAYBE LOOP HERE?
                 Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0);
                 G2D.setStroke(dashed);
                 for (int i = 0; i < start.length; i++) {
@@ -271,7 +279,7 @@ public class Plot extends JPanel {
 
             G2D.setFont(new Font("Arial", Font.BOLD, 15));
             for (int i = 0; i < scores.length; i++) {
-                G2D.setColor(scores[i].getColor());
+                G2D.setColor(new Color(scores[i].getColor().getRed(), scores[i].getColor().getGreen(), scores[i].getColor().getBlue(), 200));
 
                 if (scores[i].getScore() > 0) {
                     if (drawNumbers == true) {
