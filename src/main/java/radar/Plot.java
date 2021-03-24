@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Plot extends JPanel {
 
     private final Color selectedColor;
-    private final String plotName;
     private final Point[] scores;
     private final int points;
     private int radius;
@@ -20,16 +19,16 @@ public class Plot extends JPanel {
     private final boolean drawNumbers;
     private final boolean drawPolygons;
     private final boolean drawMissing;
+    private final boolean drawLinks;
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Plot(Color color, String name, int nPoints, Point[] nScores, int scale,
-            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing) {
+    public Plot(Color color, int nPoints, Point[] nScores, int scale,
+            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing, boolean boolLinks) {
         super(true);
         this.setPreferredSize(new Dimension(scale, scale));
         this.setBackground(transparent);
         this.selectedColor = color;
-        this.plotName = name;
         this.points = nPoints;
         this.scores = nScores;
         this.drawLines = boolLines;
@@ -37,6 +36,7 @@ public class Plot extends JPanel {
         this.drawNumbers = boolNumbers;
         this.drawPolygons = boolPolygons;
         this.drawMissing = boolMissing;
+        this.drawLinks = boolLinks;
     }
 
     @Override
@@ -181,7 +181,13 @@ public class Plot extends JPanel {
                 // Do nothing... bad if this happens
             } else {
                 for (int i = 0; i < start.length; i++) {
-                    G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                    if (drawLinks == true) {
+                        G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                    } else {
+                        if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
+                            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                        }
+                    }
                 }
             }
             // </editor-fold>
@@ -195,12 +201,13 @@ public class Plot extends JPanel {
 
             for (int i = 1; i < (scores.length); i++) {
 
-                // If a score is zero, take the previous point as a start point
-                // Loop for a score that is more than zero, take that point as an end point               
+                // If a score is missing, take the previous point as a start point
+                // Loop for a score that is not missing, take that point as an end point               
                 if (scores[i].getMissing() == true) {
                     if (scores[(i - 1)].getMissing() == true) {
                         // Skip over if true...
                     } else {
+                        String tempAlias = scores[i - 1].getAlias();
                         startPoints.add(i - 1);
                         for (int ii = i; ii < scores.length; ii++) {
                             if (scores[ii].getScore() > 0) {
@@ -212,7 +219,7 @@ public class Plot extends JPanel {
                 }
             }
 
-            // If the final point is a zero, assign the first number above zero as an end point
+            // If the final point is missing, assign the first number as an end point
             if (scores[scores.length - 1].getMissing() == true) {
                 for (int j = 0; j < scores.length; j++) {
                     if (scores[j].getScore() > 0) {
@@ -222,11 +229,12 @@ public class Plot extends JPanel {
                 }
             }
 
-            // If the first score is a zero, go backwards to find the start point
+            // If the first score is a missing, go backwards to find the start point
             if (scores[0].getMissing() == true) {
                 for (int ii = (scores.length - 1); ii > 0; ii--) {
                     if (scores[ii].getScore() > 0) {
                         startPoints.add(ii);
+                        String tempAlias = scores[ii].getAlias();
                         for (int iii = 0; iii < scores.length; iii++) {
                             if (scores[iii].getScore() > 0) {
                                 endPoints.add(iii);
@@ -241,11 +249,6 @@ public class Plot extends JPanel {
             // Reassign array list to actual array
             Integer[] start = startPoints.toArray(new Integer[0]);
             Integer[] end = endPoints.toArray(new Integer[0]);
-            
-            // Make a loop here somewhere
-            /*
-                For loop, if start[i] and end[i] names do not match, do not draw
-            */
 
             G2D.setColor(Color.BLACK);
             var defaultStroke = G2D.getStroke();
@@ -253,11 +256,16 @@ public class Plot extends JPanel {
             if (start.length > end.length || start.length < end.length) {
                 // Do nothing... bad if this happens
             } else {
-                // MAYBE LOOP HERE?
                 Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0);
                 G2D.setStroke(dashed);
                 for (int i = 0; i < start.length; i++) {
-                    G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                    if (drawLinks == true) {
+                        G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                    } else {
+                        if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
+                            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                        }
+                    }
                 }
                 G2D.setStroke(defaultStroke);
             }
