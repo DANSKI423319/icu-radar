@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class Chart extends JPanel {
 
+    private final int SIZE = 400;
     private final Point[] scores;
     private final int slices;
     private int radius;
@@ -20,10 +21,10 @@ public class Chart extends JPanel {
     private final boolean drawColLines;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Chart(int nSlices, Point[] nScores, int size, 
+    public Chart(int nSlices, Point[] nScores,
             boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines) {
         super(true);
-        this.setPreferredSize(new Dimension(size, size));
+        this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
         this.slices = nSlices;
         this.scores = nScores;

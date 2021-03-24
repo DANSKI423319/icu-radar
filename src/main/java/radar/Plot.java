@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class Plot extends JPanel {
 
+    private final int SIZE = 400;
     private final Color selectedColor;
     private final Point[] scores;
     private final int points;
@@ -23,10 +24,10 @@ public class Plot extends JPanel {
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Plot(Color color, int nPoints, Point[] nScores, int scale,
+    public Plot(Color color, int nPoints, Point[] nScores,
             boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing, boolean boolLinks) {
         super(true);
-        this.setPreferredSize(new Dimension(scale, scale));
+        this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
         this.selectedColor = color;
         this.points = nPoints;
@@ -287,7 +288,7 @@ public class Plot extends JPanel {
 
             G2D.setFont(new Font("Arial", Font.BOLD, 15));
             for (int i = 0; i < scores.length; i++) {
-                G2D.setColor(new Color(scores[i].getColor().getRed(), scores[i].getColor().getGreen(), scores[i].getColor().getBlue(), 200));
+                G2D.setColor(new Color(scores[i].getColor().getRed(), scores[i].getColor().getGreen(), scores[i].getColor().getBlue(), 255));
 
                 if (scores[i].getScore() > 0) {
                     if (drawNumbers == true) {
