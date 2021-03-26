@@ -12,9 +12,12 @@ import java.awt.*;
  * @author Daniel
  */
 public class Point {
-    
+
     private int score;
+    private String alias;
     private Color color;
+    private Boolean zero;
+    private Boolean missing;
 
     public int getScore() {
         return score;
@@ -32,14 +35,39 @@ public class Point {
         this.color = color;
     }
 
-    public Point(int score, Color color) {
+    public Boolean getZero() {
+        return zero;
+    }
+
+    public void setZero(Boolean isZero) {
+        this.zero = isZero;
+    }
+
+    public Boolean getMissing() {
+        return missing;
+    }
+
+    public void setMissing(Boolean missing) {
+        this.missing = missing;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public Point(int score, String alias, Color color) {
         this.score = score;
+        this.alias = alias;
         this.color = color;
+        this.zero = false;
+        this.missing = false;        
     }
 
     public Point() {
     }
-    
-    
-    
+
 }

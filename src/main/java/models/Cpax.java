@@ -153,6 +153,23 @@ public class Cpax {
 
         return array;
     }
+    
+    public String[] getScoresStrings() {
+        String[] array = {
+            String.valueOf(this.respiratory),
+            String.valueOf(this.cough),
+            String.valueOf(this.bedRolling),
+            String.valueOf(this.supineEdge),
+            String.valueOf(this.dynamicSitting),
+            String.valueOf(this.balance),
+            String.valueOf(this.sitToStand),
+            String.valueOf(this.bedToChair),
+            String.valueOf(this.stepping),
+            String.valueOf(this.grip)
+        };
+        
+        return array;
+    }
 
     public int[] getAll() {
         int[] array = {
@@ -170,6 +187,15 @@ public class Cpax {
         };
 
         return array;
+    }
+
+    public int checkTotal() {
+        int total = this.respiratory + this.cough + this.bedRolling
+            + this.supineEdge + this.dynamicSitting + this.balance
+            + this.sitToStand + this.bedToChair + this.stepping
+            + this.grip;
+
+        return total;
     }
 
 }

@@ -78,17 +78,20 @@ public class Main {
 
             // Until the next line equals null...
             while ((row = br.readLine()) != null) {
+                
                 column = row.split(",");
 
                 for (int i = 0; i < column.length; i++) {
                     // Re-assign blanks to zero.. for now
                     if (column[i].isBlank() == true) {
-                        column[i] = "0";
+                        column[i] = "12345";
                         // System.out.println(i + " was blank, now equals: " + val[i]);
                     } else {
                         // System.out.println(i + " " + val[i].toString());
                     }
                 }
+                
+                // System.out.println("Loading Row " + localCount);
 
                 tempCpax = new Cpax(Integer.parseInt(column[4]), Integer.parseInt(column[5]),
                         Integer.parseInt(column[6]), Integer.parseInt(column[7]),
@@ -125,6 +128,10 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
