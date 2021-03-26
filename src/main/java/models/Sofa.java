@@ -137,4 +137,11 @@ public class Sofa {
         return array;
     }
 
+    public int checkTotal() {
+        int total = this.creatine
+        + this.bilirubin + this.platelets + this.pulmonaryFunction
+        + this.gcs + this.noradrenaline;
+
+        return total;
+    }
 }

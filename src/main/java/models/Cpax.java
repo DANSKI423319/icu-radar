@@ -189,4 +189,13 @@ public class Cpax {
         return array;
     }
 
+    public int checkTotal() {
+        int total = this.respiratory + this.cough + this.bedRolling
+            + this.supineEdge + this.dynamicSitting + this.balance
+            + this.sitToStand + this.bedToChair + this.stepping
+            + this.grip;
+
+        return total;
+    }
+
 }

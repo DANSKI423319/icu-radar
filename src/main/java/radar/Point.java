@@ -59,17 +59,12 @@ public class Point {
         this.alias = alias;
     }
 
-    public Point(int score, String alias) {
-        this.score = score;
-        this.alias = alias;
-    }
-
     public Point(int score, String alias, Color color) {
         this.score = score;
         this.alias = alias;
         this.color = color;
         this.zero = false;
-        this.missing = false;
+        this.missing = false;        
     }
 
     public Point() {

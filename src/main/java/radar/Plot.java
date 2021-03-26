@@ -120,7 +120,7 @@ public class Plot extends JPanel {
 
         }
 
-        // Draw lines between zeros
+         // Draw lines between zeros
         if (drawLines == true) {
             // <editor-fold defaultstate="collapsed" desc="Draw Lines Procedure">
             // Array for lines between zeros
@@ -131,8 +131,8 @@ public class Plot extends JPanel {
 
                 // If a score is zero, take the previous point as a start point
                 // Loop for a score that is more than zero, take that point as an end point               
-                if (scores[i].getZero() == true) {
-                    if (scores[(i - 1)].getZero() == true) {
+                if (scores[i].getZero() == true && scores[i].getMissing() == false) {
+                    if (scores[(i - 1)].getZero() == true && scores[i].getMissing() == false) {
                         // Skip over if true...
                     } else {
                         startPoints.add(i - 1);
@@ -147,7 +147,7 @@ public class Plot extends JPanel {
             }
 
             // If the final point is a zero, assign the first number above zero as an end point
-            if (scores[scores.length - 1].getZero() == true) {
+            if (scores[scores.length - 1].getZero() == true && scores[scores.length - 1].getMissing() == false) {
                 for (int j = 0; j < scores.length; j++) {
                     if (scores[j].getScore() > 0) {
                         endPoints.add(j);
@@ -157,7 +157,7 @@ public class Plot extends JPanel {
             }
 
             // If the first score is a zero, go backwards to find the start point
-            if (scores[0].getZero() == true) {
+            if (scores[0].getZero() == true && scores[0].getMissing() == false) {
                 for (int ii = (scores.length - 1); ii > 0; ii--) {
                     if (scores[ii].getScore() > 0) {
                         startPoints.add(ii);
@@ -288,7 +288,7 @@ public class Plot extends JPanel {
 
             G2D.setFont(new Font("Arial", Font.BOLD, 15));
             for (int i = 0; i < scores.length; i++) {
-                G2D.setColor(new Color(scores[i].getColor().getRed(), scores[i].getColor().getGreen(), scores[i].getColor().getBlue(), 255));
+                G2D.setColor((scores[i].getColor()));
 
                 if (scores[i].getScore() > 0) {
                     if (drawNumbers == true) {
