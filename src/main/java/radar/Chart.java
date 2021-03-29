@@ -2,14 +2,13 @@ package radar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  *
  * @author Daniel
  */
 public class Chart extends JPanel {
-
+    
     private final int SIZE = 400;
     private final Point[] scores;
     private final int slices;
@@ -20,7 +19,7 @@ public class Chart extends JPanel {
     private final boolean drawCircles;
     private final boolean drawColLines;
     private final Color transparent = new Color(0, 0, 0, 0);
-
+    
     public Chart(int nSlices, Point[] nScores,
             boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines) {
         super(true);
@@ -58,14 +57,14 @@ public class Chart extends JPanel {
             if (scores[i].getScore() > range) {
                 range = scores[i].getScore();
                 range = range + 1;
-                if (range <= 5) {
-                    range = 5 + 1;
+                if (range <= 6) {
+                    range = 6 + 1;
                 }
             }
         }
 
         if (range == 0) {
-            range = 5 + 1;
+            range = 6 + 1;
         }
 
         // Range check

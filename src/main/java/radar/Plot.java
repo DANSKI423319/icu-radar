@@ -70,15 +70,15 @@ public class Plot extends JPanel {
             if (scores[i].getScore() > range) {
                 range = scores[i].getScore();
                 range = range + 1;
-                if (range <= 5) {
-                    range = 5;
+                if (range <= 6) {
+                    range = 6;
                     range = range + 1;
                 }
             }
         }
 
         if (range == 0) {
-            range = 5 + 1;
+            range = 6 + 1;
         }
 
         finalRange = range;
@@ -103,24 +103,19 @@ public class Plot extends JPanel {
         // Get coordinates for the scores
         for (int i = 0; i < scores.length; i++) {
 
-            double angle = 2 * Math.PI * i / points;
-            xCoord = (int) Math.round(0 + (scores[i].getScore() * superOrigin / finalRange) * Math.cos(angle));
-            yCoord = (int) Math.round(0 + (scores[i].getScore() * superOrigin / finalRange) * Math.sin(angle));
+            // This will include zeros
+            int theScore = scores[i].getScore() + 1;
 
-            if (xCoord == 0) {
-                if (scores[i].getScore() > 0) {
-                    // Score validation check
-                    xPoints[i] = -xCoord;
-                    yPoints[i] = yCoord;
-                }
-            } else {
-                xPoints[i] = -xCoord;
-                yPoints[i] = yCoord;
-            }
+            double angle = 2 * Math.PI * i / points;
+            xCoord = (int) Math.round(0 + (theScore * superOrigin / finalRange) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + (theScore * superOrigin / finalRange) * Math.sin(angle));
+
+            xPoints[i] = -xCoord;
+            yPoints[i] = yCoord;
 
         }
 
-         // Draw lines between zeros
+        // Draw lines between zeros
         if (drawLines == true) {
             // <editor-fold defaultstate="collapsed" desc="Draw Lines Procedure">
             // Array for lines between zeros
@@ -282,7 +277,7 @@ public class Plot extends JPanel {
             G2D.fillPolygon(yPoints, xPoints, points);
         }
 
-        //   Draw scores onto the chart
+        // Draw scores onto the chart
         if (drawScores == true) {
             int ovalSize = 0;
 
@@ -290,18 +285,18 @@ public class Plot extends JPanel {
             for (int i = 0; i < scores.length; i++) {
                 G2D.setColor((scores[i].getColor()));
 
-                if (scores[i].getScore() > 0) {
+                // if (scores[i].getScore() > 0) {
                     if (drawNumbers == true) {
-                        ovalSize = Math.abs(superOrigin - radius) / 23;
+                        ovalSize = Math.abs(superOrigin - radius) / 26;
                     } else {
-                        ovalSize = Math.abs(superOrigin - radius) / 25;
+                        ovalSize = Math.abs(superOrigin - radius) / 28;
                     }
                     G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
                     G2D.setColor(Color.WHITE);
 
                     String txt = "" + (scores[i].getScore());
                     G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
-                }
+                // }
             }
         }
     }

@@ -506,7 +506,6 @@ public class radarFrame extends javax.swing.JFrame {
         });
         jMenuPlotOptions.add(optionShowPolygons);
 
-        optionLinkVisuals.setSelected(true);
         optionLinkVisuals.setText("Link visuals");
         optionLinkVisuals.setToolTipText("Links the entire visualization together judging by the appropiate version of data that is missing");
         optionLinkVisuals.addItemListener(new java.awt.event.ItemListener() {
