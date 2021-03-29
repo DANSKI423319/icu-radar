@@ -27,16 +27,6 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        String path = "D:/Documents/University Archive/Bsc Computing Year 3/COMP3000 Computing Project/Project/data.csv";
-        count = countData(path);
-        patientsDataPack = loadData(path, count);
-
-        for (int i = 0; i < patientsDataPack.length; i++) {
-            System.out.println(patientsDataPack[i].getAdmission());
-        }
-
-        //System.out.println("LoadData(): " + count);
-
     }
 
     // Count rows
@@ -85,14 +75,10 @@ public class Main {
                     // Re-assign blanks to zero.. for now
                     if (column[i].isBlank() == true) {
                         column[i] = "12345";
-                        // System.out.println(i + " was blank, now equals: " + val[i]);
                     } else {
-                        // System.out.println(i + " " + val[i].toString());
                     }
                 }
                 
-                // System.out.println("Loading Row " + localCount);
-
                 tempCpax = new Cpax(Integer.parseInt(column[4]), Integer.parseInt(column[5]),
                         Integer.parseInt(column[6]), Integer.parseInt(column[7]),
                         Integer.parseInt(column[8]), Integer.parseInt(column[9]),
