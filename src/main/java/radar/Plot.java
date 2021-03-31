@@ -21,11 +21,12 @@ public class Plot extends JPanel {
     private final boolean drawPolygons;
     private final boolean drawMissing;
     private final boolean drawLinks;
+    private final boolean drawZeros;
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
     public Plot(Color color, int nPoints, Point[] nScores,
-            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing, boolean boolLinks) {
+            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing, boolean boolLinks, boolean boolZeros) {
         super(true);
         this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
@@ -38,6 +39,7 @@ public class Plot extends JPanel {
         this.drawPolygons = boolPolygons;
         this.drawMissing = boolMissing;
         this.drawLinks = boolLinks;
+        this.drawZeros = boolZeros;
     }
 
     @Override
@@ -285,19 +287,38 @@ public class Plot extends JPanel {
             for (int i = 0; i < scores.length; i++) {
                 G2D.setColor((scores[i].getColor()));
 
-                // if (scores[i].getScore() > 0) {
-                    if (drawNumbers == true) {
-                        ovalSize = Math.abs(superOrigin - radius) / 26;
-                    } else {
-                        ovalSize = Math.abs(superOrigin - radius) / 28;
-                    }
+                if (drawNumbers == true) {
+                    ovalSize = Math.abs(superOrigin - radius) / 26;
+                } else {
+                    ovalSize = Math.abs(superOrigin - radius) / 28;
+                }
+
+                if (scores[i].getScore() >= 1) {
                     G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
                     G2D.setColor(Color.WHITE);
 
                     String txt = "" + (scores[i].getScore());
                     G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
-                // }
+                } else {
+                    // Draw zeros in the middle of the plot
+                    if (drawZeros == true) {
+                        G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
+                        G2D.setColor(Color.WHITE);
+
+                        String txt = "" + (scores[i].getScore());
+                        G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
+                    }
+                }
+
             }
         }
+        
+        // MAKE A NEW CLASS FOR THIS THING
+        int tempSize = 25;
+        G2D.setColor(Color.BLACK);
+        G2D.fillOval(0 - tempSize, 0 - tempSize, 2 * tempSize, 2 * tempSize);
+        G2D.setColor(Color.WHITE);
+        G2D.drawString("0", 0 - 4, 0 + 5);
+        
     }
 }
