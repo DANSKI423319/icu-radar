@@ -41,18 +41,20 @@ public class Score extends JPanel {
         int superOrigin = Math.min(xOrigin, yOrigin);
         G2D.translate(superOrigin, superOrigin);
         
-        G2D.setFont(new Font("Arial", Font.BOLD, 24));
+        G2D.setFont(new Font("Arial", Font.BOLD, 18));
         
         int tempSize = 25;
         G2D.setColor(Color.BLACK);
         G2D.fillOval(0 - tempSize, 0 - tempSize, 2 * tempSize, 2 * tempSize);
         G2D.setColor(Color.WHITE);
         
-        if (total > 10) {
-            G2D.drawString("" + total, 0 - 12, 0 + 8);
+        if (total >= 10 && total <= 99) {
+            G2D.drawString("" + total, 0 - 10, 0 + 6);
+        } else if (total >= 100) {
+            G2D.drawString("" + total, 0 - 15, 0 + 6);
         } else {
-            G2D.drawString("0" + total, 0 - 12, 0 + 8);
-        }    
+            G2D.drawString("0" + total, 0 - 10, 0 + 6);
+        }
 
     }
 }
