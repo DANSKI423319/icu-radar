@@ -407,11 +407,6 @@ public class radarFrame extends javax.swing.JFrame {
         txtFirstName.setBackground(new java.awt.Color(255, 255, 255));
         txtFirstName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtFirstName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtFirstName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFirstNameActionPerformed(evt);
-            }
-        });
 
         txtLastName.setEditable(false);
         txtLastName.setBackground(new java.awt.Color(255, 255, 255));
@@ -432,21 +427,11 @@ public class radarFrame extends javax.swing.JFrame {
         txtCpaxTotal.setBackground(new java.awt.Color(255, 255, 255));
         txtCpaxTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCpaxTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCpaxTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCpaxTotalActionPerformed(evt);
-            }
-        });
 
         txtMrcTotal.setEditable(false);
         txtMrcTotal.setBackground(new java.awt.Color(255, 255, 255));
         txtMrcTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtMrcTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtMrcTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMrcTotalActionPerformed(evt);
-            }
-        });
 
         txtSofaTotal.setEditable(false);
         txtSofaTotal.setBackground(new java.awt.Color(255, 255, 255));
@@ -602,19 +587,17 @@ public class radarFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnFilterIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(31, 31, 31)
                         .addComponent(lblNoOfIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPatientCount, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPanePatients, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPatientList, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)))
+                        .addComponent(txtPatientCount, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPanePatients, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblPatientList, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPatientVisits, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPaneVisits, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1007,18 +990,6 @@ public class radarFrame extends javax.swing.JFrame {
         chartRefresh();
     }//GEN-LAST:event_checkBoxShowScoresItemStateChanged
 
-    private void txtMrcTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMrcTotalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMrcTotalActionPerformed
-
-    private void txtCpaxTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpaxTotalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCpaxTotalActionPerformed
-
-    private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFirstNameActionPerformed
-
     private void optionShowZeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionShowZeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_optionShowZeroActionPerformed
@@ -1313,6 +1284,7 @@ public class radarFrame extends javax.swing.JFrame {
 
             radarPane.add(bigPlot);
             radarPane.add(totalChart);
+
         }
     }
 
@@ -1326,6 +1298,7 @@ public class radarFrame extends javax.swing.JFrame {
             if (arrayPatients[i].getPoid().equals(selectedPatient)) {
                 if (arrayPatients[i].getAdmission().equals(selectedAdmission)) {
                     radarPane.removeAll();
+                    scoreBuilder();
                     chartBuilder(i, colourCpax, colourMrc, colourSofa);
                     this.revalidate();
                     this.repaint();
@@ -1442,6 +1415,9 @@ public class radarFrame extends javax.swing.JFrame {
             if (arrayPatients[i].getPoid().equals(selectedPatient)) {
                 if (arrayPatients[i].getAdmission().equals(selectedAdmission)) {
                     radarPane.removeAll();
+                    
+                    scoreBuilder();
+                    
                     chartBuilder(i, colourCpax, colourMrc, colourSofa);
                     this.revalidate();
                     this.repaint();
@@ -1457,6 +1433,34 @@ public class radarFrame extends javax.swing.JFrame {
                 }
             }
         }
+    }
+
+    public void scoreBuilder() {
+
+        int total = 0;
+       
+        for (int i = 0; i < arrayPatients.length; i++) {
+            if (arrayPatients[i].getPoid().equals(selectedPatient)) {
+                if (arrayPatients[i].getAdmission().equals(selectedAdmission)) {
+                    
+                    if (checkBoxCpax.isSelected() == true) {
+                        total = total + arrayPatients[i].getCpax().getTotal();
+                    }
+                    if (checkBoxMrc.isSelected() == true) {
+                        total = total + arrayPatients[i].getMrc().getTotal();
+                    }
+                    if (checkBoxSofa.isSelected() == true) {
+                        total = total + arrayPatients[i].getSofa().getTotal();
+                    }
+
+                    break;
+                }
+            }
+        }
+        
+        Score tot = new Score(total);
+        radarPane.add(tot);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

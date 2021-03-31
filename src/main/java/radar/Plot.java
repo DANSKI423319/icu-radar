@@ -309,16 +309,7 @@ public class Plot extends JPanel {
                         G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
                     }
                 }
-
             }
-        }
-        
-        // MAKE A NEW CLASS FOR THIS THING
-        int tempSize = 25;
-        G2D.setColor(Color.BLACK);
-        G2D.fillOval(0 - tempSize, 0 - tempSize, 2 * tempSize, 2 * tempSize);
-        G2D.setColor(Color.WHITE);
-        G2D.drawString("0", 0 - 4, 0 + 5);
-        
+        }   
     }
 }

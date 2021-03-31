@@ -172,23 +172,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="btnFilterIDs" min="-2" pref="175" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="lblNoOfIDs" min="-2" pref="68" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="txtPatientCount" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPanePatients" min="-2" pref="364" max="-2" attributes="0"/>
-                          <Component id="lblPatientList" min="-2" pref="364" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPanePatients" min="-2" pref="364" max="-2" attributes="0"/>
+                      <Component id="lblPatientList" min="-2" pref="364" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblPatientVisits" min="-2" pref="193" max="-2" attributes="0"/>
                   <Component id="jScrollPaneVisits" alignment="1" min="-2" pref="193" max="-2" attributes="0"/>
@@ -955,9 +952,6 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFirstNameActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLastName">
       <Properties>
@@ -1007,9 +1001,6 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCpaxTotalActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtMrcTotal">
       <Properties>
@@ -1022,9 +1013,6 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMrcTotalActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSofaTotal">
       <Properties>
