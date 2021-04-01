@@ -185,73 +185,43 @@
                       <Component id="lblPatientList" min="-2" pref="364" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblPatientVisits" min="-2" pref="193" max="-2" attributes="0"/>
-                  <Component id="jScrollPaneVisits" alignment="1" min="-2" pref="193" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jSliderCycleSpeed" pref="0" max="32767" attributes="0"/>
+                  <Component id="lblPatientVisits" pref="193" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneVisits" alignment="0" pref="193" max="32767" attributes="0"/>
+                  <Component id="btnStartCycle" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnStopCycle" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnCpax" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jPanelColourCpax" alignment="0" max="32767" attributes="0"/>
-                              <Component id="checkBoxCpax" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="btnAllFields" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jPanelColourCpax" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnCpax" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="btnAllFields" max="32767" attributes="0"/>
+                          <Component id="checkBoxCpax" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanelColourMrc" max="32767" attributes="0"/>
-                          <Component id="btnMrc" alignment="0" max="32767" attributes="0"/>
-                          <Component id="checkBoxMrc" max="32767" attributes="0"/>
                           <Component id="checkBoxShowScores" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="checkBoxMrc" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnMrc" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jRadioAlternateView" pref="190" max="32767" attributes="0"/>
-                          <Component id="btnSofa" alignment="1" max="32767" attributes="0"/>
                           <Component id="jPanelColourSofa" alignment="1" max="32767" attributes="0"/>
                           <Component id="checkBoxSofa" max="32767" attributes="0"/>
+                          <Component id="btnSofa" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="radarPane" alignment="0" max="32767" attributes="0"/>
                   <Component id="lblRadarChart" alignment="0" max="32767" attributes="0"/>
+                  <Component id="radarPane" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="lblPOID" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtPoid" min="-2" pref="596" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="lblInformation" min="-2" pref="648" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblFirstName" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtFirstName" min="-2" pref="214" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lblLastName" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      <Component id="txtLastName" min="-2" pref="257" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblMrcTotal" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtMrcTotal" min="-2" pref="51" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jPanelColourMrc1" pref="521" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jScrollPaneMrc" min="-2" pref="649" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="jScrollPaneSofa" min="-2" pref="334" max="-2" attributes="0"/>
@@ -271,13 +241,46 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txtCpaxTotal" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jPanelColourCpax1" max="32767" attributes="0"/>
+                              <Component id="jPanelColourCpax1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPaneCpax" pref="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPaneCpax" min="-2" pref="300" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblPOID" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="txtPoid" min="-2" pref="592" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblFirstName" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txtFirstName" min="-2" pref="214" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="lblLastName" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Component id="txtLastName" min="-2" pref="252" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblInformation" alignment="0" min="-2" pref="644" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jScrollPaneMrc" min="-2" pref="643" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblMrcTotal" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtMrcTotal" min="-2" pref="51" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jPanelColourMrc1" min="-2" pref="515" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -295,96 +298,107 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jScrollPaneVisits" max="32767" attributes="0"/>
-                  <Component id="jScrollPanePatients" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtPoid" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPOID" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblFirstName" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="txtFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblLastName" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="txtLastName" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txtPoid" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblPOID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblFirstName" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="txtFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblLastName" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                          <Component id="txtLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jPanelColourCpax1" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                      <Component id="lblCpaxTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                                      <Component id="txtCpaxTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jScrollPaneCpax" min="-2" pref="187" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jPanelColourSofa1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                                      <Component id="lblSofaTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                                      <Component id="txtSofaTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                              <Component id="jScrollPaneSofa" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jPanelColourCpax1" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="lblCpaxTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                              <Component id="txtCpaxTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                          <Component id="jPanelColourMrc1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                              <Component id="txtMrcTotal" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                                              <Component id="lblMrcTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jScrollPaneCpax" min="-2" pref="187" max="-2" attributes="0"/>
+                                      <Component id="jScrollPaneMrc" min="-2" pref="325" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jPanelColourSofa1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                              <Component id="lblSofaTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                              <Component id="txtSofaTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                      <Component id="jScrollPaneSofa" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="radarPane" min="-2" pref="642" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jPanelColourMrc1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="txtMrcTotal" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                                      <Component id="lblMrcTotal" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jPanelColourCpax" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jPanelColourMrc" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jPanelColourSofa" alignment="1" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPaneMrc" min="-2" pref="325" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="radarPane" min="-2" pref="649" max="-2" attributes="0"/>
+                          <Component id="jScrollPaneVisits" alignment="0" min="-2" pref="691" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jPanelColourCpax" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jPanelColourSofa" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnSofa" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
-                                  <Component id="btnCpax" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="checkBoxCpax" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="checkBoxSofa" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btnStartCycle" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSliderCycleSpeed" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jPanelColourMrc" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnSofa" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                                      <Component id="btnMrc" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnCpax" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnMrc" min="-2" pref="51" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="checkBoxMrc" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="checkBoxSofa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="checkBoxMrc" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="checkBoxCpax" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
+                  <Component id="jScrollPanePatients" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnAllFields" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="jRadioAlternateView" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="btnStopCycle" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="btnAllFields" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="checkBoxShowScores" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="txtPatientCount" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblNoOfIDs" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                  <Component id="btnFilterIDs" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioAlternateView" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="txtPatientCount" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="lblNoOfIDs" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="btnFilterIDs" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
@@ -607,7 +621,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="29" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -638,7 +652,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="29" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -672,7 +686,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="29" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -850,7 +864,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="169" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -874,7 +888,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="515" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -1056,6 +1070,46 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnStartCycle">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial" size="14" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Present Visits"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStartCycleActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnStopCycle">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial" size="14" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Stop"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStopCycleActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSlider" name="jSliderCycleSpeed">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="10" style="0"/>
+        </Property>
+        <Property name="majorTickSpacing" type="int" value="250"/>
+        <Property name="maximum" type="int" value="2000"/>
+        <Property name="minimum" type="int" value="500"/>
+        <Property name="paintLabels" type="boolean" value="true"/>
+        <Property name="paintTicks" type="boolean" value="true"/>
+        <Property name="snapToTicks" type="boolean" value="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Speed in Milliseconds"/>
+        <Property name="value" type="int" value="500"/>
+      </Properties>
+      <Events>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jSliderCycleSpeedPropertyChange"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

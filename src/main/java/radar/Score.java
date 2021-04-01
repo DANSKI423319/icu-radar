@@ -44,7 +44,7 @@ public class Score extends JPanel {
         G2D.setFont(new Font("Arial", Font.BOLD, 18));
         
         int tempSize = 25;
-        G2D.setColor(Color.BLACK);
+        G2D.setColor(Color.GRAY);
         G2D.fillOval(0 - tempSize, 0 - tempSize, 2 * tempSize, 2 * tempSize);
         G2D.setColor(Color.WHITE);
         
