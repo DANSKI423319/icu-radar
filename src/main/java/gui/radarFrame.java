@@ -140,6 +140,7 @@ public class radarFrame extends javax.swing.JFrame {
         btnStartCycle = new javax.swing.JButton();
         btnStopCycle = new javax.swing.JButton();
         jSliderCycleSpeed = new javax.swing.JSlider();
+        checkBoxShowScores1 = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         btnOpenFile = new javax.swing.JMenuItem();
@@ -502,10 +503,18 @@ public class radarFrame extends javax.swing.JFrame {
         jSliderCycleSpeed.setPaintTicks(true);
         jSliderCycleSpeed.setSnapToTicks(true);
         jSliderCycleSpeed.setToolTipText("Speed in Milliseconds");
-        jSliderCycleSpeed.setValue(500);
         jSliderCycleSpeed.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jSliderCycleSpeedPropertyChange(evt);
+            }
+        });
+
+        checkBoxShowScores1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        checkBoxShowScores1.setSelected(true);
+        checkBoxShowScores1.setText("Show Scores");
+        checkBoxShowScores1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxShowScores1ItemStateChanged(evt);
             }
         });
 
@@ -670,9 +679,9 @@ public class radarFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanelColourMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(checkBoxShowScores, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                             .addComponent(checkBoxMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnMrc, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(checkBoxShowScores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jRadioAlternateView, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
@@ -729,6 +738,11 @@ public class radarFrame extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jPanelColourMrc1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(896, 896, 896)
+                    .addComponent(checkBoxShowScores1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(981, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -818,7 +832,12 @@ public class radarFrame extends javax.swing.JFrame {
                     .addComponent(txtPatientCount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNoOfIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFilterIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(847, Short.MAX_VALUE)
+                    .addComponent(checkBoxShowScores1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(2, 2, 2)))
         );
 
         pack();
@@ -1079,6 +1098,10 @@ public class radarFrame extends javax.swing.JFrame {
         myCycler.setDelay(jSliderCycleSpeed.getValue());
     }//GEN-LAST:event_jSliderCycleSpeedPropertyChange
 
+    private void checkBoxShowScores1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxShowScores1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkBoxShowScores1ItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -1171,16 +1194,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "cpax", colourCpax);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "cpax", colourCpax);
-                    }
-
-                    plotPoints[i] = newPoint;
+                    plotPoints[i] = preparePoint(scores, i, "cpax", colourCpax);
                 }
 
                 int nPoints = scores.length;
@@ -1201,16 +1215,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "mrc", colourMrc);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "mrc", colourMrc);
-                    }
-
-                    plotPoints[i] = newPoint;
+                    plotPoints[i] = preparePoint(scores, i, "mrc", colourMrc);
                 }
 
                 int nPoints = scores.length;
@@ -1231,16 +1236,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "sofa", colourMrc);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "sofa", colourSofa);
-                    }
-
-                    plotPoints[i] = newPoint;
+                    plotPoints[i] = preparePoint(scores, i, "sofa", colourSofa);
                 }
 
                 int nPoints = scores.length;
@@ -1266,16 +1262,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "cpax", colourCpax);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "cpax", colourCpax);
-                    }
-
-                    plotPoints[i] = newPoint;
+                    plotPoints[i] = plotPoints[i] = preparePoint(scores, i, "cpax", colourCpax);;
                 }
 
                 Chart CpaxChart = new Chart(slices, plotPoints,
@@ -1294,16 +1281,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "mrc", colourMrc);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "mrc", colourMrc);
-                    }
-
-                    plotPoints[i] = newPoint;
+                    plotPoints[i] = plotPoints[i] = preparePoint(scores, i, "mrc", colourMrc);;
                 }
 
                 Chart MrcChart = new Chart(slices, plotPoints,
@@ -1321,16 +1299,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "sofa", colourMrc);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "sofa", colourSofa);
-                    }
-
-                    plotPoints[i] = newPoint;
+                    plotPoints[i] = plotPoints[i] = preparePoint(scores, i, "sofa", colourSofa);;
                 }
 
                 Chart SofaChart = new Chart(slices, plotPoints,
@@ -1370,16 +1339,7 @@ public class radarFrame extends javax.swing.JFrame {
             if (checkBoxCpax.isSelected() == true) {
                 String scores[] = arrayPatients[index].getCpax().getScores();
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "cpax", colourCpax);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "cpax", colourCpax);
-                    }
-
-                    chartScores[pos] = newPoint;
+                    chartScores[pos] = preparePoint(scores, i, "cpax", colourCpax);
                     pos++;
                 }
             }
@@ -1387,16 +1347,7 @@ public class radarFrame extends javax.swing.JFrame {
             if (checkBoxMrc.isSelected() == true) {
                 String scores[] = arrayPatients[index].getMrc().getScores();
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "mrc", colourMrc);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "mrc", colourMrc);
-                    }
-
-                    chartScores[pos] = newPoint;
+                    chartScores[pos] = preparePoint(scores, i, "mrc", colourMrc);
                     pos++;
                 }
             }
@@ -1404,16 +1355,7 @@ public class radarFrame extends javax.swing.JFrame {
             if (checkBoxSofa.isSelected() == true) {
                 String scores[] = arrayPatients[index].getSofa().getScores();
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint;
-
-                    if (scores[i] == null) {
-                        newPoint = new Point(0, "sofa", colourMrc);
-                        newPoint.setMissing(true);
-                    } else {
-                        newPoint = new Point(Integer.parseInt(scores[i]), "sofa", colourSofa);
-                    }
-
-                    chartScores[pos] = newPoint;
+                    chartScores[pos] = preparePoint(scores, i, "sofa", colourSofa);
                     pos++;
                 }
             }
@@ -1499,7 +1441,7 @@ public class radarFrame extends javax.swing.JFrame {
             String[] tempCpaxScores = arrayPatients[patientIndex].getCpax().getScores();
             for (int ii = 0; ii < items.length; ii++) {
                 if (tempCpaxScores[ii] == null) {
-                    tempCpaxScores[ii] = "MISSING";
+                    tempCpaxScores[ii] = "Missing";
                 }
                 tableModelCpaxScores.addRow(new Object[]{(ii + 1), items[ii], tempCpaxScores[ii]});
             }
@@ -1508,7 +1450,7 @@ public class radarFrame extends javax.swing.JFrame {
             String[] tempMrcScores = arrayPatients[patientIndex].getMrc().getScores();
             for (int ii = 0; ii < items.length; ii++) {
                 if (tempMrcScores[ii] == null) {
-                    tempMrcScores[ii] = "MISSING";
+                    tempMrcScores[ii] = "Missing";
                 }
                 tableModelMrcScores.addRow(new Object[]{(ii + 1), items[ii], tempMrcScores[ii]});
             }
@@ -1517,7 +1459,7 @@ public class radarFrame extends javax.swing.JFrame {
             String[] tempSofaScores = arrayPatients[patientIndex].getSofa().getScores();
             for (int ii = 0; ii < items.length; ii++) {
                 if (tempSofaScores[ii] == null) {
-                    tempSofaScores[ii] = "MISSING";
+                    tempSofaScores[ii] = "Missing";
                 }
                 tableModelSofaScores.addRow(new Object[]{(ii + 1), items[ii], tempSofaScores[ii]});
             }
@@ -1574,7 +1516,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                     setDataTables(i);
                     lblRadarChart.setText("Radar Chart: " + selectedAdmission);
-                    
+
                     txtCpaxTotal.setText("" + arrayPatients[i].getCpax().getTotal());
                     txtMrcTotal.setText("" + arrayPatients[i].getMrc().getTotal());
                     txtSofaTotal.setText("" + arrayPatients[i].getSofa().getTotal());
@@ -1625,6 +1567,23 @@ public class radarFrame extends javax.swing.JFrame {
 
     }
 
+    
+    /*
+        Prepares a new point to be added to a chart of plot building procedure
+    */
+    public Point preparePoint(String[] scores, int pos, String pointAlias, Color pointColour) {
+        Point tempPoint;
+
+        if (scores[pos] == null) {
+            tempPoint = new Point(0, pos, pointAlias, pointColour);
+            tempPoint.setMissing(true);
+        } else {
+            tempPoint = new Point(Integer.parseInt(scores[pos]), pos, pointAlias, pointColour);
+        }
+
+        return tempPoint;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAllFields;
     private javax.swing.JButton btnCpax;
@@ -1637,6 +1596,7 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkBoxCpax;
     private javax.swing.JCheckBox checkBoxMrc;
     private javax.swing.JCheckBox checkBoxShowScores;
+    private javax.swing.JCheckBox checkBoxShowScores1;
     private javax.swing.JCheckBox checkBoxSofa;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuChartOptions;

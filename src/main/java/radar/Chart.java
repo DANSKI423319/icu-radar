@@ -8,7 +8,7 @@ import java.awt.*;
  * @author Daniel
  */
 public class Chart extends JPanel {
-    
+
     private final int SIZE = 400;
     private final Point[] scores;
     private final int slices;
@@ -19,7 +19,7 @@ public class Chart extends JPanel {
     private final boolean drawCircles;
     private final boolean drawColLines;
     private final Color transparent = new Color(0, 0, 0, 0);
-    
+
     public Chart(int nSlices, Point[] nScores,
             boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines) {
         super(true);
@@ -43,6 +43,8 @@ public class Chart extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        Font defaultFont = G2D.getFont();
+
         int range = 0;
 
         for (int i = 0; i < scores.length; i++) {
@@ -51,7 +53,7 @@ public class Chart extends JPanel {
                 scores[i].setMissing(true);
             }
         }
-        
+
         // Set range for chart if more than 5
         for (int i = 0; i < scores.length; i++) {
             if (scores[i].getScore() > range) {
@@ -109,12 +111,12 @@ public class Chart extends JPanel {
                 if (drawColLines == true) {
                     G2D.setColor(scores[i].getColor());
                 }
-                
+
                 double angle = 2 * Math.PI * i / slices;
 
                 xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.cos(angle));
                 yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.sin(angle));
-                
+
                 G2D.drawLine(0, 0, yCoord, -xCoord);
             }
         }
@@ -124,19 +126,23 @@ public class Chart extends JPanel {
             can be reviewed from a table in the GUI
          */
         if (drawNumbers == true) {
-            G2D.setColor(Color.BLACK);
+            G2D.setFont(new Font("Arial", Font.BOLD, 13));
+
             for (int i = 0; i < slices; i++) {
                 double angle = 2 * Math.PI * i / slices;
+                G2D.setColor(scores[i].getColor());
 
                 xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.cos(angle));
                 yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.sin(angle));
 
-                if (i < 9) {
-                    G2D.drawString("0" + Integer.toString(i + 1), yCoord - 7, -xCoord + 3);
+                if (scores[i].getPosition() < 9) {
+                    G2D.drawString("0" + (scores[i].getPosition() + 1), yCoord - 7, -xCoord + 3);
                 } else {
-                    G2D.drawString(Integer.toString(i + 1), yCoord - 7, -xCoord + 3);
+                    G2D.drawString("" + (scores[i].getPosition() + 1), yCoord - 7, -xCoord + 3);
                 }
             }
+            
+            G2D.setFont(defaultFont);
         }
     }
 
