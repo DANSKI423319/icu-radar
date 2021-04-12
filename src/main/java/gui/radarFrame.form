@@ -1105,7 +1105,6 @@
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>
         <Property name="toolTipText" type="java.lang.String" value="Speed in Milliseconds"/>
-        <Property name="value" type="int" value="500"/>
       </Properties>
       <Events>
         <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jSliderCycleSpeedPropertyChange"/>

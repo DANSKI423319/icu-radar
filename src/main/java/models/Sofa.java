@@ -6,7 +6,7 @@ package models;
  */
 public class Sofa {
 
-    private int creatine, bilirubin, platelets, pulmonaryFunction, gcs,
+    private String creatine, bilirubin, platelets, pulmonaryFunction, gcs,
             noradrenaline, total;
 
     private String[] items = {
@@ -19,59 +19,59 @@ public class Sofa {
     };
 
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
-    public int getCreatine() {
+    public String getCreatine() {
         return creatine;
     }
 
-    public void setCreatine(int creatine) {
+    public void setCreatine(String creatine) {
         this.creatine = creatine;
     }
 
-    public int getBilirubin() {
+    public String getBilirubin() {
         return bilirubin;
     }
 
-    public void setBilirubin(int bilirubin) {
+    public void setBilirubin(String bilirubin) {
         this.bilirubin = bilirubin;
     }
 
-    public int getPlatelets() {
+    public String getPlatelets() {
         return platelets;
     }
 
-    public void setPlatelets(int platelets) {
+    public void setPlatelets(String platelets) {
         this.platelets = platelets;
     }
 
-    public int getPulmonaryFunction() {
+    public String getPulmonaryFunction() {
         return pulmonaryFunction;
     }
 
-    public void setPulmonaryFunction(int pulmonaryFunction) {
+    public void setPulmonaryFunction(String pulmonaryFunction) {
         this.pulmonaryFunction = pulmonaryFunction;
     }
 
-    public int getGcs() {
+    public String getGcs() {
         return gcs;
     }
 
-    public void setGcs(int gcs) {
+    public void setGcs(String gcs) {
         this.gcs = gcs;
     }
 
-    public int getNoradrenaline() {
+    public String getNoradrenaline() {
         return noradrenaline;
     }
 
-    public void setNoradrenaline(int noradrenaline) {
+    public void setNoradrenaline(String noradrenaline) {
         this.noradrenaline = noradrenaline;
     }
 
-    public int getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
@@ -81,10 +81,10 @@ public class Sofa {
 
     public void setItems(String[] items) {
         this.items = items;
-    }
+    }   
     // </editor-fold>
 
-    public Sofa(int creatine, int bilirubin, int platelets, int pulmonaryFunction, int gcs, int noradrenaline, int total) {
+    public Sofa(String creatine, String bilirubin, String platelets, String pulmonaryFunction, String gcs, String noradrenaline, String total) {
         this.creatine = creatine;
         this.bilirubin = bilirubin;
         this.platelets = platelets;
@@ -97,8 +97,8 @@ public class Sofa {
     public Sofa() {
     }
 
-    public int[] getScores() {
-        int[] array = {
+    public String[] getScores() {
+        String[] array = {
             this.creatine,
             this.bilirubin,
             this.platelets,
@@ -109,7 +109,7 @@ public class Sofa {
 
         return array;
     }
-    
+
     public String[] getScoresStrings() {
         String[] array = {
             String.valueOf(this.creatine),
@@ -119,12 +119,12 @@ public class Sofa {
             String.valueOf(this.gcs),
             String.valueOf(this.noradrenaline)
         };
-        
+
         return array;
     }
-    
-    public int[] getAll() {
-        int[] array = {
+
+    public String[] getAll() {
+        String[] array = {
             this.creatine,
             this.bilirubin,
             this.platelets,
@@ -137,6 +137,7 @@ public class Sofa {
         return array;
     }
 
+    /*
     public int checkTotal() {
         int total = this.creatine
         + this.bilirubin + this.platelets + this.pulmonaryFunction
@@ -144,4 +145,5 @@ public class Sofa {
 
         return total;
     }
+     */
 }

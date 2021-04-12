@@ -22,12 +22,11 @@ import javax.swing.Timer;
 public class radarFrame extends javax.swing.JFrame {
 
     public boolean tablesAreFull = false;
-    
+
     public Color colourCpax = Color.RED;
     public Color colourMrc = Color.GREEN;
     public Color colourSofa = Color.BLUE;
 
-    public String missingData = "12345";
     public String dataPath = "";
     public int dataCount;
     public Patient[] arrayPatients;
@@ -51,15 +50,15 @@ public class radarFrame extends javax.swing.JFrame {
 
     public String selectedPatient;
     public String selectedAdmission;
-    
+
     // Timer Utilities
     ActionListener visitCycle = new ActionListener() {
         int selection = 0;
-    
+
         @Override
         public void actionPerformed(ActionEvent evt) {
             int patientVisits = listModelPatientVisits.getSize();
-            
+
             listPatientVisits.setSelectedIndex(selection);
 
             radarPane.removeAll();
@@ -75,7 +74,7 @@ public class radarFrame extends javax.swing.JFrame {
     };
 
     Timer myCycler = new Timer(500, visitCycle);
-    
+
     /**
      * Creates new form radarFrame
      */
@@ -824,7 +823,7 @@ public class radarFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void optionCoverZerosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_optionCoverZerosItemStateChanged
         // Refresh the chart when option changed
         chartRefresh();
@@ -1168,11 +1167,19 @@ public class radarFrame extends javax.swing.JFrame {
                 Plots the enabled charts first before the chart itself
              */
             if (checkBoxCpax.isSelected() == true) {
-                int scores[] = arrayPatients[index].getCpax().getScores();
+                String scores[] = arrayPatients[index].getCpax().getScores();
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "cpax", colourCpax);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "cpax", colourCpax);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "cpax", colourCpax);
+                    }
+
                     plotPoints[i] = newPoint;
                 }
 
@@ -1190,11 +1197,19 @@ public class radarFrame extends javax.swing.JFrame {
             }
 
             if (checkBoxMrc.isSelected() == true) {
-                int scores[] = arrayPatients[index].getMrc().getScores();
+                String scores[] = arrayPatients[index].getMrc().getScores();
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "mrc", colourMrc);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "mrc", colourMrc);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "mrc", colourMrc);
+                    }
+
                     plotPoints[i] = newPoint;
                 }
 
@@ -1212,11 +1227,19 @@ public class radarFrame extends javax.swing.JFrame {
             }
 
             if (checkBoxSofa.isSelected() == true) {
-                int scores[] = arrayPatients[index].getSofa().getScores();
+                String scores[] = arrayPatients[index].getSofa().getScores();
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "sofa", colourSofa);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "sofa", colourMrc);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "sofa", colourSofa);
+                    }
+
                     plotPoints[i] = newPoint;
                 }
 
@@ -1238,12 +1261,20 @@ public class radarFrame extends javax.swing.JFrame {
                 Creates the shapes that will be put BEHIND the plot
              */
             if (checkBoxCpax.isSelected() == true) {
-                int scores[] = arrayPatients[index].getCpax().getScores();
+                String scores[] = arrayPatients[index].getCpax().getScores();
                 int slices = scores.length;
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "cpax", colourCpax);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "cpax", colourCpax);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "cpax", colourCpax);
+                    }
+
                     plotPoints[i] = newPoint;
                 }
 
@@ -1258,12 +1289,20 @@ public class radarFrame extends javax.swing.JFrame {
             }
 
             if (checkBoxMrc.isSelected() == true) {
-                int scores[] = arrayPatients[index].getMrc().getScores();
+                String scores[] = arrayPatients[index].getMrc().getScores();
                 int slices = scores.length;
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "mrc", colourMrc);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "mrc", colourMrc);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "mrc", colourMrc);
+                    }
+
                     plotPoints[i] = newPoint;
                 }
 
@@ -1277,12 +1316,20 @@ public class radarFrame extends javax.swing.JFrame {
             }
 
             if (checkBoxSofa.isSelected() == true) {
-                int scores[] = arrayPatients[index].getSofa().getScores();
+                String scores[] = arrayPatients[index].getSofa().getScores();
                 int slices = scores.length;
 
                 Point[] plotPoints = new Point[scores.length];
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "sofa", colourSofa);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "sofa", colourMrc);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "sofa", colourSofa);
+                    }
+
                     plotPoints[i] = newPoint;
                 }
 
@@ -1321,27 +1368,51 @@ public class radarFrame extends javax.swing.JFrame {
             int pos = 0;
 
             if (checkBoxCpax.isSelected() == true) {
-                int scores[] = arrayPatients[index].getCpax().getScores();
+                String scores[] = arrayPatients[index].getCpax().getScores();
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "cpax", colourCpax);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "cpax", colourCpax);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "cpax", colourCpax);
+                    }
+
                     chartScores[pos] = newPoint;
                     pos++;
                 }
             }
 
             if (checkBoxMrc.isSelected() == true) {
-                int scores[] = arrayPatients[index].getMrc().getScores();
+                String scores[] = arrayPatients[index].getMrc().getScores();
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "mrc", colourMrc);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "mrc", colourMrc);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "mrc", colourMrc);
+                    }
+
                     chartScores[pos] = newPoint;
                     pos++;
                 }
             }
 
             if (checkBoxSofa.isSelected() == true) {
-                int scores[] = arrayPatients[index].getSofa().getScores();
+                String scores[] = arrayPatients[index].getSofa().getScores();
                 for (int i = 0; i < scores.length; i++) {
-                    Point newPoint = new Point(scores[i], "sofa", colourSofa);
+                    Point newPoint;
+
+                    if (scores[i] == null) {
+                        newPoint = new Point(0, "sofa", colourMrc);
+                        newPoint.setMissing(true);
+                    } else {
+                        newPoint = new Point(Integer.parseInt(scores[i]), "sofa", colourSofa);
+                    }
+
                     chartScores[pos] = newPoint;
                     pos++;
                 }
@@ -1425,30 +1496,30 @@ public class radarFrame extends javax.swing.JFrame {
 
             // Go through the tables, replace the missing value ID with a word...
             items = arrayPatients[patientIndex].getCpax().getItems();
-            String[] strScoresCpax = arrayPatients[patientIndex].getCpax().getScoresStrings();
+            String[] tempCpaxScores = arrayPatients[patientIndex].getCpax().getScores();
             for (int ii = 0; ii < items.length; ii++) {
-                if (strScoresCpax[ii].contains(missingData)) {
-                    strScoresCpax[ii] = "MISSING";
+                if (tempCpaxScores[ii] == null) {
+                    tempCpaxScores[ii] = "MISSING";
                 }
-                tableModelCpaxScores.addRow(new Object[]{(ii + 1), items[ii], strScoresCpax[ii]});
+                tableModelCpaxScores.addRow(new Object[]{(ii + 1), items[ii], tempCpaxScores[ii]});
             }
 
             items = arrayPatients[patientIndex].getMrc().getItems();
-            String[] strScoresMrc = arrayPatients[patientIndex].getMrc().getScoresStrings();
+            String[] tempMrcScores = arrayPatients[patientIndex].getMrc().getScores();
             for (int ii = 0; ii < items.length; ii++) {
-                if (strScoresMrc[ii].contains(missingData)) {
-                    strScoresMrc[ii] = "MISSING";
+                if (tempMrcScores[ii] == null) {
+                    tempMrcScores[ii] = "MISSING";
                 }
-                tableModelMrcScores.addRow(new Object[]{(ii + 1), items[ii], strScoresMrc[ii]});
+                tableModelMrcScores.addRow(new Object[]{(ii + 1), items[ii], tempMrcScores[ii]});
             }
 
             items = arrayPatients[patientIndex].getSofa().getItems();
-            String[] strScoreSofa = arrayPatients[patientIndex].getSofa().getScoresStrings();
+            String[] tempSofaScores = arrayPatients[patientIndex].getSofa().getScores();
             for (int ii = 0; ii < items.length; ii++) {
-                if (strScoreSofa[ii].contains(missingData)) {
-                    strScoreSofa[ii] = "MISSING";
+                if (tempSofaScores[ii] == null) {
+                    tempSofaScores[ii] = "MISSING";
                 }
-                tableModelSofaScores.addRow(new Object[]{(ii + 1), items[ii], strScoreSofa[ii]});
+                tableModelSofaScores.addRow(new Object[]{(ii + 1), items[ii], tempSofaScores[ii]});
             }
 
             tablesAreFull = true;
@@ -1503,22 +1574,7 @@ public class radarFrame extends javax.swing.JFrame {
 
                     setDataTables(i);
                     lblRadarChart.setText("Radar Chart: " + selectedAdmission);
-
-                    // Missing Cpax totals check
-                    if (arrayPatients[i].getCpax().getTotal() == Integer.parseInt(missingData)) {
-                        arrayPatients[i].getCpax().setTotal(0);
-                    }
-
-                    // Missing Mrc totals check
-                    if (arrayPatients[i].getMrc().getTotal() == Integer.parseInt(missingData)) {
-                        arrayPatients[i].getMrc().setTotal(0);
-                    }
-
-                    // Missing Sofa totals check
-                    if (arrayPatients[i].getSofa().getTotal() == Integer.parseInt(missingData)) {
-                        arrayPatients[i].getSofa().setTotal(0);
-                    }
-
+                    
                     txtCpaxTotal.setText("" + arrayPatients[i].getCpax().getTotal());
                     txtMrcTotal.setText("" + arrayPatients[i].getMrc().getTotal());
                     txtSofaTotal.setText("" + arrayPatients[i].getSofa().getTotal());
@@ -1531,31 +1587,31 @@ public class radarFrame extends javax.swing.JFrame {
 
     public void scoreBuilder() {
 
-        int total = 0;
+        int sum = 0;
 
         for (int i = 0; i < arrayPatients.length; i++) {
             if (arrayPatients[i].getPoid().equals(selectedPatient)) {
                 if (arrayPatients[i].getAdmission().equals(selectedAdmission)) {
 
                     if (checkBoxCpax.isSelected() == true) {
-                        if (arrayPatients[i].getCpax().getTotal() == Integer.parseInt(missingData)) {
-                            total = total + 0;
+                        if (arrayPatients[i].getCpax().getTotal() == null) {
+                            sum = sum + 0;
                         } else {
-                            total = total + arrayPatients[i].getCpax().getTotal();
+                            sum = sum + Integer.parseInt(arrayPatients[i].getCpax().getTotal());
                         }
                     }
                     if (checkBoxMrc.isSelected() == true) {
-                        if (arrayPatients[i].getMrc().getTotal() == Integer.parseInt(missingData)) {
-                            total = total + 0;
+                        if (arrayPatients[i].getMrc().getTotal() == null) {
+                            sum = sum + 0;
                         } else {
-                            total = total + arrayPatients[i].getMrc().getTotal();
+                            sum = sum + Integer.parseInt(arrayPatients[i].getMrc().getTotal());
                         }
                     }
                     if (checkBoxSofa.isSelected() == true) {
-                        if (arrayPatients[i].getMrc().getTotal() == Integer.parseInt(missingData)) {
-                            total = total + 0;
+                        if (arrayPatients[i].getMrc().getTotal() == null) {
+                            sum = sum + 0;
                         } else {
-                            total = total + arrayPatients[i].getSofa().getTotal();
+                            sum = sum + Integer.parseInt(arrayPatients[i].getSofa().getTotal());
                         }
                     }
 
@@ -1564,8 +1620,8 @@ public class radarFrame extends javax.swing.JFrame {
             }
         }
 
-        Score tot = new Score(total);
-        radarPane.add(tot);
+        Score total = new Score(sum);
+        radarPane.add(total);
 
     }
 
