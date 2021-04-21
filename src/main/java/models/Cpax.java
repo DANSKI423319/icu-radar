@@ -6,7 +6,7 @@ package models;
  */
 public class Cpax {
 
-    private int respiratory, cough, bedRolling, supineEdge, dynamicSitting,
+    private String respiratory, cough, bedRolling, supineEdge, dynamicSitting,
             balance, sitToStand, bedToChair, stepping, grip, total;
 
     private String[] items = {
@@ -23,91 +23,91 @@ public class Cpax {
     };
 
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
-    public int getRespiratory() {
+    public String getRespiratory() {
         return respiratory;
     }
 
-    public void setRespiratory(int respiratory) {
+    public void setRespiratory(String respiratory) {
         this.respiratory = respiratory;
     }
 
-    public int getCough() {
+    public String getCough() {
         return cough;
     }
 
-    public void setCough(int cough) {
+    public void setCough(String cough) {
         this.cough = cough;
     }
 
-    public int getBedRolling() {
+    public String getBedRolling() {
         return bedRolling;
     }
 
-    public void setBedRolling(int bedRolling) {
+    public void setBedRolling(String bedRolling) {
         this.bedRolling = bedRolling;
     }
 
-    public int getSupineEdge() {
+    public String getSupineEdge() {
         return supineEdge;
     }
 
-    public void setSupineEdge(int supineEdge) {
+    public void setSupineEdge(String supineEdge) {
         this.supineEdge = supineEdge;
     }
 
-    public int getDynamicSitting() {
+    public String getDynamicSitting() {
         return dynamicSitting;
     }
 
-    public void setDynamicSitting(int dynamicSitting) {
+    public void setDynamicSitting(String dynamicSitting) {
         this.dynamicSitting = dynamicSitting;
     }
 
-    public int getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 
-    public int getSitToStand() {
+    public String getSitToStand() {
         return sitToStand;
     }
 
-    public void setSitToStand(int sitToStand) {
+    public void setSitToStand(String sitToStand) {
         this.sitToStand = sitToStand;
     }
 
-    public int getBedToChair() {
+    public String getBedToChair() {
         return bedToChair;
     }
 
-    public void setBedToChair(int bedToChair) {
+    public void setBedToChair(String bedToChair) {
         this.bedToChair = bedToChair;
     }
 
-    public int getStepping() {
+    public String getStepping() {
         return stepping;
     }
 
-    public void setStepping(int stepping) {
+    public void setStepping(String stepping) {
         this.stepping = stepping;
     }
 
-    public int getGrip() {
+    public String getGrip() {
         return grip;
     }
 
-    public void setGrip(int grip) {
+    public void setGrip(String grip) {
         this.grip = grip;
     }
 
-    public int getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
@@ -120,7 +120,7 @@ public class Cpax {
     }
     // </editor-fold>
 
-    public Cpax(int respiratory, int cough, int bedRolling, int supineEdge, int dynamicSitting, int balance, int sitToStand, int bedToChair, int stepping, int grip, int total) {
+    public Cpax(String respiratory, String cough, String bedRolling, String supineEdge, String dynamicSitting, String balance, String sitToStand, String bedToChair, String stepping, String grip, String total) {
         this.respiratory = respiratory;
         this.cough = cough;
         this.bedRolling = bedRolling;
@@ -137,8 +137,8 @@ public class Cpax {
     public Cpax() {
     }
 
-    public int[] getScores() {
-        int[] array = {
+    public String[] getScores() {
+        String[] array = {
             this.respiratory,
             this.cough,
             this.bedRolling,
@@ -153,7 +153,7 @@ public class Cpax {
 
         return array;
     }
-    
+
     public String[] getScoresStrings() {
         String[] array = {
             String.valueOf(this.respiratory),
@@ -167,12 +167,12 @@ public class Cpax {
             String.valueOf(this.stepping),
             String.valueOf(this.grip)
         };
-        
+
         return array;
     }
 
-    public int[] getAll() {
-        int[] array = {
+    public String[] getAll() {
+        String[] array = {
             this.respiratory,
             this.cough,
             this.bedRolling,
@@ -189,13 +189,14 @@ public class Cpax {
         return array;
     }
 
+    /*
     public int checkTotal() {
-        int total = this.respiratory + this.cough + this.bedRolling
+        String total = this.respiratory + this.cough + this.bedRolling
             + this.supineEdge + this.dynamicSitting + this.balance
             + this.sitToStand + this.bedToChair + this.stepping
             + this.grip;
 
         return total;
     }
-
+     */
 }

@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.Integer.parseInt;
-import java.util.ArrayList;
-import java.util.Arrays;
 import models.Cpax;
 import models.Mrc;
 import models.Patient;
@@ -26,7 +23,6 @@ public class Main {
 
     public static void main(String[] args) {
         // TODO code application logic here
-
     }
 
     // Count rows
@@ -74,36 +70,36 @@ public class Main {
                 for (int i = 0; i < column.length; i++) {
                     // Re-assign blanks to zero.. for now
                     if (column[i].isBlank() == true) {
-                        column[i] = "12345";
+                        column[i] = null;
                     } else {
                     }
                 }
                 
-                tempCpax = new Cpax(Integer.parseInt(column[4]), Integer.parseInt(column[5]),
-                        Integer.parseInt(column[6]), Integer.parseInt(column[7]),
-                        Integer.parseInt(column[8]), Integer.parseInt(column[9]),
-                        Integer.parseInt(column[10]), Integer.parseInt(column[11]),
-                        Integer.parseInt(column[12]), Integer.parseInt(column[13]),
-                        Integer.parseInt(column[14]));
+                tempCpax = new Cpax((column[4]), (column[5]),
+                        (column[6]), (column[7]),
+                        (column[8]), (column[9]),
+                        (column[10]), (column[11]),
+                        (column[12]), (column[13]),
+                        (column[14]));
 
-                tempMrc = new Mrc(Integer.parseInt(column[15]), Integer.parseInt(column[16]),
-                        Integer.parseInt(column[17]), Integer.parseInt(column[18]),
-                        Integer.parseInt(column[19]), Integer.parseInt(column[20]),
-                        Integer.parseInt(column[21]), Integer.parseInt(column[22]),
-                        Integer.parseInt(column[23]), Integer.parseInt(column[24]),
-                        Integer.parseInt(column[25]), Integer.parseInt(column[26]),
-                        Integer.parseInt(column[27]), Integer.parseInt(column[28]),
-                        Integer.parseInt(column[29]), Integer.parseInt(column[30]),
-                        Integer.parseInt(column[31]), Integer.parseInt(column[32]),
-                        Integer.parseInt(column[33]), Integer.parseInt(column[34]),
-                        Integer.parseInt(column[35]), Integer.parseInt(column[36]),
-                        Integer.parseInt(column[37]), Integer.parseInt(column[38]),
-                        Integer.parseInt(column[39]));
+                tempMrc = new Mrc((column[15]), (column[16]),
+                        (column[17]), (column[18]),
+                        (column[19]), (column[20]),
+                        (column[21]), (column[22]),
+                        (column[23]), (column[24]),
+                        (column[25]), (column[26]),
+                        (column[27]), (column[28]),
+                        (column[29]), (column[30]),
+                        (column[31]), (column[32]),
+                        (column[33]), (column[34]),
+                        (column[35]), (column[36]),
+                        (column[37]), (column[38]),
+                        (column[39]));
 
-                tempSofa = new Sofa(Integer.parseInt(column[40]), Integer.parseInt(column[41]),
-                        Integer.parseInt(column[42]), Integer.parseInt(column[43]),
-                        Integer.parseInt(column[44]), Integer.parseInt(column[45]),
-                        Integer.parseInt(column[46]));
+                tempSofa = new Sofa((column[40]), (column[41]),
+                        (column[42]), (column[43]),
+                        (column[44]), (column[45]),
+                        (column[46]));
 
                 Patient tempPatient = new Patient(column[0], column[1], column[2], column[3], tempCpax, tempMrc, tempSofa);
                 tempArray[localCount] = tempPatient;

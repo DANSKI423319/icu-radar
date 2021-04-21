@@ -14,6 +14,7 @@ import java.awt.*;
 public class Point {
 
     private int score;
+    private int position;
     private String alias;
     private Color color;
     private Boolean zero;
@@ -25,6 +26,22 @@ public class Point {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public Color getColor() {
@@ -39,8 +56,8 @@ public class Point {
         return zero;
     }
 
-    public void setZero(Boolean isZero) {
-        this.zero = isZero;
+    public void setZero(Boolean zero) {
+        this.zero = zero;
     }
 
     public Boolean getMissing() {
@@ -51,16 +68,9 @@ public class Point {
         this.missing = missing;
     }
 
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    public Point(int score, String alias, Color color) {
+    public Point(int score, int position, String alias, Color color) {
         this.score = score;
+        this.position = position;
         this.alias = alias;
         this.color = color;
         this.zero = false;

@@ -8,20 +8,21 @@ import java.awt.*;
  * @author Daniel
  */
 public class Chart extends JPanel {
-    
+
     private final int SIZE = 400;
     private final Point[] scores;
     private final int slices;
     private int radius;
-    private int finalRange = 0;
+    private int modifiedRange = 0;
     private final boolean drawNumbers;
     private final boolean drawLines;
     private final boolean drawCircles;
     private final boolean drawColLines;
+    private final boolean drawRelativeRange;
     private final Color transparent = new Color(0, 0, 0, 0);
-    
+
     public Chart(int nSlices, Point[] nScores,
-            boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines) {
+            boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines, boolean boolRelRange) {
         super(true);
         this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
@@ -31,6 +32,7 @@ public class Chart extends JPanel {
         this.drawLines = boolLines;
         this.drawCircles = boolCircles;
         this.drawColLines = boolColLines;
+        this.drawRelativeRange = boolRelRange;
     }
 
     @Override
@@ -43,39 +45,43 @@ public class Chart extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int range = 0;
+        Font defaultFont = G2D.getFont();
 
+        int range = 0;
+        int imposedMaximum = 7;
+        
+        int largestNum = scores[0].getScore();
+        int largestPos = 0;
+
+        // Search array for the largest number and the position
         for (int i = 0; i < scores.length; i++) {
-            if (scores[i].getScore() == 12345) {
-                scores[i].setScore(0);
-                scores[i].setMissing(true);
+            if (scores[i].getScore() > largestNum) {
+                largestNum = scores[i].getScore();
+                largestPos = i;
             }
         }
         
-        // Set range for chart if more than 5
-        for (int i = 0; i < scores.length; i++) {
-            if (scores[i].getScore() > range) {
-                range = scores[i].getScore();
-                range = range + 1;
-                if (range <= 6) {
-                    range = 6 + 1;
-                }
-            }
+        range = scores[largestPos].getScore();
+        int circleRange = 0;
+        int textRange = 0;
+        
+        // If less than the imposed maximum, look to see if relative scoring is enabled
+        if (range <= imposedMaximum) {
+            if (drawRelativeRange == true) {
+                range = range + 2;
+                circleRange = range;
+            } else {
+                range = imposedMaximum;
+                circleRange = range;
+            }     
         }
-
-        if (range == 0) {
-            range = 6 + 1;
-        }
-
-        // Range check
-        int rangeText = 0;
-
-        finalRange = range;
+        
+        modifiedRange = range;
 
         // Adding a number makes the chart smaller, minusing a number makes it bigger
         if (drawNumbers == true) {
-            finalRange = range + 1;
-            rangeText = range;
+            modifiedRange = range + 1;
+            textRange = range;
         }
 
         int xOrigin = getWidth() / 2;
@@ -84,38 +90,35 @@ public class Chart extends JPanel {
         // Change to Cartesian coordinates...
         int superOrigin = Math.min(xOrigin, yOrigin);
         G2D.translate(superOrigin, superOrigin);
+        
         G2D.setColor(Color.GRAY);
 
-        // Draw circle loop
+        // Plot points
+        int xCoord, yCoord;
+        
+        // Draw circles for the radar
         if (drawCircles == true) {
-            for (int i = 0; i < (range); i++) { // Range is the maximum score given, tells how many circles to make
-                radius = i * superOrigin / (finalRange);
+            for (int i = 0; i < (circleRange); i++) { // The amount of circles there are...
+                radius = i * superOrigin / (modifiedRange);
                 G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
             }
         }
 
-        // Plot points
-        int xPoints[] = new int[slices];
-        int yPoints[] = new int[slices];
-        int xCoord, yCoord;
-
         G2D.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        /*
-            Creates lines for points on the radar
-         */
+        // Draw lines for the radar
         if (drawLines == true) {
             for (int i = 0; i < slices; i++) {
                 if (drawColLines == true) {
                     G2D.setColor(scores[i].getColor());
                 }
-                
+
                 double angle = 2 * Math.PI * i / slices;
 
-                xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.cos(angle));
-                yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / finalRange) * Math.sin(angle));
-                
-                G2D.drawLine(0, 0, yCoord, -xCoord);
+                yCoord = (int) -Math.round(0 + ((range - 1) * superOrigin / modifiedRange) * Math.cos(angle));
+                xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / modifiedRange) * Math.sin(angle));
+
+                G2D.drawLine(0, 0, xCoord, yCoord);
             }
         }
 
@@ -124,19 +127,28 @@ public class Chart extends JPanel {
             can be reviewed from a table in the GUI
          */
         if (drawNumbers == true) {
-            G2D.setColor(Color.BLACK);
+            G2D.setFont(new Font("Arial", Font.BOLD, 13));
+
             for (int i = 0; i < slices; i++) {
                 double angle = 2 * Math.PI * i / slices;
+                G2D.setColor(scores[i].getColor());
 
-                xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.cos(angle));
-                yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.sin(angle));
-
-                if (i < 9) {
-                    G2D.drawString("0" + Integer.toString(i + 1), yCoord - 7, -xCoord + 3);
+                if (range < 5) {
+                    yCoord = (int) -Math.round(0 + ((5) * superOrigin / 6) * Math.cos(angle));
+                    xCoord = (int) Math.round(0 + ((5) * superOrigin / 6) * Math.sin(angle));
                 } else {
-                    G2D.drawString(Integer.toString(i + 1), yCoord - 7, -xCoord + 3);
+                    yCoord = (int) -Math.round(0 + ((range - 1) * superOrigin / textRange) * Math.cos(angle));
+                    xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / textRange) * Math.sin(angle));
+                }
+
+                if (scores[i].getPosition() < 9) {
+                    G2D.drawString("" + (scores[i].getPosition() + 1), xCoord - 3, yCoord + 3);
+                } else {
+                    G2D.drawString("" + (scores[i].getPosition() + 1), xCoord - 7, yCoord + 3);
                 }
             }
+
+            G2D.setFont(defaultFont);
         }
     }
 
