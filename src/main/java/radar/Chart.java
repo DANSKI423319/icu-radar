@@ -18,10 +18,11 @@ public class Chart extends JPanel {
     private final boolean drawLines;
     private final boolean drawCircles;
     private final boolean drawColLines;
+    private final boolean drawRelativeRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
     public Chart(int nSlices, Point[] nScores,
-            boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines) {
+            boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines, boolean boolRelRange) {
         super(true);
         this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
@@ -31,6 +32,7 @@ public class Chart extends JPanel {
         this.drawLines = boolLines;
         this.drawCircles = boolCircles;
         this.drawColLines = boolColLines;
+        this.drawRelativeRange = boolRelRange;
     }
 
     @Override
@@ -60,13 +62,17 @@ public class Chart extends JPanel {
                 range = scores[i].getScore();
                 range = range + 1;
                 if (range <= 6) {
-                    range = 6 + 1;
+                    if (drawRelativeRange == true) {
+                        range = range + 1;
+                    } else {
+                        range = 6 + 1;
+                    }
                 }
             }
         }
 
         if (range == 0) {
-            range = 6 + 1;
+            range = 2;
         }
 
         // Range check
@@ -132,8 +138,13 @@ public class Chart extends JPanel {
                 double angle = 2 * Math.PI * i / slices;
                 G2D.setColor(scores[i].getColor());
 
-                xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.cos(angle));
-                yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.sin(angle));
+                if (range < 5) {
+                    xCoord = (int) Math.round(0 + ((5) * superOrigin / 6) * Math.cos(angle));
+                    yCoord = (int) Math.round(0 + ((5) * superOrigin / 6) * Math.sin(angle));
+                } else {
+                    xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.cos(angle));
+                    yCoord = (int) Math.round(0 + ((range - 1) * superOrigin / rangeText) * Math.sin(angle));
+                }
 
                 if (scores[i].getPosition() < 9) {
                     G2D.drawString("0" + (scores[i].getPosition() + 1), yCoord - 7, -xCoord + 3);
@@ -141,7 +152,7 @@ public class Chart extends JPanel {
                     G2D.drawString("" + (scores[i].getPosition() + 1), yCoord - 7, -xCoord + 3);
                 }
             }
-            
+
             G2D.setFont(defaultFont);
         }
     }

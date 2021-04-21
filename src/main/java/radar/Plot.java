@@ -22,11 +22,14 @@ public class Plot extends JPanel {
     private final boolean drawMissing;
     private final boolean drawLinks;
     private final boolean drawZeros;
+    private final boolean drawRelativeRange;
     private int finalRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
     public Plot(Color color, int nPoints, Point[] nScores,
-            boolean boolLines, boolean boolScores, boolean boolNumbers, boolean boolPolygons, boolean boolMissing, boolean boolLinks, boolean boolZeros) {
+            boolean boolLines, boolean boolScores, boolean boolNumbers,
+            boolean boolPolygons, boolean boolMissing, boolean boolLinks,
+            boolean boolZeros, boolean boolRelRange) {
         super(true);
         this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
@@ -40,6 +43,7 @@ public class Plot extends JPanel {
         this.drawMissing = boolMissing;
         this.drawLinks = boolLinks;
         this.drawZeros = boolZeros;
+        this.drawRelativeRange = boolRelRange;
     }
 
     @Override
@@ -53,6 +57,7 @@ public class Plot extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         G2D.setStroke(new BasicStroke(2));
+        var defaultStroke = G2D.getStroke();
 
         int range = 0;
 
@@ -73,14 +78,17 @@ public class Plot extends JPanel {
                 range = scores[i].getScore();
                 range = range + 1;
                 if (range <= 6) {
-                    range = 6;
-                    range = range + 1;
+                    if (drawRelativeRange == true) {
+                        range = range + 1;
+                    } else {
+                        range = 6 + 1;
+                    }
                 }
             }
         }
 
         if (range == 0) {
-            range = 6 + 1;
+            range = 2;
         }
 
         finalRange = range;
@@ -175,14 +183,26 @@ public class Plot extends JPanel {
 
             G2D.setColor(selectedColor);
 
+            float[] pattern = {10f, 10f, 1f, 10f};
+            Stroke dashPatternStroke = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, pattern, 0);
+
             if (start.length > end.length || start.length < end.length) {
                 // Do nothing... bad if this happens
             } else {
                 for (int i = 0; i < start.length; i++) {
                     if (drawLinks == true) {
-                        G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+
+                        if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
+                            G2D.setStroke(defaultStroke);
+                            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                        } else {
+                            G2D.setStroke(dashPatternStroke);
+                            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                        }
+
                     } else {
                         if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
+                            G2D.setStroke(defaultStroke);
                             G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
                         }
                     }
@@ -191,6 +211,7 @@ public class Plot extends JPanel {
             // </editor-fold>
         }
 
+        // Draw lines between missing scores
         if (drawMissing == true) {
             // <editor-fold defaultstate="collapsed" desc="Draw Lines Procedure">
             // Array for lines between zeros
@@ -249,18 +270,31 @@ public class Plot extends JPanel {
             Integer[] end = endPoints.toArray(new Integer[0]);
 
             G2D.setColor(Color.BLACK);
-            var defaultStroke = G2D.getStroke();
 
             if (start.length > end.length || start.length < end.length) {
                 // Do nothing... bad if this happens
             } else {
+
                 Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0);
                 G2D.setStroke(dashed);
+
+                float[] pattern = {10f, 10f, 1f, 10f};
+                Stroke dashPatternStroke = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, pattern, 0);
+
                 for (int i = 0; i < start.length; i++) {
                     if (drawLinks == true) {
-                        G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+
+                        if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
+                            G2D.setStroke(dashed);
+                            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                        } else {
+                            G2D.setStroke(dashPatternStroke);
+                            G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                        }
+
                     } else {
                         if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
+                            G2D.setStroke(dashed);
                             G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
                         }
                     }
@@ -310,6 +344,6 @@ public class Plot extends JPanel {
                     }
                 }
             }
-        }   
+        }
     }
 }
