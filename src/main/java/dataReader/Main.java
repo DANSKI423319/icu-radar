@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.Integer.parseInt;
-import java.util.ArrayList;
-import java.util.Arrays;
 import models.Cpax;
 import models.Mrc;
 import models.Patient;
@@ -26,7 +23,6 @@ public class Main {
 
     public static void main(String[] args) {
         // TODO code application logic here
-
     }
 
     // Count rows

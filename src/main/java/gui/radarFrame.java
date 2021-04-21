@@ -153,6 +153,7 @@ public class radarFrame extends javax.swing.JFrame {
         checkBoxPolygons = new javax.swing.JCheckBox();
         checkBoxZeroes = new javax.swing.JCheckBox();
         checkBoxVisuals = new javax.swing.JCheckBox();
+        checkBoxReplaceMissingData = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         checkBoxRadarRange = new javax.swing.JCheckBox();
         checkBoxRadarScore = new javax.swing.JCheckBox();
@@ -523,7 +524,7 @@ public class radarFrame extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Plot", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
 
         checkBoxZeroGaps.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        checkBoxZeroGaps.setText("Gap Zero Values");
+        checkBoxZeroGaps.setText("Gap Zeros");
         checkBoxZeroGaps.setToolTipText("Draw lines across data where a zero is present inbetween two values");
         checkBoxZeroGaps.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -562,7 +563,7 @@ public class radarFrame extends javax.swing.JFrame {
 
         checkBoxZeroes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         checkBoxZeroes.setSelected(true);
-        checkBoxZeroes.setText("Show Zeroes");
+        checkBoxZeroes.setText("Show Zeros");
         checkBoxZeroes.setToolTipText("Display zeroes on the plot");
         checkBoxZeroes.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -571,11 +572,20 @@ public class radarFrame extends javax.swing.JFrame {
         });
 
         checkBoxVisuals.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        checkBoxVisuals.setText("Link Visuals");
+        checkBoxVisuals.setText("Link Scores");
         checkBoxVisuals.setToolTipText("For the alternate view, link missing and zero data lines to other scores");
         checkBoxVisuals.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 checkBoxVisualsItemStateChanged(evt);
+            }
+        });
+
+        checkBoxReplaceMissingData.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        checkBoxReplaceMissingData.setText("Replace Missing Data with Zero");
+        checkBoxReplaceMissingData.setToolTipText("This will replace the missing data shape with a zero value");
+        checkBoxReplaceMissingData.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxReplaceMissingDataItemStateChanged(evt);
             }
         });
 
@@ -587,17 +597,22 @@ public class radarFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(checkBoxMissingGaps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(checkBoxZeroGaps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(10, 10, 10))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(checkBoxMissingGaps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(checkBoxZeroGaps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(10, 10, 10))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(checkBoxVisuals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkBoxShowKey, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(checkBoxPolygons, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(checkBoxZeroes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(checkBoxVisuals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkBoxShowKey, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(checkBoxPolygons, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                    .addComponent(checkBoxZeroes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(checkBoxReplaceMissingData)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -615,7 +630,9 @@ public class radarFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkBoxZeroes)
                     .addComponent(checkBoxVisuals))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(checkBoxReplaceMissingData)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Radar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
@@ -721,12 +738,14 @@ public class radarFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(btnRefreshColours, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExportChart, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExportChart, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1230,9 +1249,12 @@ public class radarFrame extends javax.swing.JFrame {
 
             }
         }
-
-
     }//GEN-LAST:event_btnExportChartActionPerformed
+
+    private void checkBoxReplaceMissingDataItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxReplaceMissingDataItemStateChanged
+        // TODO add your handling code here:
+        chartRefresh();
+    }//GEN-LAST:event_checkBoxReplaceMissingDataItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1338,7 +1360,8 @@ public class radarFrame extends javax.swing.JFrame {
                         checkBoxMissingGaps.isSelected(),
                         checkBoxVisuals.isSelected(),
                         checkBoxZeroes.isSelected(),
-                        checkBoxRelativeRange.isSelected());
+                        checkBoxRelativeRange.isSelected(),
+                        checkBoxReplaceMissingData.isSelected());
 
                 radarPane.add(cpaxPlot);
             }
@@ -1360,7 +1383,8 @@ public class radarFrame extends javax.swing.JFrame {
                         checkBoxMissingGaps.isSelected(),
                         checkBoxVisuals.isSelected(),
                         checkBoxZeroes.isSelected(),
-                        checkBoxRelativeRange.isSelected());
+                        checkBoxRelativeRange.isSelected(),
+                        checkBoxReplaceMissingData.isSelected());
 
                 radarPane.add(mrcPlot);
             }
@@ -1382,7 +1406,8 @@ public class radarFrame extends javax.swing.JFrame {
                         checkBoxMissingGaps.isSelected(),
                         checkBoxVisuals.isSelected(),
                         checkBoxZeroes.isSelected(),
-                        checkBoxRelativeRange.isSelected());
+                        checkBoxRelativeRange.isSelected(),
+                        checkBoxReplaceMissingData.isSelected());
 
                 radarPane.add(sofaPlot);
             }
@@ -1514,7 +1539,8 @@ public class radarFrame extends javax.swing.JFrame {
                     checkBoxMissingGaps.isSelected(),
                     checkBoxVisuals.isSelected(),
                     checkBoxZeroes.isSelected(),
-                    checkBoxRelativeRange.isSelected());
+                    checkBoxRelativeRange.isSelected(),
+                    checkBoxReplaceMissingData.isSelected());
 
             radarPane.add(bigPlot);
             radarPane.add(totalChart);
@@ -1745,6 +1771,7 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkBoxRadarRange;
     private javax.swing.JCheckBox checkBoxRadarScore;
     private javax.swing.JCheckBox checkBoxRelativeRange;
+    private javax.swing.JCheckBox checkBoxReplaceMissingData;
     private javax.swing.JCheckBox checkBoxShowKey;
     private javax.swing.JCheckBox checkBoxShowScores;
     private javax.swing.JCheckBox checkBoxSofa;
