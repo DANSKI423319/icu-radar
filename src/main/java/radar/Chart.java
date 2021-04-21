@@ -49,7 +49,7 @@ public class Chart extends JPanel {
 
         int range = 0;
         int imposedMaximum = 7;
-        
+
         int largestNum = scores[0].getScore();
         int largestPos = 0;
 
@@ -60,28 +60,23 @@ public class Chart extends JPanel {
                 largestPos = i;
             }
         }
-        
+
         range = scores[largestPos].getScore();
-        int circleRange = 0;
-        int textRange = 0;
-        
+
         // If less than the imposed maximum, look to see if relative scoring is enabled
         if (range <= imposedMaximum) {
             if (drawRelativeRange == true) {
                 range = range + 2;
-                circleRange = range;
             } else {
                 range = imposedMaximum;
-                circleRange = range;
-            }     
+            }
         }
-        
-        modifiedRange = range;
 
         // Adding a number makes the chart smaller, minusing a number makes it bigger
         if (drawNumbers == true) {
             modifiedRange = range + 1;
-            textRange = range;
+        } else {
+            modifiedRange = range;
         }
 
         int xOrigin = getWidth() / 2;
@@ -90,15 +85,15 @@ public class Chart extends JPanel {
         // Change to Cartesian coordinates...
         int superOrigin = Math.min(xOrigin, yOrigin);
         G2D.translate(superOrigin, superOrigin);
-        
+
         G2D.setColor(Color.GRAY);
 
         // Plot points
         int xCoord, yCoord;
-        
+
         // Draw circles for the radar
         if (drawCircles == true) {
-            for (int i = 0; i < (circleRange); i++) { // The amount of circles there are...
+            for (int i = 0; i < range; i++) { // The amount of circles there are...
                 radius = i * superOrigin / (modifiedRange);
                 G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
             }
@@ -114,11 +109,12 @@ public class Chart extends JPanel {
                 }
 
                 double angle = 2 * Math.PI * i / slices;
+                radius = (range - 1) * superOrigin / modifiedRange;
 
-                yCoord = (int) -Math.round(0 + ((range - 1) * superOrigin / modifiedRange) * Math.cos(angle));
-                xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / modifiedRange) * Math.sin(angle));
+                xCoord = (int) -Math.round(radius * Math.cos(angle));
+                yCoord = (int) Math.round(radius * Math.sin(angle));
 
-                G2D.drawLine(0, 0, xCoord, yCoord);
+                G2D.drawLine(0, 0, yCoord, xCoord);
             }
         }
 
@@ -130,21 +126,24 @@ public class Chart extends JPanel {
             G2D.setFont(new Font("Arial", Font.BOLD, 13));
 
             for (int i = 0; i < slices; i++) {
-                double angle = 2 * Math.PI * i / slices;
                 G2D.setColor(scores[i].getColor());
 
+                double angle = 2 * Math.PI * i / slices;
+                radius = (range - 1) * superOrigin / (range);
+                double modifiedRadius = (5) * superOrigin / 6;
+
                 if (range < 5) {
-                    yCoord = (int) -Math.round(0 + ((5) * superOrigin / 6) * Math.cos(angle));
-                    xCoord = (int) Math.round(0 + ((5) * superOrigin / 6) * Math.sin(angle));
+                    xCoord = (int) -Math.round(modifiedRadius * Math.cos(angle));
+                    yCoord = (int) Math.round(modifiedRadius * Math.sin(angle));
                 } else {
-                    yCoord = (int) -Math.round(0 + ((range - 1) * superOrigin / textRange) * Math.cos(angle));
-                    xCoord = (int) Math.round(0 + ((range - 1) * superOrigin / textRange) * Math.sin(angle));
+                    xCoord = (int) -Math.round(radius * Math.cos(angle));
+                    yCoord = (int) Math.round(radius * Math.sin(angle));
                 }
 
                 if (scores[i].getPosition() < 9) {
-                    G2D.drawString("" + (scores[i].getPosition() + 1), xCoord - 3, yCoord + 3);
+                    G2D.drawString("" + (scores[i].getPosition() + 1), yCoord - 3, xCoord + 3);
                 } else {
-                    G2D.drawString("" + (scores[i].getPosition() + 1), xCoord - 7, yCoord + 3);
+                    G2D.drawString("" + (scores[i].getPosition() + 1), yCoord - 7, xCoord + 3);
                 }
             }
 

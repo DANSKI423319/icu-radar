@@ -119,8 +119,8 @@ public class Plot extends JPanel {
             int theScore = scores[i].getScore() + 1;
 
             double angle = 2 * Math.PI * i / points;
-            yCoord = (int) -Math.round(0 + (theScore * superOrigin / modifiedRange) * Math.cos(angle));
-            xCoord = (int) Math.round(0 + (theScore * superOrigin / modifiedRange) * Math.sin(angle));
+            xCoord = (int) -Math.round(0 + (theScore * superOrigin / modifiedRange) * Math.cos(angle));
+            yCoord = (int) Math.round(0 + (theScore * superOrigin / modifiedRange) * Math.sin(angle));
 
             xPoints[i] = xCoord;
             yPoints[i] = yCoord;
@@ -200,17 +200,17 @@ public class Plot extends JPanel {
 
                             if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
                                 G2D.setStroke(defaultStroke);
-                                G2D.drawLine(xPoints[start[i]], yPoints[start[i]], xPoints[end[i]], yPoints[end[i]]);
+                                G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
                             } else {
                                 G2D.setStroke(dashPatternStroke);
-                                G2D.drawLine(xPoints[start[i]], yPoints[start[i]], xPoints[end[i]], yPoints[end[i]]);
+                                G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
                             }
 
                         } else {
 
                             if (scores[start[i]].getAlias().equals(scores[end[i]].getAlias())) {
                                 G2D.setStroke(defaultStroke);
-                                G2D.drawLine(xPoints[start[i]], yPoints[start[i]], xPoints[end[i]], yPoints[end[i]]);
+                                G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
                             }
 
                         }
@@ -300,17 +300,17 @@ public class Plot extends JPanel {
 
                             if (scores[start[j]].getAlias().equals(scores[end[j]].getAlias())) {
                                 G2D.setStroke(dashed);
-                                G2D.drawLine(xPoints[start[j]], yPoints[start[j]], xPoints[end[j]], yPoints[end[j]]);
+                                G2D.drawLine(yPoints[start[j]], xPoints[start[j]], yPoints[end[j]], xPoints[end[j]]);
                             } else {
                                 G2D.setStroke(dashPatternStroke);
-                                G2D.drawLine(xPoints[start[j]], yPoints[start[j]], xPoints[end[j]], yPoints[end[j]]);
+                                G2D.drawLine(yPoints[start[j]], xPoints[start[j]], yPoints[end[j]], xPoints[end[j]]);
                             }
 
                         } else {
 
                             if (scores[start[j]].getAlias().equals(scores[end[j]].getAlias())) {
                                 G2D.setStroke(dashed);
-                                G2D.drawLine(xPoints[start[j]], yPoints[start[j]], xPoints[end[j]], yPoints[end[j]]);
+                                G2D.drawLine(yPoints[start[j]], xPoints[start[j]], yPoints[end[j]], xPoints[end[j]]);
                             }
 
                         }
@@ -326,9 +326,9 @@ public class Plot extends JPanel {
         // Plot radar with loaded arrays
         if (drawPolygons == true) {
             G2D.setColor(selectedColor);
-            G2D.drawPolygon(xPoints, yPoints, points);
+            G2D.drawPolygon(yPoints, xPoints, points);
             G2D.setColor(new Color(selectedColor.getRed(), selectedColor.getGreen(), selectedColor.getBlue(), 40));
-            G2D.fillPolygon(xPoints, yPoints, points);
+            G2D.fillPolygon(yPoints, xPoints, points);
         }
 
         // Draw scores onto the chart
@@ -347,11 +347,11 @@ public class Plot extends JPanel {
                 }
 
                 if (scores[i].getScore() >= 1) {
-                    G2D.fillOval(xPoints[i] - ovalSize, yPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
+                    G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
                     G2D.setColor(Color.WHITE);
 
                     String txt = "" + (scores[i].getScore());
-                    G2D.drawString(txt, xPoints[i] - 4, yPoints[i] + 5);
+                    G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
                 } else {
 
                     // Draw zeros in the middle of the plot
@@ -360,22 +360,22 @@ public class Plot extends JPanel {
                         if (scores[i].getMissing() == true) {
 
                             if (drawMissingZeros == true) {
-                                G2D.fillOval(xPoints[i] - ovalSize, yPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
+                                G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
                                 G2D.setColor(Color.WHITE);
 
                                 String txt = "" + (scores[i].getScore());
-                                G2D.drawString(txt, xPoints[i] - 4, yPoints[i] + 5);
+                                G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
                             } else {
                                 G2D.setColor(Color.BLACK);
-                                G2D.fillOval(xPoints[i] - altOvalSize, yPoints[i] - altOvalSize, 2 * altOvalSize, 2 * altOvalSize);
+                                G2D.fillOval(yPoints[i] - altOvalSize, xPoints[i] - altOvalSize, 2 * altOvalSize, 2 * altOvalSize);
                             }
 
                         } else {
-                            G2D.fillOval(xPoints[i] - ovalSize, yPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
+                            G2D.fillOval(yPoints[i] - ovalSize, xPoints[i] - ovalSize, 2 * ovalSize, 2 * ovalSize);
                             G2D.setColor(Color.WHITE);
 
                             String txt = "" + (scores[i].getScore());
-                            G2D.drawString(txt, xPoints[i] - 4, yPoints[i] + 5);
+                            G2D.drawString(txt, yPoints[i] - 4, xPoints[i] + 5);
                         }
 
                     }
