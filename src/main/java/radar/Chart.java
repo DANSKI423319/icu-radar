@@ -11,7 +11,7 @@ public class Chart extends JPanel {
 
     private final int SIZE = 400;
     private final Point[] scores;
-    private final int slices;
+    private final int segments;
     private int radius;
     private int modifiedRange = 0;
     private final boolean drawNumbers;
@@ -21,12 +21,12 @@ public class Chart extends JPanel {
     private final boolean drawRelativeRange;
     private final Color transparent = new Color(0, 0, 0, 0);
 
-    public Chart(int nSlices, Point[] nScores,
+    public Chart(int nSegments, Point[] nScores,
             boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines, boolean boolRelRange) {
         super(true);
         this.setPreferredSize(new Dimension(SIZE, SIZE));
         this.setBackground(transparent);
-        this.slices = nSlices;
+        this.segments = nSegments;
         this.scores = nScores;
         this.drawNumbers = boolNumbers;
         this.drawLines = boolLines;
@@ -83,8 +83,8 @@ public class Chart extends JPanel {
         int yOrigin = getHeight() / 2;
 
         // Change to Cartesian coordinates...
-        int superOrigin = Math.min(xOrigin, yOrigin);
-        G2D.translate(superOrigin, superOrigin);
+        int origin = Math.min(xOrigin, yOrigin);
+        G2D.translate(origin, origin);
 
         G2D.setColor(Color.GRAY);
 
@@ -94,7 +94,7 @@ public class Chart extends JPanel {
         // Draw circles for the radar
         if (drawCircles == true) {
             for (int i = 0; i < range; i++) { // The amount of circles there are...
-                radius = i * superOrigin / (modifiedRange);
+                radius = i * origin / (modifiedRange);
                 G2D.drawOval(0 - radius, 0 - radius, 2 * radius, 2 * radius);
             }
         }
@@ -103,13 +103,13 @@ public class Chart extends JPanel {
 
         // Draw lines for the radar
         if (drawLines == true) {
-            for (int i = 0; i < slices; i++) {
+            for (int i = 0; i < segments; i++) {
                 if (drawColLines == true) {
                     G2D.setColor(scores[i].getColor());
                 }
 
-                double angle = 2 * Math.PI * i / slices;
-                radius = (range - 1) * superOrigin / modifiedRange;
+                double angle = 2 * Math.PI * i / segments;
+                radius = (range - 1) * origin / modifiedRange;
 
                 xCoord = (int) -Math.round(radius * Math.cos(angle));
                 yCoord = (int) Math.round(radius * Math.sin(angle));
@@ -125,12 +125,12 @@ public class Chart extends JPanel {
         if (drawNumbers == true) {
             G2D.setFont(new Font("Arial", Font.BOLD, 13));
 
-            for (int i = 0; i < slices; i++) {
+            for (int i = 0; i < segments; i++) {
                 G2D.setColor(scores[i].getColor());
 
-                double angle = 2 * Math.PI * i / slices;
-                radius = (range - 1) * superOrigin / (range);
-                double modifiedRadius = (5) * superOrigin / 6;
+                double angle = 2 * Math.PI * i / segments;
+                radius = (range - 1) * origin / (range);
+                double modifiedRadius = (5) * origin / 6;
 
                 if (range < 5) {
                     xCoord = (int) -Math.round(modifiedRadius * Math.cos(angle));

@@ -152,7 +152,7 @@ public class Plot extends JPanel {
                     }
                 }
             }
-
+            
             // If the final point is a zero, assign the first number above zero as an end point
             if (scores[scores.length - 1].getZero() == true && scores[scores.length - 1].getMissing() == false) {
                 for (int j = 0; j < scores.length; j++) {
@@ -178,7 +178,7 @@ public class Plot extends JPanel {
                     }
                 }
             }
-
+            
             // Reassign array list to actual array
             Integer[] start = startPoints.toArray(new Integer[0]);
             Integer[] end = endPoints.toArray(new Integer[0]);
@@ -231,7 +231,7 @@ public class Plot extends JPanel {
             for (int i = 1; i < (scores.length); i++) {
                 // If a score is missing, take the previous point as a start point
                 // Loop for a score that is not missing, take that point as an end point               
-                if (scores[i].getMissing() == true) {
+                if (scores[i].getMissing() == true && scores[i].getZero() == true) {
 
                     if (scores[(i - 1)].getMissing() == true) {
                         // Skip over if true...
@@ -258,7 +258,7 @@ public class Plot extends JPanel {
                     }
                 }
             }
-
+  
             // If the first score is a missing, go backwards to find the start point
             if (scores[0].getMissing() == true) {
                 for (int j = (scores.length - 1); j > 0; j--) {
@@ -275,7 +275,7 @@ public class Plot extends JPanel {
                     }
                 }
             }
-
+            
             // Reassign array list to actual array
             Integer[] start = startPoints.toArray(new Integer[0]);
             Integer[] end = endPoints.toArray(new Integer[0]);

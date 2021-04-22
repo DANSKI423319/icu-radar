@@ -1745,6 +1745,7 @@ public class radarFrame extends javax.swing.JFrame {
         } else if (scores[pos] == "0") {
             tempPoint = new Point(0, pos, pointAlias, pointColour);
             tempPoint.setZero(true);
+            tempPoint.setMissing(false);
         } else {
             tempPoint = new Point(Integer.parseInt(scores[pos]), pos, pointAlias, pointColour);
         }
