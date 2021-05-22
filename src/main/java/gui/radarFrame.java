@@ -139,9 +139,6 @@ public class radarFrame extends javax.swing.JFrame {
         txtCpaxTotal = new javax.swing.JTextField();
         txtMrcTotal = new javax.swing.JTextField();
         txtSofaTotal = new javax.swing.JTextField();
-        btnFilterIDs = new javax.swing.JButton();
-        lblNoOfIDs = new javax.swing.JLabel();
-        txtPatientCount = new javax.swing.JTextField();
         btnStartCycle = new javax.swing.JButton();
         btnStopCycle = new javax.swing.JButton();
         jSliderCycleSpeed = new javax.swing.JSlider();
@@ -471,23 +468,6 @@ public class radarFrame extends javax.swing.JFrame {
         txtSofaTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtSofaTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        btnFilterIDs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnFilterIDs.setText("Filter IDs");
-        btnFilterIDs.setToolTipText("This tool is in beta phase and can fracture how the data is shown");
-        btnFilterIDs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFilterIDsActionPerformed(evt);
-            }
-        });
-
-        lblNoOfIDs.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblNoOfIDs.setText("No. of IDs");
-
-        txtPatientCount.setEditable(false);
-        txtPatientCount.setBackground(new java.awt.Color(255, 255, 255));
-        txtPatientCount.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPatientCount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
         btnStartCycle.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnStartCycle.setText("Present Visits");
         btnStartCycle.addActionListener(new java.awt.event.ActionListener() {
@@ -769,16 +749,9 @@ public class radarFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnFilterIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(lblNoOfIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPatientCount, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPanePatients, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblPatientList, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPanePatients, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPatientList, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblPatientVisits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -894,8 +867,7 @@ public class radarFrame extends javax.swing.JFrame {
                                 .addComponent(lblPatientList))
                             .addComponent(lblInformation))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPanePatients, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -957,11 +929,9 @@ public class radarFrame extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(btnAllFields, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(checkBoxShowScores, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jRadioAlternateView, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtPatientCount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblNoOfIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnFilterIDs, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(jRadioAlternateView, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPanePatients))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -1130,15 +1100,10 @@ public class radarFrame extends javax.swing.JFrame {
                 dataPath = file.toString();
                 dataCount = dataReader.Main.countData(dataPath);
                 arrayPatients = dataReader.Main.loadData(dataPath, dataCount);
-                dataLoad(false);
+                dataLoad();
             }
         }
     }//GEN-LAST:event_btnOpenFileMousePressed
-
-    private void btnFilterIDsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterIDsActionPerformed
-        // TODO add your handling code here:
-        dataLoad(true);
-    }//GEN-LAST:event_btnFilterIDsActionPerformed
 
     private void checkBoxShowScoresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxShowScoresItemStateChanged
         // TODO add your handling code here:
@@ -1300,7 +1265,7 @@ public class radarFrame extends javax.swing.JFrame {
     /*
      *  Loads data for the lists
      */
-    public void dataLoad(boolean filterPatients) {
+    public void dataLoad() {
 
         if (tableModelPOIDs.getRowCount() > 0) {
             tableModelPatientIDs.setRowCount(0);
@@ -1312,22 +1277,6 @@ public class radarFrame extends javax.swing.JFrame {
 
         int counter = 0;
 
-        if (filterPatients == true) {
-            for (int i = 0; i < tableModelPatientIDs.getRowCount(); i++) {
-                String patientID = tableModelPatientIDs.getValueAt(i, 0).toString();
-                for (int ii = 0; ii < tableModelPatientIDs.getRowCount(); ii++) {
-                    if (tableModelPatientIDs.getValueAt(ii, 0).toString().equals(patientID)) {
-                        counter++;
-                        if (counter == 2) {
-                            tableModelPatientIDs.removeRow(ii);
-                            counter = 0;
-                        }
-                    }
-                }
-            }
-        }
-
-        txtPatientCount.setText("" + tableModelPatientIDs.getRowCount());
     }
 
     /*
@@ -1757,7 +1706,6 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAllFields;
     private javax.swing.JButton btnCpax;
     private javax.swing.JButton btnExportChart;
-    private javax.swing.JButton btnFilterIDs;
     private javax.swing.JButton btnMrc;
     private javax.swing.JMenuItem btnOpenFile;
     private javax.swing.JButton btnRefreshColours;
@@ -1802,7 +1750,6 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblInformation;
     private javax.swing.JLabel lblLastName;
     private javax.swing.JLabel lblMrcTotal;
-    private javax.swing.JLabel lblNoOfIDs;
     private javax.swing.JLabel lblPOID;
     private javax.swing.JLabel lblPatientList;
     private javax.swing.JLabel lblPatientVisits;
@@ -1818,7 +1765,6 @@ public class radarFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtMrcTotal;
-    private javax.swing.JTextField txtPatientCount;
     private javax.swing.JTextField txtPoid;
     private javax.swing.JTextField txtSofaTotal;
     // End of variables declaration//GEN-END:variables
