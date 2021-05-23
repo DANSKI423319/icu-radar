@@ -1,4 +1,4 @@
-package dataReader;
+package fileController;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,17 +13,13 @@ import models.Sofa;
  *
  * @author Daniel
  */
-public class Main {
+public class fileReader {
 
     /**
      * @param args the command line arguments
      */
     static Patient[] patientsDataPack;
     static int count = 0;
-
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
 
     // Count rows
     public static int countData(String filePath) {

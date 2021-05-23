@@ -16,58 +16,29 @@ public class Patient {
         return poid;
     }
 
-    public void setPoid(String poid) {
-        this.poid = poid;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getAdmission() {
         return admission;
-    }
-
-    public void setAdmission(String admission) {
-        this.admission = admission;
     }
 
     public Cpax getCpax() {
         return cpax;
     }
 
-    public void setCpax(Cpax cpax) {
-        this.cpax = cpax;
-    }
-
     public Mrc getMrc() {
         return mrc;
-    }
-
-    public void setMrc(Mrc mrc) {
-        this.mrc = mrc;
     }
 
     public Sofa getSofa() {
         return sofa;
     }
-
-    public void setSofa(Sofa sofa) {
-        this.sofa = sofa;
-    }
-    // </editor-fold> 
 
     public Patient(String poid, String firstName, String lastName, String admission, Cpax cpax, Mrc mrc, Sofa sofa) {
         this.poid = poid;

@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package view;
 
+import graphics.Score;
+import models.Point;
+import graphics.Chart;
+import graphics.Plot;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import models.*;
-import radar.*;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
@@ -1098,8 +1098,8 @@ public class radarFrame extends javax.swing.JFrame {
             if (response == JFileChooser.APPROVE_OPTION) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 dataPath = file.toString();
-                dataCount = dataReader.Main.countData(dataPath);
-                arrayPatients = dataReader.Main.loadData(dataPath, dataCount);
+                dataCount = fileController.fileReader.countData(dataPath);
+                arrayPatients = fileController.fileReader.loadData(dataPath, dataCount);
                 dataLoad();
             }
         }

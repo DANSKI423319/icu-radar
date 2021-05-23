@@ -1,4 +1,4 @@
-package radar;
+package graphics;
 
 import java.awt.*;
 import javax.swing.*;

@@ -1,5 +1,6 @@
-package radar;
+package graphics;
 
+import models.Point;
 import javax.swing.*;
 import java.awt.*;
 
