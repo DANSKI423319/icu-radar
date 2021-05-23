@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class Chart extends JPanel {
 
-    private final int SIZE = 400;
+    private final int size = 400;
     private final Point[] scores;
     private final int segments;
     private int radius;
@@ -25,7 +25,7 @@ public class Chart extends JPanel {
     public Chart(int nSegments, Point[] nScores,
             boolean boolNumbers, boolean boolLines, boolean boolCircles, boolean boolColLines, boolean boolRelRange) {
         super(true);
-        this.setPreferredSize(new Dimension(SIZE, SIZE));
+        this.setPreferredSize(new Dimension(size, size));
         this.setBackground(transparent);
         this.segments = nSegments;
         this.scores = nScores;

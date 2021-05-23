@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Plot extends JPanel {
 
-    private final int SIZE = 400;
+    private final int size = 400;
     private final Color selectedColor;
     private final Point[] scores;
     private final int points;
@@ -33,7 +33,7 @@ public class Plot extends JPanel {
             boolean boolPolygons, boolean boolMissing, boolean boolLinks,
             boolean boolZeros, boolean boolRelRange, boolean boolMissingZeros) {
         super(true);
-        this.setPreferredSize(new Dimension(SIZE, SIZE));
+        this.setPreferredSize(new Dimension(size, size));
         this.setBackground(transparent);
         this.selectedColor = color;
         this.points = nPoints;

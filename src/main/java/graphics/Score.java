@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class Score extends JPanel {
 
-    int total;
+    private int total;
     private final Color transparent = new Color(0, 0, 0, 0);
 
     public int getTotal() {

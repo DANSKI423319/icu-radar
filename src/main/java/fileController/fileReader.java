@@ -15,12 +15,6 @@ import models.Sofa;
  */
 public class fileReader {
 
-    /**
-     * @param args the command line arguments
-     */
-    static Patient[] patientsDataPack;
-    static int count = 0;
-
     // Count rows
     public static int countData(String filePath) {
         int tempCount = 0;
