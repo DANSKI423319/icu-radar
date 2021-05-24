@@ -26,18 +26,18 @@ import javax.swing.Timer;
  */
 public class radarFrame extends javax.swing.JFrame {
 
-    public Color colourCpax = Color.RED;
-    public Color colourMrc = Color.GREEN;
-    public Color colourSofa = Color.BLUE;
+    private Color colourCpax = Color.RED;
+    private Color colourMrc = Color.GREEN;
+    private Color colourSofa = Color.BLUE;
 
-    public String dataPath = "";
-    public int dataCount;
-    public Patient[] arrayPatients;
+    private String dataPath = "";
+    private int dataCount;
+    private Patient[] arrayPatients;
 
-    public DefaultListModel listModelPatientVisits = new DefaultListModel();
+    private DefaultListModel listModelPatientVisits = new DefaultListModel();
 
     // Make this model uneditable
-    public DefaultTableModel tableModelPatientIDs = new DefaultTableModel(new String[]{""}, 0) {
+    private DefaultTableModel tableModelPatientIDs = new DefaultTableModel(new String[]{""}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
@@ -45,12 +45,12 @@ public class radarFrame extends javax.swing.JFrame {
     ;
     };
     
-    public DefaultTableModel tableModelCpaxScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
-    public DefaultTableModel tableModelMrcScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
-    public DefaultTableModel tableModelSofaScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
+    private DefaultTableModel tableModelCpaxScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
+    private DefaultTableModel tableModelMrcScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
+    private DefaultTableModel tableModelSofaScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
 
-    public String selectedPatient;
-    public String selectedAdmission;
+    private String selectedPatient;
+    private String selectedAdmission;
 
     // Timer Utilities
     ActionListener visitCycle = new ActionListener() {
