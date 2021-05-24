@@ -26,8 +26,6 @@ import javax.swing.Timer;
  */
 public class radarFrame extends javax.swing.JFrame {
 
-    public boolean tablesAreFull = false;
-
     public Color colourCpax = Color.RED;
     public Color colourMrc = Color.GREEN;
     public Color colourSofa = Color.BLUE;
@@ -36,7 +34,6 @@ public class radarFrame extends javax.swing.JFrame {
     public int dataCount;
     public Patient[] arrayPatients;
 
-    public DefaultListModel listModelPatients = new DefaultListModel();
     public DefaultListModel listModelPatientVisits = new DefaultListModel();
 
     // Make this model uneditable
@@ -48,7 +45,6 @@ public class radarFrame extends javax.swing.JFrame {
     ;
     };
     
-    public DefaultTableModel tableModelPatientOverview = new DefaultTableModel(new String[]{"POID", "First Name", "Last Name", "CPAX Total", "MRC Total", "SOFA Total"}, 0);
     public DefaultTableModel tableModelCpaxScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
     public DefaultTableModel tableModelMrcScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
     public DefaultTableModel tableModelSofaScores = new DefaultTableModel(new String[]{"[#]", "Item", "Score"}, 0);
@@ -67,7 +63,7 @@ public class radarFrame extends javax.swing.JFrame {
             listPatientVisits.setSelectedIndex(selection);
 
             radarPane.removeAll();
-            chartFoundation();
+            chartPainter();
 
             selection++;
             if (selection == patientVisits) {
@@ -939,7 +935,8 @@ public class radarFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listPatientVisitsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listPatientVisitsMouseClicked
-        chartFoundation();
+        selectedAdmission = listPatientVisits.getSelectedValue();
+        chartPainter();
     }//GEN-LAST:event_listPatientVisitsMouseClicked
 
     private void btnCpaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCpaxActionPerformed
@@ -958,17 +955,17 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void checkBoxCpaxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxCpaxItemStateChanged
         // Refresh the chart when plot selection changed
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxCpaxItemStateChanged
 
     private void checkBoxMrcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxMrcItemStateChanged
         // Refresh the chart when plot selection changed
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxMrcItemStateChanged
 
     private void checkBoxSofaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxSofaItemStateChanged
         // Refresh the chart when plot selection changed
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxSofaItemStateChanged
 
     private void btnAllFieldsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllFieldsActionPerformed
@@ -990,29 +987,30 @@ public class radarFrame extends javax.swing.JFrame {
         colourCpax = selectColorRoutine(colourCpax);
         jPanelColourCpax.setBackground(colourCpax);
         jPanelColourCpax1.setBackground(colourCpax);
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_jPanelColourCpaxMouseClicked
 
     private void jPanelColourMrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColourMrcMouseClicked
         colourMrc = selectColorRoutine(colourMrc);
         jPanelColourMrc.setBackground(colourMrc);
         jPanelColourMrc1.setBackground(colourMrc);
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_jPanelColourMrcMouseClicked
 
     private void jPanelColourSofaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColourSofaMouseClicked
         colourSofa = selectColorRoutine(colourSofa);
         jPanelColourSofa.setBackground(colourSofa);
         jPanelColourSofa1.setBackground(colourSofa);
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_jPanelColourSofaMouseClicked
 
     private void jRadioAlternateViewItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioAlternateViewItemStateChanged
         // Refresh the chart when option changed
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_jRadioAlternateViewItemStateChanged
 
     private void tableModelPOIDsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableModelPOIDsMouseClicked
+
         // Clear previous information
         listModelPatientVisits.removeAllElements();
         selectedPatient = tableModelPOIDs.getValueAt(
@@ -1080,7 +1078,7 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void listPatientVisitsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listPatientVisitsKeyReleased
         // TODO add your handling code here:
-        chartFoundation();
+        chartPainter();
     }//GEN-LAST:event_listPatientVisitsKeyReleased
 
     private void btnOpenFileMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenFileMousePressed
@@ -1107,7 +1105,7 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void checkBoxShowScoresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxShowScoresItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxShowScoresItemStateChanged
 
     private void btnStartCycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartCycleActionPerformed
@@ -1127,47 +1125,47 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void checkBoxZeroGapsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxZeroGapsItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxZeroGapsItemStateChanged
 
     private void checkBoxMissingGapsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxMissingGapsItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxMissingGapsItemStateChanged
 
     private void checkBoxShowKeyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxShowKeyItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxShowKeyItemStateChanged
 
     private void checkBoxPolygonsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxPolygonsItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxPolygonsItemStateChanged
 
     private void checkBoxZeroesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxZeroesItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxZeroesItemStateChanged
 
     private void checkBoxVisualsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxVisualsItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxVisualsItemStateChanged
 
     private void checkBoxRadarRangeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxRadarRangeItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxRadarRangeItemStateChanged
 
     private void checkBoxRadarScoreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxRadarScoreItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxRadarScoreItemStateChanged
 
     private void checkBoxColourLinesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxColourLinesItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxColourLinesItemStateChanged
 
     private void btnRefreshColoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshColoursActionPerformed
@@ -1181,12 +1179,12 @@ public class radarFrame extends javax.swing.JFrame {
         colourSofa = Color.BLUE;
         jPanelColourSofa.setBackground(colourSofa);
         jPanelColourSofa1.setBackground(colourSofa);
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_btnRefreshColoursActionPerformed
 
     private void checkBoxRelativeRangeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxRelativeRangeItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxRelativeRangeItemStateChanged
 
     //public static BufferedImage getScreenShot(Component component) {
@@ -1218,7 +1216,7 @@ public class radarFrame extends javax.swing.JFrame {
 
     private void checkBoxReplaceMissingDataItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxReplaceMissingDataItemStateChanged
         // TODO add your handling code here:
-        chartRefresh();
+        chartPainter();
     }//GEN-LAST:event_checkBoxReplaceMissingDataItemStateChanged
 
     /**
@@ -1263,19 +1261,15 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     /*
-     *  Loads data for the lists
+     *  Loads patient information
      */
     public void dataLoad() {
 
-        if (tableModelPOIDs.getRowCount() > 0) {
-            tableModelPatientIDs.setRowCount(0);
-        }
+        tableModelPatientIDs.setRowCount(0);
 
         for (int i = 0; i < arrayPatients.length; i++) {
             tableModelPatientIDs.addRow(new Object[]{arrayPatients[i].getPoid()});
         }
-
-        int counter = 0;
 
     }
 
@@ -1498,28 +1492,7 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     /*
-     *  Chart refresh procedure that is commonly used for when something the user
-     *  has clicked should change particular parts of the chart
-     */
-    public void chartRefresh() {
-        // Find the right patient by looping for the selected value
-        for (int i = 0; i < arrayPatients.length; i++) {
-            if (arrayPatients[i].getPoid().equals(selectedPatient)) {
-                if (arrayPatients[i].getAdmission().equals(selectedAdmission)) {
-                    radarPane.removeAll();
-                    scoreBuilder();
-                    chartBuilder(i, colourCpax, colourMrc, colourSofa);
-                    this.revalidate();
-                    this.repaint();
-
-                    break;
-                }
-            }
-        }
-    }
-
-    /*
-     *   Procedure that is to select a color for the chart plot 
+     *   Procedure that is used to select a color for the chart plot 
      */
     public Color selectColorRoutine(Color previousColor) {
         Color color = JColorChooser.showDialog(this, "Select a new color", colourCpax);
@@ -1533,91 +1506,55 @@ public class radarFrame extends javax.swing.JFrame {
     }
 
     /*
-     *   Sets up the tables of data to go with the chart... 
-     *   There must be a way to shorten this?
+     *   Empties then fills tables based off the selected patient index
      */
     public void setDataTables(int patientIndex) {
 
-        // Empty table of information before showing new relevant information
-        if (tableModelPatientOverview.getRowCount() == 1) {
-            tableModelPatientOverview.removeRow(0);
-            tableModelPatientOverview.addRow(arrayPatients[patientIndex].getOverviewRow());
-        } else {
-            tableModelPatientOverview.addRow(arrayPatients[patientIndex].getOverviewRow());
+        String[] items = {};
+
+        tableModelCpaxScores.setRowCount(0);
+        tableModelMrcScores.setRowCount(0);
+        tableModelSofaScores.setRowCount(0);
+
+        // Go through the tables, replace the missing value ID with a word...
+        items = arrayPatients[patientIndex].getCpax().getItems();
+        String[] tempCpaxScores = arrayPatients[patientIndex].getCpax().getScores();
+        for (int ii = 0; ii < items.length; ii++) {
+            if (tempCpaxScores[ii] == null) {
+                tempCpaxScores[ii] = "Missing";
+            }
+            tableModelCpaxScores.addRow(new Object[]{(ii + 1), items[ii], tempCpaxScores[ii]});
         }
 
-        String[] items = {};
-        int[] intScores = {};
-
-        if (tablesAreFull == false) {
-
-            // Go through the tables, replace the missing value ID with a word...
-            items = arrayPatients[patientIndex].getCpax().getItems();
-            String[] tempCpaxScores = arrayPatients[patientIndex].getCpax().getScores();
-            for (int ii = 0; ii < items.length; ii++) {
-                if (tempCpaxScores[ii] == null) {
-                    tempCpaxScores[ii] = "Missing";
-                }
-                tableModelCpaxScores.addRow(new Object[]{(ii + 1), items[ii], tempCpaxScores[ii]});
+        items = arrayPatients[patientIndex].getMrc().getItems();
+        String[] tempMrcScores = arrayPatients[patientIndex].getMrc().getScores();
+        for (int ii = 0; ii < items.length; ii++) {
+            if (tempMrcScores[ii] == null) {
+                tempMrcScores[ii] = "Missing";
             }
+            tableModelMrcScores.addRow(new Object[]{(ii + 1), items[ii], tempMrcScores[ii]});
+        }
 
-            items = arrayPatients[patientIndex].getMrc().getItems();
-            String[] tempMrcScores = arrayPatients[patientIndex].getMrc().getScores();
-            for (int ii = 0; ii < items.length; ii++) {
-                if (tempMrcScores[ii] == null) {
-                    tempMrcScores[ii] = "Missing";
-                }
-                tableModelMrcScores.addRow(new Object[]{(ii + 1), items[ii], tempMrcScores[ii]});
+        items = arrayPatients[patientIndex].getSofa().getItems();
+        String[] tempSofaScores = arrayPatients[patientIndex].getSofa().getScores();
+        for (int ii = 0; ii < items.length; ii++) {
+            if (tempSofaScores[ii] == null) {
+                tempSofaScores[ii] = "Missing";
             }
-
-            items = arrayPatients[patientIndex].getSofa().getItems();
-            String[] tempSofaScores = arrayPatients[patientIndex].getSofa().getScores();
-            for (int ii = 0; ii < items.length; ii++) {
-                if (tempSofaScores[ii] == null) {
-                    tempSofaScores[ii] = "Missing";
-                }
-                tableModelSofaScores.addRow(new Object[]{(ii + 1), items[ii], tempSofaScores[ii]});
-            }
-
-            tablesAreFull = true;
-
-        } else {
-
-            for (int ii = (tableModelCpaxScores.getRowCount() - 1); ii > 0; ii--) {
-                tableModelCpaxScores.removeRow(ii);
-                if (tableModelCpaxScores.getRowCount() == 1) {
-                    tableModelCpaxScores.removeRow(0);
-                }
-            }
-
-            for (int ii = (tableModelMrcScores.getRowCount() - 1); ii > 0; ii--) {
-                tableModelMrcScores.removeRow(ii);
-                if (tableModelMrcScores.getRowCount() == 1) {
-                    tableModelMrcScores.removeRow(0);
-                }
-            }
-
-            for (int ii = (tableModelSofaScores.getRowCount() - 1); ii > 0; ii--) {
-                tableModelSofaScores.removeRow(ii);
-                if (tableModelSofaScores.getRowCount() == 1) {
-                    tableModelSofaScores.removeRow(0);
-                }
-            }
-
-            tablesAreFull = false;
-            setDataTables(patientIndex);
-
+            tableModelSofaScores.addRow(new Object[]{(ii + 1), items[ii], tempSofaScores[ii]});
         }
     }
 
+    /*
+     * Sets the information in the patientoverview.
+    */
     public void setPatientOverview(int patientIndex) {
         txtPoid.setText(arrayPatients[patientIndex].getPoid());
         txtFirstName.setText(arrayPatients[patientIndex].getFirstName());
         txtLastName.setText(arrayPatients[patientIndex].getLastName());
     }
 
-    public void chartFoundation() {
-        selectedAdmission = listPatientVisits.getSelectedValue();
+    public void chartPainter() {
 
         // Checks validity of admission and ID selected, shows chart
         for (int i = 0; i < arrayPatients.length; i++) {

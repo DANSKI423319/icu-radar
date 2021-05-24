@@ -49,18 +49,5 @@ public class Patient {
         this.mrc = mrc;
         this.sofa = sofa;
     }
-
-    public Object[] getOverviewRow() {
-        Object[] row = {
-            this.poid,
-            this.firstName,
-            this.lastName,
-            this.getCpax().getTotal(),
-            this.getMrc().getTotal(),
-            this.getSofa().getTotal(),
-        };
-
-        return row;
-    }
     
 }
