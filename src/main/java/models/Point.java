@@ -16,7 +16,7 @@ public class Point {
     private int score;
     private int position;
     private String alias;
-    private Color color;
+    private Color colour;
     private Boolean zero;
     private Boolean missing;
 
@@ -45,11 +45,11 @@ public class Point {
     }
 
     public Color getColor() {
-        return color;
+        return colour;
     }
 
     public void setColor(Color color) {
-        this.color = color;
+        this.colour = color;
     }
 
     public Boolean getZero() {
@@ -72,7 +72,7 @@ public class Point {
         this.score = score;
         this.position = position;
         this.alias = alias;
-        this.color = color;
+        this.colour = color;
         this.zero = false;
         this.missing = false;        
     }

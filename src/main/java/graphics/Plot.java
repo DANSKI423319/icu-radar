@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Plot extends JPanel {
 
     private final int size = 400;
-    private final Color selectedColor;
+    private final Color selectedColour;
     private final Point[] scores;
     private final int points;
     private int radius;
@@ -35,7 +35,7 @@ public class Plot extends JPanel {
         super(true);
         this.setPreferredSize(new Dimension(size, size));
         this.setBackground(transparent);
-        this.selectedColor = color;
+        this.selectedColour = color;
         this.points = nPoints;
         this.scores = nScores;
         this.drawLines = boolLines;
@@ -184,7 +184,7 @@ public class Plot extends JPanel {
             Integer[] start = startPoints.toArray(new Integer[0]);
             Integer[] end = endPoints.toArray(new Integer[0]);
 
-            G2D.setColor(selectedColor);
+            G2D.setColor(selectedColour);
 
             float[] pattern = {10f, 10f, 1f, 10f};
             Stroke dashPatternStroke = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, pattern, 0);
@@ -326,9 +326,9 @@ public class Plot extends JPanel {
 
         // Plot radar with loaded arrays
         if (drawPolygons == true) {
-            G2D.setColor(selectedColor);
+            G2D.setColor(selectedColour);
             G2D.drawPolygon(yPoints, xPoints, points);
-            G2D.setColor(new Color(selectedColor.getRed(), selectedColor.getGreen(), selectedColor.getBlue(), 40));
+            G2D.setColor(new Color(selectedColour.getRed(), selectedColour.getGreen(), selectedColour.getBlue(), 40));
             G2D.fillPolygon(yPoints, xPoints, points);
         }
 

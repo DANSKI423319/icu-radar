@@ -30,7 +30,7 @@ public class radarFrame extends javax.swing.JFrame {
     private Color colourMrc = Color.GREEN;
     private Color colourSofa = Color.BLUE;
 
-    private String dataPath = "";
+    private String filePath = "";
     private int dataCount;
     private Patient[] arrayPatients;
 
@@ -683,7 +683,7 @@ public class radarFrame extends javax.swing.JFrame {
         btnRefreshColours.setText("Reset Colours");
         btnRefreshColours.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshColoursActionPerformed(evt);
+                btnResetColoursActionPerformed(evt);
             }
         });
 
@@ -983,22 +983,22 @@ public class radarFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMrcActionPerformed
 
     private void jPanelColourCpaxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColourCpaxMouseClicked
-        // Color selection for CPAX
-        colourCpax = selectColorRoutine(colourCpax);
+        // Colour selection for CPAX
+        colourCpax = selectColourRoutine(colourCpax);
         jPanelColourCpax.setBackground(colourCpax);
         jPanelColourCpax1.setBackground(colourCpax);
         chartPainter();
     }//GEN-LAST:event_jPanelColourCpaxMouseClicked
 
     private void jPanelColourMrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColourMrcMouseClicked
-        colourMrc = selectColorRoutine(colourMrc);
+        colourMrc = selectColourRoutine(colourMrc);
         jPanelColourMrc.setBackground(colourMrc);
         jPanelColourMrc1.setBackground(colourMrc);
         chartPainter();
     }//GEN-LAST:event_jPanelColourMrcMouseClicked
 
     private void jPanelColourSofaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelColourSofaMouseClicked
-        colourSofa = selectColorRoutine(colourSofa);
+        colourSofa = selectColourRoutine(colourSofa);
         jPanelColourSofa.setBackground(colourSofa);
         jPanelColourSofa1.setBackground(colourSofa);
         chartPainter();
@@ -1095,9 +1095,9 @@ public class radarFrame extends javax.swing.JFrame {
             // If something is chosen, reload the data in the applicaiton
             if (response == JFileChooser.APPROVE_OPTION) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                dataPath = file.toString();
-                dataCount = fileController.fileReader.countData(dataPath);
-                arrayPatients = fileController.fileReader.loadData(dataPath, dataCount);
+                filePath = file.toString();
+                dataCount = fileController.fileReader.countData(filePath);
+                arrayPatients = fileController.fileReader.loadData(filePath, dataCount);
                 dataLoad();
             }
         }
@@ -1168,7 +1168,7 @@ public class radarFrame extends javax.swing.JFrame {
         chartPainter();
     }//GEN-LAST:event_checkBoxColourLinesItemStateChanged
 
-    private void btnRefreshColoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshColoursActionPerformed
+    private void btnResetColoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetColoursActionPerformed
         // TODO add your handling code here:
         colourCpax = Color.RED;
         jPanelColourCpax.setBackground(colourCpax);
@@ -1180,7 +1180,7 @@ public class radarFrame extends javax.swing.JFrame {
         jPanelColourSofa.setBackground(colourSofa);
         jPanelColourSofa1.setBackground(colourSofa);
         chartPainter();
-    }//GEN-LAST:event_btnRefreshColoursActionPerformed
+    }//GEN-LAST:event_btnResetColoursActionPerformed
 
     private void checkBoxRelativeRangeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxRelativeRangeItemStateChanged
         // TODO add your handling code here:
@@ -1494,8 +1494,8 @@ public class radarFrame extends javax.swing.JFrame {
     /*
      *   Procedure that is used to select a color for the chart plot 
      */
-    public Color selectColorRoutine(Color previousColor) {
-        Color color = JColorChooser.showDialog(this, "Select a new color", colourCpax);
+    public Color selectColourRoutine(Color previousColor) {
+        Color color = JColorChooser.showDialog(this, "Select a new colour", colourCpax);
 
         // Return to a black color if null
         if (color == null) {
