@@ -1,6 +1,5 @@
 # COMP3000, Intensive Care Unit Visualizer
 ![letterbox-image](https://user-images.githubusercontent.com/43968979/119660645-673d3a80-be27-11eb-9e74-bb3e573fdf91.jpg)
-> [Video Link Here]
 
 This application uses a structured **CSV** **File** and organises the fields into a data visualizing application meant to graphically represent the recovery of patients in the **Intensive Care Unit** based off their **CPAX, MRC and SOFA** medical assessments. This is made with with **Java's Graphics** component which builds a **Radar Chart** using mathematic formulae. It offers a plethora of visualization tools so that the user can expose different patterns of data.
 
@@ -38,6 +37,12 @@ This repository is the product of a final year dissertation project based on the
 | The user can replace missing data with the number zero                        	| Non-Essential 	| ✅        	|
 | The user can search for patients via search bar                               	| Non-Essential 	| ❌        	|
 
+### 📅 Future Updates and Ideas
+- The user can update the opened file.
+- The user can save the changes made to the file.
+- The user can search for patients via search bar.
+- The user can remove duplicate entries.
+
 ### 🖼️ Other Images
-![10602402-v2](https://user-images.githubusercontent.com/43968979/119660733-7b813780-be27-11eb-83ce-84537785c64b.jpg)
+![10602402](https://user-images.githubusercontent.com/43968979/119881573-54a92b00-bf25-11eb-9783-9c6fd7901012.jpg)
 ![10602402_tn](https://user-images.githubusercontent.com/43968979/119660751-7f14be80-be27-11eb-9631-53ddf926a9b8.png)
