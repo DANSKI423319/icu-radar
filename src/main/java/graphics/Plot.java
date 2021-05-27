@@ -205,6 +205,7 @@ public class Plot extends JPanel {
                             } else {
                                 G2D.setStroke(dashPatternStroke);
                                 G2D.drawLine(yPoints[start[i]], xPoints[start[i]], yPoints[end[i]], xPoints[end[i]]);
+                                G2D.setStroke(defaultStroke);
                             }
 
                         } else {
